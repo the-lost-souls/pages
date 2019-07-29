@@ -38,7 +38,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   public itemSizeStyle: string;
 
   public translate: number[] = [];
-  public scale: number[] = [];
+  // public scale: number[] = [];
   public transforms: SafeStyle[] = [];
 
   public scrollPaddingTop: string;
@@ -80,22 +80,15 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   helper() {
 
-    const distances: number[] = new Array(this.images.length);
-    for (let i = 0; i < this.images.length; i++) {
-      distances[i] = Math.abs(this._container.nativeElement.scrollTop - i * this.itemSize);
-    }
-
-    const p = (this._container.nativeElement.scrollTop % this.itemSize) / this.itemSize;
-
     const heights: number[] = new Array(this.images.length);
-    heights.fill(this.itemSize);
+    const scale: number[] = new Array(this.images.length);
 
     for (let i = 0; i < this.images.length; i++) {
-      const k = Math.min(1, distances[i] / (this.itemSize * 2));
+      const scrollDistance = Math.abs(this._container.nativeElement.scrollTop - i * this.itemSize);
+      const k = Math.min(1, scrollDistance / (this.itemSize * 2));
 
-      const scale = 1 + (this.grow - 1) * (1 + Math.cos(k * Math.PI)) / 2;
-      this.scale[i] = scale;
-      heights[i] = this.itemSize * scale;
+      scale[i] = 1 + (this.grow - 1) * (1 + Math.cos(k * Math.PI)) / 2;
+      heights[i] = this.itemSize * scale[i];
     }
 
     const a = Math.floor(this._container.nativeElement.scrollTop / this.itemSize);
@@ -104,6 +97,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     // this.selectedItem = p < 0.5 ? a : b;
     // this.selectedItem = Math.min(this.selectedItem, this.images.length - 1);
 
+    const p = (this._container.nativeElement.scrollTop % this.itemSize) / this.itemSize;
     const dist = (heights[a] + heights[b]) / 2 - this.itemSize;
     this.translate[a] = - p * dist;
     this.translate[b] = (1 - p) * dist;
@@ -123,7 +117,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     for (let i = 0; i < this.images.length; i++) {
-      this.transforms[i] = this.getTransform(this.translate[i], this.scale[i]);
+      this.transforms[i] = this.getTransform(this.translate[i], scale[i]);
     }
   }
 
