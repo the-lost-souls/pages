@@ -65,7 +65,7 @@ jobs:
                 key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
             - run:
                 name: Deploy Dev
-                command: ./scripts/deploy-to-branch.sh $GH_TOKEN deploy-dev
+                command: ./scripts/deploy-to-branch.sh $GH_TOKEN gh-pages
     
     # deploy_stable:
     #     working_directory: ~/project
