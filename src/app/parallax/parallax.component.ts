@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import * as StackBlur from 'stackblur-canvas';
-import { CarouselChild } from '../carousechild';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -33,7 +32,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     ])
   ]
 })
-export class ParallaxComponent implements OnInit, CarouselChild, AfterViewInit {
+export class ParallaxComponent implements OnInit, AfterViewInit {
 
   public rotate1;
   public rotate2 = true;
