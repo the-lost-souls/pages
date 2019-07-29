@@ -1,6 +1,15 @@
 <div #carousel class="carousel" (scroll)="onScroll()" [style.scroll-padding-top]="scrollPaddingTop" [style.scroll-padding-bottom]="scrollPaddingBottom">
-    <div class="carousel-item-container" *ngFor="let image of images; let i = index" [style.margin]="margins[i]"
+    <div class="carousel-item-container" *ngFor="let item of content; let i = index" [style.margin]="margins[i]"
         [style.height]="itemSizeStyle">
-        <app-parallax class="carousel-item" [image]="image" [style.transform]="transforms[i]"></app-parallax>
+        <app-parallax class="carousel-item" [image]="item.image" [style.transform]="transforms[i]"></app-parallax>
+    </div>
+    <div [@showHideContent]="contentVisible" id="content" [style.top]="(center - (itemSize * grow) / 2) + 'px'" [style.height]="(this.itemSize * this.grow) + 'px'">
+
+        <div class="title">{{ content[currentItem].title }} ({{ content[currentItem].year }}) </div>
+        <div class="actions">
+            <div class="action">
+                <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">
+            </div>
+        </div>
     </div>
 </div>

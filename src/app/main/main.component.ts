@@ -1,12 +1,36 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Input, Output } from '@angular/core';
 import * as IsMobile from 'is-mobile';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import * as StackBlur from 'stackblur-canvas';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
+interface CarouselItem {
+  image: string;
+  title: string;
+  year: number;
+
+}
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.sass']
+  styleUrls: ['./main.component.sass'],
+  animations: [
+    trigger('showHideContent', [
+      state('true', style({
+        opacity: '1'
+      })),
+      state('false', style({
+        opacity: '0'
+      })),
+      transition('false => true', [
+        animate('0.5s ease-out')
+      ]),
+      transition('true => false', [
+        animate('0.1s ease-in')
+      ])
+    ])
+  ]
 })
 export class MainComponent implements OnInit, AfterViewInit {
 
@@ -14,31 +38,99 @@ export class MainComponent implements OnInit, AfterViewInit {
   public center = 250;
   public grow = 3;
 
-  images = [
-    'assets/iv.jpg',
-    'assets/anytime.jpg',
-    'assets/III.jpg',
-    'assets/cucumber01.png',
-    'assets/FYH.jpg',
-    'assets/II.jpg',
-    'assets/pgp.gif',
-    'assets/mom02.png',
-    'assets/pese01.png',
-    'assets/time01.png',
-    'assets/synthetic.png',
-    'assets/sorcerer.png',
-    'assets/tib.png',
+  content: CarouselItem[] = [
+    {
+      image: 'assets/iv.jpg',
+      title: 'IV - Racer',
+      year: 2002
+    },
+    {
+      image: 'assets/anytime.jpg',
+      title: 'Anytime',
+      year: 2001
+    },
+    {
+      image: 'assets/III.jpg',
+      title: 'III - Live tomorrow',
+      year: 1999
+    },
+    {
+      image: 'assets/cucumber01.png',
+      title: 'Cucumber Slumber',
+      year: 1999
+    },
+    {
+      image: 'assets/FYH.jpg',
+      title: 'Follow your Heart',
+      year: 1999
+    },
+    {
+      image: 'assets/II.jpg',
+      title: 'II',
+      year: 1998
+    },
+    {
+      image: 'assets/pgp.gif',
+      title: 'pgp',
+      year: 1997
+    },
+    {
+      image: 'assets/mom02.png',
+      title: 'Mind over Matter',
+      year: 1996
+    },
+    {
+      image: 'assets/pese01.png',
+      title: 'PESE',
+      year: 1996
+    },
+    {
+      image: 'assets/time01.png',
+      title: 'Time',
+      year: 1996
+    },
+    {
+      image: 'assets/synthetic.png',
+      title: 'Synthetic',
+      year: 1995
+    },
+    {
+      image: 'assets/sorcerer.png',
+      title: 'Sorcerer',
+      year: 1995
+    },
+    {
+      image: 'assets/tib.png',
+      title: 'Tiß',
+      year: 1994
+    }
   ];
+
+
+  // -------------
+  public contentVisible = false;
 
   @ViewChild('carousel', {static: false})
   private _container: ElementRef<HTMLElement>;
 
-  public selectedItem = 0;
+
+  public currentItem = 0;
+  public _focusedItem = 0;
+  @Input() public set focusedItem(value: number) {
+
+    if (this.focusedItem === value) {
+      return;
+    }
+    this._focusedItem = value;
+    this.focusedItemChange.next(this.focusedItem);
+  }
+  public get focusedItem(): number { return this._focusedItem; }
+  @Output() public focusedItemChange: Subject<number> = new BehaviorSubject(this.focusedItem);
+
   public itemSize: number;
   public itemSizeStyle: string;
 
   public translate: number[] = [];
-  // public scale: number[] = [];
   public transforms: SafeStyle[] = [];
 
   public scrollPaddingTop: string;
@@ -48,18 +140,23 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _changeDetector: ChangeDetectorRef,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer) {
+
+      this.focusedItemChange.subscribe((value: number) => {
+        this.contentVisible = (value != undefined) ? true : false;
+      });
+    }
 
   ngOnInit() {
     this.itemSize = IsMobile.isMobile(navigator.userAgent) ? 75 : 100;
     this.itemSizeStyle = `${this.itemSize}px`;
-    this.transforms = new Array(this.images.length);
+    this.transforms = new Array(this.content.length);
   }
 
   ngAfterViewInit() {
-    this.margins = new Array(this.images.length);
+    this.margins = new Array(this.content.length);
     this.margins[0] = `${this.center - this.itemSize / 2}px 0 0 0`;
-    this.margins[this.images.length - 1] = `0 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
+    this.margins[this.content.length - 1] = `0 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
 
     this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
     this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
@@ -80,10 +177,10 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   onScroll() {
 
-    const heights: number[] = new Array(this.images.length);
-    const scale: number[] = new Array(this.images.length);
+    const heights: number[] = new Array(this.content.length);
+    const scale: number[] = new Array(this.content.length);
 
-    for (let i = 0; i < this.images.length; i++) {
+    for (let i = 0; i < this.content.length; i++) {
       const scrollDistance = Math.abs(this._container.nativeElement.scrollTop - i * this.itemSize);
       const k = Math.min(1, scrollDistance / (this.itemSize * 2));
 
@@ -94,8 +191,6 @@ export class MainComponent implements OnInit, AfterViewInit {
     const a = Math.floor(this._container.nativeElement.scrollTop / this.itemSize);
     const b = a + 1;
 
-    // this.selectedItem = p < 0.5 ? a : b;
-    // this.selectedItem = Math.min(this.selectedItem, this.images.length - 1);
 
     const p = (this._container.nativeElement.scrollTop % this.itemSize) / this.itemSize;
     const dist = (heights[a] + heights[b]) / 2 - this.itemSize;
@@ -110,14 +205,22 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     current = this.translate[b] + (heights[b] - this.itemSize) / 2;
-    for (let i = b + 1; i < this.images.length; i++) {
+    for (let i = b + 1; i < this.content.length; i++) {
       current += (heights[i] - this.itemSize) / 2;
       this.translate[i] = current;
       current += (heights[i] - this.itemSize) / 2;
     }
 
-    for (let i = 0; i < this.images.length; i++) {
+    for (let i = 0; i < this.content.length; i++) {
       this.transforms[i] = this.getTransform(this.translate[i], scale[i]);
+    }
+
+    this.currentItem = p < 0.5 ? a : b;
+    this.currentItem = Math.min(this.currentItem, this.content.length - 1);
+    if (this._container.nativeElement.scrollTop % this.itemSize === 0) {
+      this.focusedItem = this._container.nativeElement.scrollTop / this.itemSize;
+    } else {
+      this.focusedItem = null;
     }
   }
 
