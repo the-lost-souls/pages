@@ -10,6 +10,10 @@ import * as StackBlur from 'stackblur-canvas';
 })
 export class MainComponent implements OnInit, AfterViewInit {
 
+  // inputs
+  public center: number;
+  public grow = 3;
+
   images = [
     'assets/iv.jpg',
     'assets/anytime.jpg',
@@ -33,13 +37,8 @@ export class MainComponent implements OnInit, AfterViewInit {
   public itemSize: number;
   public itemSizeStyle: string;
 
-  public tops: number[] = [];
   public translate: number[] = [];
-  public scales: number[] = [];
-  public center: number;
-  public carouselHeight: number;
-  public grow = 3;
-  public shadowCenters: number[] = [];
+  public scale: number[] = [];
   public transforms: SafeStyle[] = [];
 
   public scrollPaddingTop: string;
@@ -54,7 +53,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.itemSize = IsMobile.isMobile(navigator.userAgent) ? 75 : 100;
     this.itemSizeStyle = `${this.itemSize}px`;
-    this.tops = new Array(this.images.length);
     this.transforms = new Array(this.images.length);
   }
 
@@ -76,8 +74,7 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   private updateLayout() {
     for (let i = 0; i < this.images.length; i++) {
-      this.translate[i] = this.center + i * this.itemSize;
-      this.tops[i] = this.translate[i] - i * this.itemSize;
+      // this.translate[i] = this.center + i * this.itemSize;
     }
   }
 
@@ -92,11 +89,6 @@ export class MainComponent implements OnInit, AfterViewInit {
 
 
   helper() {
-
-    this.shadowCenters = new Array(this.images.length);
-    for (let i = 0; i < this.images.length; i++) {
-      this.shadowCenters[i] = this.center + i * this.itemSize - this._container.nativeElement.scrollTop;
-    }
 
     const distances: number[] = new Array(this.images.length);
     const centerTransformed = this._container.nativeElement.scrollTop + this.center;
@@ -113,7 +105,7 @@ export class MainComponent implements OnInit, AfterViewInit {
       const k = Math.min(1, distances[i] / (this.itemSize * 2));
 
       const scale = 1 + (this.grow - 1) * (1 + Math.cos(k * Math.PI)) / 2;
-      this.scales[i] = scale;
+      this.scale[i] = scale;
       heights[i] = this.itemSize * scale;
     }
 
@@ -142,8 +134,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     for (let i = 0; i < this.images.length; i++) {
-      // this.tops[i] = this.translate[i] - this.itemSize / 2;
-      this.transforms[i] = this.getTransform(this.translate[i], this.scales[i]);
+      this.transforms[i] = this.getTransform(this.translate[i], this.scale[i]);
     }
   }
 
