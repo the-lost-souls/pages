@@ -11,19 +11,19 @@ import * as StackBlur from 'stackblur-canvas';
 export class MainComponent implements OnInit, AfterViewInit {
 
   images = [
-    '../../assets/iv.jpg',
-    '../../assets/anytime.jpg',
-    '../../assets/III.jpg',
-    '../../assets/cucumber01.png',
-    '../../assets/FYH.jpg',
-    '../../assets/II.jpg',
-    '../../assets/pgp.gif',
-    '../../assets/mom02.png',
-    '../../assets/pese01.png',
-    '../../assets/time01.png',
-    '../../assets/synthetic.png',
-    '../../assets/sorcerer.png',
-    '../../assets/tib.png',
+    'assets/iv.jpg',
+    'assets/anytime.jpg',
+    'assets/III.jpg',
+    'assets/cucumber01.png',
+    'assets/FYH.jpg',
+    'assets/II.jpg',
+    'assets/pgp.gif',
+    'assets/mom02.png',
+    'assets/pese01.png',
+    'assets/time01.png',
+    'assets/synthetic.png',
+    'assets/sorcerer.png',
+    'assets/tib.png',
   ];
 
   @ViewChild('carousel', {static: false})
