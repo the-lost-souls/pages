@@ -11,7 +11,7 @@ import * as StackBlur from 'stackblur-canvas';
 export class MainComponent implements OnInit, AfterViewInit {
 
   // inputs
-  public center: number;
+  public center = 250;
   public grow = 3;
 
   images = [
@@ -57,8 +57,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.center = 250;
-
     this.margins = new Array(this.images.length);
     this.margins[0] = `${this.center - this.itemSize / 2}px 0 0 0`;
     this.margins[this.images.length - 1] = `0 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
@@ -66,16 +64,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
     this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
 
-    this.updateLayout();
-
     this.helper();
     this._changeDetector.detectChanges();
-  }
-
-  private updateLayout() {
-    for (let i = 0; i < this.images.length; i++) {
-      // this.translate[i] = this.center + i * this.itemSize;
-    }
   }
 
   setSelected(i: number) {
@@ -91,9 +81,8 @@ export class MainComponent implements OnInit, AfterViewInit {
   helper() {
 
     const distances: number[] = new Array(this.images.length);
-    const centerTransformed = this._container.nativeElement.scrollTop + this.center;
     for (let i = 0; i < this.images.length; i++) {
-      distances[i] = Math.abs(centerTransformed - (this.center + i * this.itemSize));
+      distances[i] = Math.abs(this._container.nativeElement.scrollTop - i * this.itemSize);
     }
 
     const p = (this._container.nativeElement.scrollTop % this.itemSize) / this.itemSize;
