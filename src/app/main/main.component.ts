@@ -114,7 +114,10 @@ export class MainComponent implements OnInit, AfterViewInit {
   private _container: ElementRef<HTMLElement>;
 
 
+  // item currently closest to center
   public currentItem = 0;
+
+  // item focused when scroll stops
   public _focusedItem = 0;
   @Input() public set focusedItem(value: number) {
 
