@@ -64,7 +64,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
     this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
 
-    this.helper();
+    this.onScroll();
     this._changeDetector.detectChanges();
   }
 
@@ -78,7 +78,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
 
-  helper() {
+  onScroll() {
 
     const heights: number[] = new Array(this.images.length);
     const scale: number[] = new Array(this.images.length);
