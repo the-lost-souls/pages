@@ -14,6 +14,8 @@
     height: 100%
     width: 100%
     background-image: linear-gradient(to bottom, white, rgb(220, 220, 225))
+    pointer-events: none
+    user-select: none
 
 .carousel-item-container
     display: block
@@ -21,6 +23,7 @@
     width: 100%
     scroll-snap-align: start
     box-sizing: border-box
+    pointer-events: none
 
     
 .carousel-item
@@ -43,12 +46,15 @@
     pointer-events: none
     display: flex
     flex-direction: column
+    will-change: opacity
 
 .title
     color: white
     font-size: 30pt
     box-sizing: border-box
     padding-left: 50px
+    pointer-events: none
+    user-select: none
 
 .actions
     position: absolute
@@ -66,6 +72,7 @@
     box-sizing: content-box
     padding: 0 8px 0 8px
     cursor: pointer
+    pointer-events: auto
 
 .github-icon
     width: 20px

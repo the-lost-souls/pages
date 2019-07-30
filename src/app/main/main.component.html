@@ -11,13 +11,13 @@
 
             <div class="title">{{ content[i].title }} ({{ content[i].year }}) </div>
             <div class="actions">
-                <div class="action">
+                <div *ngIf="content[i].github" class="action" (click)=openUrl(content[i].github)>
                     <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">
                 </div>
-                <div class="action">
+                <div *ngIf="content[i].youtube" class="action" (click)=openUrl(content[i].youtube)>
                     <img src="assets/YouTube_Play_Button.png" class="github-icon">
                 </div>
-                <div class="action">
+                <div *ngIf="content[i].pouet" class="action" (click)=openUrl(content[i].pouet)>
                     <img src="assets/trumpet.png" class="github-icon">
                 </div>
             </div>
