@@ -204,7 +204,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     for (let i = 1; i < this.content.length - 1; i++) {
       this.margins[i] = `${this.itemSpacing}px 0 0 0`;
     }
-    this.margins[this.content.length - 1] = `${this.itemSpacing}px 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
+    this.margins[this.content.length - 1] =
+    `${this.itemSpacing}px 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
 
     this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
     this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
