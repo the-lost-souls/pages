@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainComponent } from './main.component';
 import { ParallaxComponent } from '../parallax/parallax.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -9,7 +10,8 @@ describe('MainComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainComponent, ParallaxComponent ]
+      imports: [ NoopAnimationsModule ],
+      declarations: [ MainComponent, ParallaxComponent ],
     })
     .compileComponents();
   }));
