@@ -38,7 +38,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   public center = 250;
   public grow = 3;
   public itemSize: number = IsMobile.isMobile(navigator.userAgent) ? 75 : 100;
-  public itemSpacing: number = IsMobile.isMobile(navigator.userAgent) ? 20 : 20;
+  public itemSpacing: number = IsMobile.isMobile(navigator.userAgent) ? 30 : 30;
   public itemTotalSize = this.itemSize + this.itemSpacing;
 
   content: CarouselItem[] = [

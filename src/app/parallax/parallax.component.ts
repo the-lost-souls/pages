@@ -81,7 +81,11 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    requestAnimationFrame((frameT) => this.animate(frameT));
+    this.transform1 = this.getTransform(this.angle1, 1);
+    this.transform2 = this.getTransform(this.angle2, 1.5);
+    // requestAnimationFrame((frameT) => this.animate(frameT));
+
+
   }
 
   private animate(t: number) {
@@ -90,18 +94,15 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
       const elapsed = t - this._previousT;
       this.angle1 += 3.5 * elapsed / 1000;
       this.angle2 += -4.2 * elapsed / 1000;
-      this.scale1 = Math.sin(elapsed / 10000) + 2;
-      this.transform1 = this.getTransform(this.angle1, this.scale1);
-      this.transform2 = this.getTransform(this.angle2, 1);
-      // console.log(this.scale1);
+      this.transform1 = this.getTransform(this.angle1, 1);
+      this.transform2 = this.getTransform(this.angle2, 1.5);
     }
     this._previousT = t;
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
   public blurAll() {
-    this.blur(this._theimage.nativeElement, this._blurred1.nativeElement, 10);
-    // this.blur(this._theimage.nativeElement, this._blurred2.nativeElement, 3);
+    this.blur(this._theimage.nativeElement, this._blurred1.nativeElement, 7);
   }
 
   getTransform(angle: number, scale: number) {
@@ -122,15 +123,9 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
     StackBlur.canvasRGBA( canvas, 0, 0, w, h, radius);
     const imageData = context.getImageData(0, 0, w, h);
 
-    for (let i = 0; i < imageData.data.length; i += 4) {
-      const k = Math.max(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2]);
-      imageData.data[i + 3] = k;
-    }
-
     context.putImageData(imageData, 0, 0);
     this._plasma1.nativeElement.src = canvas.toDataURL();
     this._plasma2.nativeElement.src = canvas.toDataURL();
-
   }
 
   restartRotate1() {

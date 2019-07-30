@@ -6,16 +6,15 @@
     scroll-snap-type: y mandatory
     // Needed for the nice smooth slide on devices
     -webkit-overflow-scrolling: touch
-    background-color: rgb(30, 30, 35)
+    // background-color: rgb(30, 30, 35)
+    background-color: rgb(255, 255, 255)
 
 .background
-    mix-blend-mode: hard-light
     position: absolute
     height: 100%
     width: 100%
-    background-image: url('../../assets/texture6.jpeg')
-    background-size: cover
-    opacity: 1
+    background-image: linear-gradient(to bottom, white, rgb(220, 220, 225))
+
 
 
 .carousel-item-container
@@ -36,10 +35,12 @@
     pointer-events: none
     box-shadow: rgba(0, 0, 0, 0.5) 0 5px 5px
 
-#content
+.content
     position: absolute
     left: 0
+    top: 0
     width: 100%
+    height: 100%
     user-select: none
     pointer-events: none
     display: flex
