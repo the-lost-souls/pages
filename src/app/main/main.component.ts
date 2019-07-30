@@ -37,6 +37,9 @@ export class MainComponent implements OnInit, AfterViewInit {
   // inputs
   public center = 250;
   public grow = 3;
+  public itemSize: number = IsMobile.isMobile(navigator.userAgent) ? 75 : 100;
+  public itemSpacing: number = IsMobile.isMobile(navigator.userAgent) ? 20 : 20;
+  public itemTotalSize = this.itemSize + this.itemSpacing;
 
   content: CarouselItem[] = [
     {
@@ -130,7 +133,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   public get focusedItem(): number { return this._focusedItem; }
   @Output() public focusedItemChange: Subject<number> = new BehaviorSubject(this.focusedItem);
 
-  public itemSize: number;
   public itemSizeStyle: string;
 
   public translate: number[] = [];
@@ -146,12 +148,11 @@ export class MainComponent implements OnInit, AfterViewInit {
     private sanitizer: DomSanitizer) {
 
       this.focusedItemChange.subscribe((value: number) => {
-        this.contentVisible = (value != undefined) ? true : false;
+        this.contentVisible = (value != null) ? true : false;
       });
     }
 
   ngOnInit() {
-    this.itemSize = IsMobile.isMobile(navigator.userAgent) ? 75 : 100;
     this.itemSizeStyle = `${this.itemSize}px`;
     this.transforms = new Array(this.content.length);
   }
@@ -159,7 +160,10 @@ export class MainComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.margins = new Array(this.content.length);
     this.margins[0] = `${this.center - this.itemSize / 2}px 0 0 0`;
-    this.margins[this.content.length - 1] = `0 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
+    for (let i = 1; i < this.content.length - 1; i++) {
+      this.margins[i] = `${this.itemSpacing}px 0 0 0`;
+    }
+    this.margins[this.content.length - 1] = `${this.itemSpacing}px 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
 
     this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
     this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
@@ -184,18 +188,18 @@ export class MainComponent implements OnInit, AfterViewInit {
     const scale: number[] = new Array(this.content.length);
 
     for (let i = 0; i < this.content.length; i++) {
-      const scrollDistance = Math.abs(this._container.nativeElement.scrollTop - i * this.itemSize);
-      const k = Math.min(1, scrollDistance / (this.itemSize * 2));
+      const scrollDistance = Math.abs(this._container.nativeElement.scrollTop - i * this.itemTotalSize);
+      const k = Math.min(1, scrollDistance / (this.itemTotalSize * 2));
 
       scale[i] = 1 + (this.grow - 1) * (1 + Math.cos(k * Math.PI)) / 2;
       heights[i] = this.itemSize * scale[i];
     }
 
-    const a = Math.floor(this._container.nativeElement.scrollTop / this.itemSize);
+    const a = Math.floor(this._container.nativeElement.scrollTop / this.itemTotalSize);
     const b = a + 1;
 
 
-    const p = (this._container.nativeElement.scrollTop % this.itemSize) / this.itemSize;
+    const p = (this._container.nativeElement.scrollTop % this.itemTotalSize) / this.itemTotalSize;
     const dist = (heights[a] + heights[b]) / 2 - this.itemSize;
     this.translate[a] = - p * dist;
     this.translate[b] = (1 - p) * dist;
@@ -220,8 +224,8 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     this.currentItem = p < 0.5 ? a : b;
     this.currentItem = Math.min(this.currentItem, this.content.length - 1);
-    if (this._container.nativeElement.scrollTop % this.itemSize === 0) {
-      this.focusedItem = this._container.nativeElement.scrollTop / this.itemSize;
+    if (this._container.nativeElement.scrollTop % this.itemTotalSize === 0) {
+      this.focusedItem = this._container.nativeElement.scrollTop / this.itemTotalSize;
     } else {
       this.focusedItem = null;
     }

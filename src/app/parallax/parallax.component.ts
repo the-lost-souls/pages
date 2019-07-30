@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import * as StackBlur from 'stackblur-canvas';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-parallax',
@@ -50,8 +50,17 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
   @ViewChild('blurred1', {static: false})
   private _blurred1: ElementRef<HTMLCanvasElement>;
 
-  @ViewChild('blurred2', {static: false})
-  private _blurred2: ElementRef<HTMLCanvasElement>;
+  @ViewChild('plasma1', {static: false})
+  private _plasma1: ElementRef<HTMLImageElement>;
+
+  @ViewChild('plasma2', {static: false})
+  private _plasma2: ElementRef<HTMLImageElement>;
+
+  // @ViewChild('blurred2', {static: false})
+  // private _blurred2: ElementRef<HTMLCanvasElement>;
+
+  public transform1: SafeStyle;
+  public transform2: SafeStyle;
 
   @ViewChild('theimage', {static: false})
   private _theimage: ElementRef<HTMLImageElement>;
@@ -79,9 +88,11 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
 
     if (this._previousT) {
       const elapsed = t - this._previousT;
-      this.angle1 += 5.5 * elapsed / 1000;
-      this.angle2 += -8.2 * elapsed / 1000;
+      this.angle1 += 3.5 * elapsed / 1000;
+      this.angle2 += -4.2 * elapsed / 1000;
       this.scale1 = Math.sin(elapsed / 10000) + 2;
+      this.transform1 = this.getTransform(this.angle1, this.scale1);
+      this.transform2 = this.getTransform(this.angle2, 1);
       // console.log(this.scale1);
     }
     this._previousT = t;
@@ -89,7 +100,7 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
   }
 
   public blurAll() {
-    // this.blur(this._theimage.nativeElement, this._blurred1.nativeElement, 7);
+    this.blur(this._theimage.nativeElement, this._blurred1.nativeElement, 10);
     // this.blur(this._theimage.nativeElement, this._blurred2.nativeElement, 3);
   }
 
@@ -117,6 +128,9 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
     }
 
     context.putImageData(imageData, 0, 0);
+    this._plasma1.nativeElement.src = canvas.toDataURL();
+    this._plasma2.nativeElement.src = canvas.toDataURL();
+
   }
 
   restartRotate1() {
