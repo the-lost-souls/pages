@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Input, Output, ViewChildren, OnChanges, SimpleChanges } from '@angular/core';
 import * as IsMobile from 'is-mobile';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -152,11 +152,10 @@ export class MainComponent implements OnInit, AfterViewInit {
 
 
   // -------------
-  public contentVisible = false;
+  // public contentVisible = false;
 
   @ViewChild('carousel', {static: false})
   private _container: ElementRef<HTMLElement>;
-
 
   // item currently closest to center
   public currentItem = 0;
@@ -175,6 +174,9 @@ export class MainComponent implements OnInit, AfterViewInit {
   @Output() public focusedItemChange: Subject<number> = new BehaviorSubject(this.focusedItem);
 
   public itemSizeStyle: string;
+  public contentTopStyle: string;
+  public contentHeightStyle: string;
+  public contentVisible: boolean[];
 
   public translate: number[] = [];
   public transforms: SafeStyle[] = [];
@@ -188,14 +190,18 @@ export class MainComponent implements OnInit, AfterViewInit {
     private _changeDetector: ChangeDetectorRef,
     private sanitizer: DomSanitizer) {
 
+      this.transforms = new Array(this.content.length);
+      this.contentVisible = new Array(this.content.length);
+      this.contentVisible.fill(false);
+
       this.focusedItemChange.subscribe((value: number) => {
-        this.contentVisible = (value != null) ? true : false;
+        this.contentVisible.fill(false);
+        this.contentVisible[value] = true;
       });
     }
 
   ngOnInit() {
     this.itemSizeStyle = `${this.itemSize}px`;
-    this.transforms = new Array(this.content.length);
   }
 
   ngAfterViewInit() {
@@ -205,10 +211,13 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.margins[i] = `${this.itemSpacing}px 0 0 0`;
     }
     this.margins[this.content.length - 1] =
-    `${this.itemSpacing}px 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
+      `${this.itemSpacing}px 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
 
     this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
     this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
+
+    this.contentTopStyle = -(this.itemSize * (this.grow - 1)) / 2 + 'px';
+    this.contentHeightStyle = (this.itemSize * this.grow) + 'px';
 
     this.onScroll();
     this._changeDetector.detectChanges();
@@ -223,41 +232,42 @@ export class MainComponent implements OnInit, AfterViewInit {
     return this.sanitizer.bypassSecurityTrustStyle(transform);
   }
 
-
   onScroll() {
+    const scrollTop = this._container.nativeElement.scrollTop;
 
-    const heights: number[] = new Array(this.content.length);
+    const height: number[] = new Array(this.content.length);
     const scale: number[] = new Array(this.content.length);
 
     for (let i = 0; i < this.content.length; i++) {
-      const scrollDistance = Math.abs(this._container.nativeElement.scrollTop - i * this.itemTotalSize);
+      const scrollDistance = Math.abs(scrollTop - i * this.itemTotalSize);
       const k = Math.min(1, scrollDistance / (this.itemTotalSize * 2));
 
       scale[i] = 1 + (this.grow - 1) * (1 + Math.cos(k * Math.PI)) / 2;
-      heights[i] = this.itemSize * scale[i];
+      height[i] = this.itemSize * scale[i];
     }
 
-    const a = Math.floor(this._container.nativeElement.scrollTop / this.itemTotalSize);
+    const a = Math.floor(scrollTop / this.itemTotalSize);
     const b = a + 1;
 
+    const heightB = (b < this.content.length) ? height[b] : 0;
 
-    const p = (this._container.nativeElement.scrollTop % this.itemTotalSize) / this.itemTotalSize;
-    const dist = (heights[a] + heights[b]) / 2 - this.itemSize;
+    const p = (scrollTop % this.itemTotalSize) / this.itemTotalSize;
+    const dist = (height[a] + heightB) / 2 - this.itemSize;
     this.translate[a] = - p * dist;
     this.translate[b] = (1 - p) * dist;
 
-    let current = this.translate[a] - (heights[a] - this.itemSize) / 2;
+    let current = this.translate[a] - (height[a] - this.itemSize) / 2;
     for (let i = a - 1; i >= 0; i--) {
-      current -= (heights[i] - this.itemSize) / 2;
+      current -= (height[i] - this.itemSize) / 2;
       this.translate[i] = current;
-      current -= (heights[i] - this.itemSize) / 2;
+      current -= (height[i] - this.itemSize) / 2;
     }
 
-    current = this.translate[b] + (heights[b] - this.itemSize) / 2;
+    current = this.translate[b] + (height[b] - this.itemSize) / 2;
     for (let i = b + 1; i < this.content.length; i++) {
-      current += (heights[i] - this.itemSize) / 2;
+      current += (height[i] - this.itemSize) / 2;
       this.translate[i] = current;
-      current += (heights[i] - this.itemSize) / 2;
+      current += (height[i] - this.itemSize) / 2;
     }
 
     for (let i = 0; i < this.content.length; i++) {
@@ -266,8 +276,8 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     this.currentItem = p < 0.5 ? a : b;
     this.currentItem = Math.min(this.currentItem, this.content.length - 1);
-    if (this._container.nativeElement.scrollTop % this.itemTotalSize === 0) {
-      this.focusedItem = this._container.nativeElement.scrollTop / this.itemTotalSize;
+    if (scrollTop % this.itemTotalSize === 0) {
+      this.focusedItem = scrollTop / this.itemTotalSize;
     } else {
       this.focusedItem = null;
     }
