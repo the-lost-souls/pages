@@ -12,35 +12,35 @@ jobs:
                 keys:
                 - dependencies-{{ checksum "package.json" }}
 
-            # - run:
-            #     name: Install local dependencies
-            #     command: npm install
+            - run:
+                name: Install local dependencies
+                command: npm install
 
-            # - save_cache:
-            #     key: dependencies-{{ checksum "package.json" }}
-            #     paths:
-            #         - node_modules
+            - save_cache:
+                key: dependencies-{{ checksum "package.json" }}
+                paths:
+                    - node_modules
 
-            # - run:  
-            #     name: Inject build date
-            #     command: ./scripts/inject-build-date.sh
+            - run:  
+                name: Inject build date
+                command: ./scripts/inject-build-date.sh
             
-            # - run:
-            #     name: Linting
-            #     command: npm run lint
+            - run:
+                name: Linting
+                command: npm run lint
             
-            # - run:
-            #     name: Testing
-            #     command: npm run test -- --watch=false
+            - run:
+                name: Testing
+                command: npm run test -- --watch=false
 
-            # - run:
-            #     name: Building
-            #     command: npm run build -- --prod --base-href {{ .Environment.BASE_HREF }}
+            - run:
+                name: Building
+                command: npm run build -- --prod --base-href {{ .Environment.BASE_HREF }}
             
-            # - save_cache:
-            #     key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-            #     paths:
-            #         - dist
+            - save_cache:
+                key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+                paths:
+                    - dist
 
     # deploy:
     #     working_directory: ~/project
