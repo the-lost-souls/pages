@@ -11,7 +11,10 @@ commands:
     steps:
         - run:
             name: Setup shared variables
+            environment:
+                DEPENDENCY_CACHE_KEY: dependencies-{{ checksum "package.json" }}
             command: echo << parameters.target >> 
+        
 
 jobs:
     build:
@@ -25,11 +28,13 @@ jobs:
                 default: ""
 
         steps:
-            - run:
-                name: List variables
-                command: echo << parameters.target >> 
             - init_variables:
                 target: "hello2"
+            - run:
+                name: List variables
+                command: |
+                    echo << parameters.target >> 
+                    echo {{ .Environment.DEPENDENCY_CACHE_KEY }}
                     
 
 workflows:
