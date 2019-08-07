@@ -34,7 +34,7 @@ jobs:
                 name: List variables
                 command: |
                     echo << parameters.target >> 
-                    echo {{ .Environment.CIRCLE_BUILD_NUM }}
+                    echo $CIRCLE_BUILD_NUM
                     
 
 workflows:
