@@ -47,6 +47,9 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
   @Input()
   public height = 100;
 
+  @Input()
+  public focus = 0;
+
   @ViewChild('blurred1', {static: false})
   private _blurred1: ElementRef<HTMLCanvasElement>;
 
@@ -84,8 +87,6 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
     this.transform1 = this.getTransform(this.angle1, 1);
     this.transform2 = this.getTransform(this.angle2, 1.5);
     // requestAnimationFrame((frameT) => this.animate(frameT));
-
-
   }
 
   private animate(t: number) {
@@ -110,6 +111,12 @@ export class ParallaxComponent implements OnInit, AfterViewInit {
     return this.sanitizer.bypassSecurityTrustStyle(transform);
   }
 
+
+  getTitleTransform(focus: number) {
+    const transform = `translate(${(1 - focus) * 50}%, 0)`;
+    // const transform = 'translate(, 0)';
+    return this.sanitizer.bypassSecurityTrustStyle(transform);
+  }
 
   blur(img: HTMLImageElement, canvas: HTMLCanvasElement, radius: number) {
     const w = 512;

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Input, Output, ViewChildren, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input, Output } from '@angular/core';
 import * as IsMobile from 'is-mobile';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -20,16 +20,18 @@ interface CarouselItem {
   animations: [
     trigger('showHideContent', [
       state('true', style({
-        opacity: '1'
+        // opacity: '1',
+        transform: 'translateX(0)'
       })),
       state('false', style({
-        opacity: '0'
+        // opacity: '0',
+        transform: 'translateX(500%)'
       })),
       transition('false => true', [
-        animate('0.5s ease-out')
+        animate('1s ease-out')
       ]),
       transition('true => false', [
-        animate('0.1s ease-in')
+        animate('1s ease-in')
       ])
     ])
   ]
@@ -180,6 +182,7 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   public translate: number[] = [];
   public transforms: SafeStyle[] = [];
+  public focus: number[];
 
   public scrollPaddingTop: string;
   public scrollPaddingBottom: string;
@@ -191,13 +194,14 @@ export class MainComponent implements OnInit, AfterViewInit {
     private sanitizer: DomSanitizer) {
 
       this.transforms = new Array(this.content.length);
+      this.focus = new Array(this.content.length);
       this.contentVisible = new Array(this.content.length);
       this.contentVisible.fill(false);
 
-      this.focusedItemChange.subscribe((value: number) => {
-        this.contentVisible.fill(false);
-        this.contentVisible[value] = true;
-      });
+      // this.focusedItemChange.subscribe((value: number) => {
+      //   this.contentVisible.fill(false);
+      //   this.contentVisible[value] = true;
+      // });
     }
 
   ngOnInit() {
@@ -239,10 +243,12 @@ export class MainComponent implements OnInit, AfterViewInit {
     const scale: number[] = new Array(this.content.length);
 
     for (let i = 0; i < this.content.length; i++) {
-      const scrollDistance = Math.abs(scrollTop - i * this.itemTotalSize);
-      const k = Math.min(1, scrollDistance / (this.itemTotalSize * 2));
+      const scrollDistance = scrollTop - i * this.itemTotalSize;
+      const r = scrollDistance / (this.itemTotalSize * 2);
+      const k = (1 + Math.cos(Math.min(1, Math.abs(r)) * Math.PI)) / 2;
+      this.focus[i] = 1 - r;
 
-      scale[i] = 1 + (this.grow - 1) * (1 + Math.cos(k * Math.PI)) / 2;
+      scale[i] = 1 + (this.grow - 1) * k;
       height[i] = this.itemSize * scale[i];
     }
 
@@ -280,6 +286,10 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.focusedItem = scrollTop / this.itemTotalSize;
     } else {
       this.focusedItem = null;
+    }
+
+    for (let i = 0; i < this.content.length; i++) {
+      this.contentVisible[i] = (Math.abs(this.translate[i]) < 200);
     }
   }
 

@@ -14,4 +14,7 @@
     <!-- <img class="overlay" src="../../assets/texture.jpg"> -->
     <img #theimage class="pic" [src]="image" (load)="blurAll()">
 
+    <div class="content" [style.opacity]="focus">
+        <div class="title" [style.transform]="getTitleTransform(focus)">TITLE</div>
+    </div>
 </div>
