@@ -35,31 +35,34 @@ jobs:
 
             - run:
                 name: Building
-                command: npm run build -- --prod --base-href {{ .Environment.BASE_HREF }}
+                command: npm run build -- --prod
             
             - save_cache:
                 key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
                 paths:
                     - dist
 
-    # deploy:
-    #     working_directory: ~/project
-    #     docker:
-    #         - image: circleci/node:11.15-browsers
-    #     parameters:
-    #         base_href:
-    #             type: string
-    #             default: ""
-    #     steps:
-    #         - checkout
-    #         - restore_cache:
-    #             key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-    #         - run:
-    #             name: Set base href
-    #             command: sed -i.bak 's/.*base href.*/<base href="<< parameters.base_href >>">/' ./dist/index.html
-    #         - run:
-    #             name: Deploy
-    #             command: ./scripts/deploy-to-branch.sh $GH_TOKEN gh-pages
+    deploy:
+        working_directory: ~/project
+        docker:
+            - image: circleci/node:11.15-browsers
+        parameters:
+            base_href:
+                type: string
+                default: ""
+            folder:
+                type: string
+                default: ""
+        steps:
+            - checkout
+            - restore_cache:
+                key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            - run:
+                name: Set base href
+                command: sed -i.bak 's/.*base href.*/<base href="<< parameters.base_href >>">/' ./dist/index.html
+            - run:
+                name: Deploy
+                command: ./scripts/deploy-to-pages.sh $GH_TOKEN ./dist <<parameters.folder>>
             
 
 
