@@ -50,7 +50,7 @@ jobs:
 
         steps:
             - init_shared_variables
-            - init_conditional_variables
+            - init_conditional_variables:
                 target: << parameters.target >>
             
             - run:
