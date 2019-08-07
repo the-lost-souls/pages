@@ -1,38 +1,5 @@
 version: 2.1
 
-commands:
-  init_variables:
-    description: "Initialize variables"
-    parameters:
-      target:
-        type: string
-        default: ""
-
-    steps:
-        - run:
-            name: Setup shared variables
-            environment:
-                DEPENDENCY_CACHE_KEY: dependencies-{{ checksum "package.json" }}
-        - when:
-            # Assuming 'prod' for any non-empty parameter. Unfortunately, CircleCI only supports
-            # truthy/falsey, not equals
-            condition: <<parameters.target>>
-            steps:
-                - run:
-                    name: Setup prod variables
-                    environment:
-                        DIST_CACHE_KEY: dist-prod-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-                        BASE_HREF: /tls-home/
-        - unless:
-            condition: <<parameters.target>>
-            steps:
-                - run:
-                    name: Setup dev variables
-                    environment:
-                        DIST_CACHE_KEY: dist-dev-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-                        BASE_HREF: /tls-home/builds/{{ .Environment.CIRCLE_BUILD_NUM }}
-
-
 jobs:
     build:
         working_directory: ~/project
@@ -45,114 +12,13 @@ jobs:
                 default: ""
 
         steps:
-            - init_variables:
-                target: << parameters.target >>
-            
             - run:
                 name: List variables
-                command: |
-                    echo << parameters.target >> 
-                    echo {{ .Environment.DIST_CACHE_KEY }} 
-                    echo {{ .Environment.DEPENDENCY_CACHE_KEY }} 
-                    echo {{ .Environment.BASE_HREF }} 
-
-            - checkout
-            - restore_cache:
-                keys:
-                - {{ .Environment.DEPENDENCY_CACHE_KEY }}
-
-            - run:
-                name: Install local dependencies
-                command: npm install
-
-            - save_cache:
-                key: {{ .Environment.DEPENDENCY_CACHE_KEY }}
-                paths:
-                    - node_modules
-
-            - run:  
-                name: Inject build date
-                command: ./scripts/inject-build-date.sh
-            
-            - run:
-                name: Linting
-                command: npm run lint
-            
-            - run:
-                name: Testing
-                command: npm run test -- --watch=false
-
-            - run:
-                name: Building
-                command: npm run build -- --prod --base-href {{ .Environment.BASE_HREF }}
-            
-            - save_cache:
-                key: {{ .Environment.DIST_CACHE_KEY }}
-                paths:
-                    - dist
-
-
-    # deploy_dev:
-    #     working_directory: ~/project
-    #     docker:
-    #         - image: circleci/node:11.15-browsers
-    #     steps:
-    #         - checkout
-    #         # Log the current branch
-    #         - run:
-    #             name: Show current branch
-    #             command: echo ${CIRCLE_BRANCH}
-    #         # Restore cache from the build job which contains the
-    #         # dist folder that needs to be deployed
-    #         - restore_cache:
-    #             key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-    #         - run:
-    #             name: Deploy Dev
-    #             command: ./scripts/deploy-to-branch.sh $GH_TOKEN gh-pages
-    
-    # deploy_stable:
-    #     working_directory: ~/project
-    #     docker:
-    #         - image: circleci/node:11.15-browsers
-    #     steps:
-    #         - checkout
-    #         # Log the current branch
-    #         - run:
-    #             name: Show current branch
-    #             command: echo ${CIRCLE_BRANCH}
-    #         # Restore cache from the build job which contains the
-    #         # dist folder that needs to be deployed
-    #         - restore_cache:
-    #             key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-    #         - run:
-    #             name: Deploy Stable
-    #             command: ./scripts/deploy-to-branch.sh $GH_TOKEN gh-pages
-
+                command: echo << parameters.target >> 
+                    
 
 workflows:
-    version: 2.1
     build_and_deploy_dev:
         jobs:
             - build:
-                target: ""
-            # - deploy_dev:
-            #     requires:
-            #         - build
-            #     filters:
-            #         branches:
-            #             only:
-            #                 - master
-    # build_and_deploy_stable:
-    #     jobs:
-    #         - build
-    #         - approve:
-    #             type: approval
-    #             requires:
-    #                 - build
-    #         - deploy_stable:
-    #             requires:
-    #                 - approve
-    #             filters:
-    #                 branches:
-    #                     only:
-    #                         - master
+                target: "hello"
