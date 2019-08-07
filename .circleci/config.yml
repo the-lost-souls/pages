@@ -59,7 +59,9 @@ jobs:
                 key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
             - run:
                 name: Set base href
-                command: sed -i.bak 's/.*base href.*/<base href="<< parameters.base_href >>">/' ./dist/index.html
+                command: |
+                    echo Base href: <<parameters.base.href>>
+                    sed -i.bak 's/.*base href.*/<base href="<< parameters.base_href >>">/' ./dist/index.html
             - run:
                 name: Deploy
                 command: ./scripts/deploy-to-pages.sh $GH_TOKEN ./dist <<parameters.folder>>
@@ -107,6 +109,9 @@ workflows:
     build_and_deploy_dev:
         jobs:
             - build
+            - deploy:
+                folder: builds/{{ .Environments.CIRCLE_BUILD_NUM }}
+                base_href: /tls-home/builds/{{ .Environments.CIRCLE_BUILD_NUM }}/
             # - deploy_dev:
             #     requires:
             #         - build
