@@ -15,6 +15,7 @@ commands:
                 DEPENDENCY_CACHE_KEY: dependencies-{{ checksum "package.json" }}
             command: |
                 echo << parameters.target >> 
+                echo dependencies-{{ checksum "package.json" }}
                 echo $DEPENDENCY_CACHE_KEY
         
 
