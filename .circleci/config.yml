@@ -130,7 +130,7 @@ jobs:
 
 
 workflows:
-    version: 2
+    version: 2.1
     build_and_deploy_dev:
         jobs:
             - build:
