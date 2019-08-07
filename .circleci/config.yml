@@ -45,7 +45,7 @@ jobs:
                 default: ""
 
         steps:
-            - init_conditional_variables:
+            - init_variables:
                 target: << parameters.target >>
             
             - run:
