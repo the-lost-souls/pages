@@ -1,5 +1,37 @@
 version: 2.1
 
+commands:
+  init_variables:
+    description: "Initialize variables"
+    parameters:
+      target:
+        type: string
+        default: ""
+
+    steps:
+        - run:
+            name: Setup shared variables
+            environment:
+                DEPENDENCY_CACHE_KEY: dependencies-{{ checksum "package.json" }}
+        - when:
+            # Assuming 'prod' for any non-empty parameter. Unfortunately, CircleCI only supports
+            # truthy/falsey, not equals
+            condition: <<parameters.target>>
+            steps:
+                - run:
+                    name: Setup prod variables
+                    environment:
+                        DIST_CACHE_KEY: dist-prod-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+                        BASE_HREF: /tls-home/
+        - unless:
+            condition: <<parameters.target>>
+            steps:
+                - run:
+                    name: Setup dev variables
+                    environment:
+                        DIST_CACHE_KEY: dist-dev-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+                        BASE_HREF: /tls-home/builds/{{ .Environment.CIRCLE_BUILD_NUM }}
+
 jobs:
     build:
         working_directory: ~/project
@@ -15,6 +47,8 @@ jobs:
             - run:
                 name: List variables
                 command: echo << parameters.target >> 
+            - init_variables:
+                target: "hello2"
                     
 
 workflows:
