@@ -110,6 +110,8 @@ workflows:
         jobs:
             - build
             - deploy:
+                requires:
+                    - build
                 folder: "builds/$CIRCLE_BUILD_NUM"
                 base_href: "/tls-home/builds/$CIRCLE_BUILD_NUM/"
             # - deploy_dev:
