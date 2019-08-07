@@ -61,7 +61,7 @@ jobs:
                 name: Set base href
                 command: |
                     echo Base href: <<parameters.base_href>>
-                    sed -i.bak 's/.*base href.*/<base href="<< parameters.base_href >>">/' ./dist/index.html
+                    sed -i.bak 's#.*base href.*#<base href="<< parameters.base_href >>">#' ./dist/index.html
             - run:
                 name: Deploy
                 command: ./scripts/deploy-to-pages.sh $GH_TOKEN ./dist <<parameters.folder>>
