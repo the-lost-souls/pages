@@ -34,7 +34,7 @@ jobs:
                 name: List variables
                 command: |
                     echo << parameters.target >> 
-                    echo {{ .Environment.DEPENDENCY_CACHE_KEY }}
+                    echo {{ .Environment.CIRCLE_BUILD_NUM }}
                     
 
 workflows:
