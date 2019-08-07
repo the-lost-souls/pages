@@ -60,7 +60,7 @@ jobs:
             - run:
                 name: Set base href
                 command: |
-                    echo Base href: <<parameters.base.href>>
+                    echo Base href: <<parameters.base_href>>
                     sed -i.bak 's/.*base href.*/<base href="<< parameters.base_href >>">/' ./dist/index.html
             - run:
                 name: Deploy
