@@ -126,7 +126,7 @@ workflows:
             - deploy:
                 name: whoho
                 requires:
-                    - approval
+                    - approve
                 folder: "/"
                 base_href: "/tls-home/"                
 
