@@ -110,13 +110,13 @@ workflows:
         jobs:
             - build
             - deploy:
-                name: Deploy to 'builds/{{ .Environment.CIRCLE_BUILD_NUM }}'
+                name: Deploy build
                 requires:
                     - build
                 folder: "builds/$CIRCLE_BUILD_NUM"
                 base_href: "/tls-home/builds/$CIRCLE_BUILD_NUM/"
             - deploy:
-                name: Deploy to 'builds/latest'
+                name: Deploy latest
                 requires:
                     - build
                 folder: "builds/latest"
@@ -126,7 +126,7 @@ workflows:
                 requires:
                     - build
             - deploy:
-                name: Deploy to prod
+                name: Deploy prod
                 requires:
                     - approve
                 folder: "/"
