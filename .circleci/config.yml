@@ -119,20 +119,16 @@ workflows:
                     - build
                 folder: "builds/latest"
                 base_href: "/tls-home/builds/latest/"
-
-    prod:
-        jobs:
-            - build
             - approve:
                 type: approval
                 requires:
                     - build
             - deploy:
+                name: whoho
                 requires:
                     - approval
                 folder: "/"
-                base_href: "/tls-home/"
-                
+                base_href: "/tls-home/"                
 
 
 
