@@ -106,7 +106,7 @@ jobs:
 
 
 workflows:
-    build_and_deploy_dev:
+    dev:
         jobs:
             - build
             - deploy:
@@ -114,6 +114,11 @@ workflows:
                     - build
                 folder: "builds/$CIRCLE_BUILD_NUM"
                 base_href: "/tls-home/builds/$CIRCLE_BUILD_NUM/"
+            - deploy_latest:
+                requires:
+                    - build
+                folder: "builds/latest"
+                base_href: "/tls-home/builds/latest/"
             # - deploy_dev:
             #     requires:
             #         - build
