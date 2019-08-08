@@ -114,7 +114,7 @@ workflows:
                     - build
                 folder: "builds/$CIRCLE_BUILD_NUM"
                 base_href: "/tls-home/builds/$CIRCLE_BUILD_NUM/"
-            - deploy_latest:
+            - deploy:
                 requires:
                     - build
                 folder: "builds/latest"
