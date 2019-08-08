@@ -129,7 +129,7 @@ workflows:
                 name: Deploy prod
                 requires:
                     - approve
-                folder: "/"
+                folder: "."
                 base_href: "/tls-home/"                
 
 
