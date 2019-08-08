@@ -75,16 +75,7 @@ workflows:
                     branches:
                         only: master
             - deploy:
-                name: Deploy build
-                requires:
-                    - build
-                filters:
-                    branches:
-                        only: master
-                folder: "builds/$CIRCLE_BUILD_NUM"
-                base_href: "/tls-home/builds/$CIRCLE_BUILD_NUM/"
-            - deploy:
-                name: Deploy latest
+                name: deploy-latest
                 requires:
                     - build
                 filters:
@@ -92,6 +83,16 @@ workflows:
                         only: master
                 folder: "builds/latest"
                 base_href: "/tls-home/builds/latest/"
+            - deploy:
+                name: deploy-build
+                requires:
+                    - build
+                    - deploy-latest
+                filters:
+                    branches:
+                        only: master
+                folder: "builds/$CIRCLE_BUILD_NUM"
+                base_href: "/tls-home/builds/$CIRCLE_BUILD_NUM/"
             - approve:
                 type: approval
                 requires:
@@ -100,7 +101,7 @@ workflows:
                     branches:
                         only: master
             - deploy:
-                name: Deploy prod
+                name: deploy-prod
                 requires:
                     - approve
                 filters:
