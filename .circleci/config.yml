@@ -67,7 +67,7 @@ jobs:
                     echo checking out
                     git checkout gh-pages
                     echo running deployment
-                    ./versions/deploy.sh << parameters.version >> ../dist https://the-lost-souls.github.io/tls-home/ https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID https://github.com/the-lost-souls/tls-home/commit/$CIRCLE_SHA1
+                    ./versions/deploy.sh << parameters.version >> ../dist https://the-lost-souls.github.io/tls-home https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID https://github.com/the-lost-souls/tls-home/commit/$CIRCLE_SHA1
                     cd ..
                     rm -rf gh-pages-branch            
 
