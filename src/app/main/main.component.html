@@ -6,7 +6,23 @@
 
             <img [src]="blurredImages[i]" class="item-background" [style.transform]="backgroundTransform[i]" />
             <img [src]="item.image" class="item-image" [style.height]="itemSizeStyle" />
-            <div class="item-title">{{ item.title }}</div>
+
+            <div class="content" 
+            [@showHideContent]="isInViewport[i]"
+                [style.height]="contentHeightStyle">
+                <div class="title">{{ item.title }} ({{ item.year }}) </div>
+                <div class="actions" [style.transform]="actionsTransform[i]">
+                    <div *ngIf="item.github" class="action" (click)=openUrl(item.github)>
+                        <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">
+                    </div>
+                    <div *ngIf="item.youtube" class="action" (click)=openUrl(item.youtube)>
+                        <img src="assets/YouTube_Play_Button.png" class="github-icon">
+                    </div>
+                    <div *ngIf="item.pouet" class="action" (click)=openUrl(item.pouet)>
+                        <img src="assets/trumpet.png" class="github-icon">
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

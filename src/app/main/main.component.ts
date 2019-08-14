@@ -18,10 +18,10 @@ import * as StackBlur from 'stackblur-canvas';
         opacity: '0',
       })),
       transition('false => true', [
-        animate('1s ease-out')
+        animate('1s 0.5s ease-out')
       ]),
       transition('true => false', [
-        animate('1s ease-in')
+        animate('0.5s ease-in')
       ])
     ])
   ]
@@ -38,6 +38,9 @@ export class MainComponent implements OnInit, AfterViewInit {
   // -------------
   public itemTotalSize = this.itemSize + this.itemSpacing;
 
+  public angle1 = 45;
+  public angle2 = -63;
+
   @ViewChild('container', { static: false })
   private _container: ElementRef<HTMLElement>;
 
@@ -45,12 +48,19 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   public transform: SafeStyle[] = [];
   public backgroundTransform: SafeStyle[] = [];
+  public actionsTransform: SafeStyle[] = [];
+  public distance: number[] = [];
+  public scale: number[] = [];
+  public translate: number[] = [];
 
   public scrollPaddingTop: string;
   public scrollPaddingBottom: string;
   public blurredImages: string[] = [];
+  public isInViewport: boolean[];
 
   public margins: string[] = [];
+
+  private _previousT: number;
 
   constructor(
     private _changeDetector: ChangeDetectorRef,
@@ -58,6 +68,8 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     this.transform = new Array(this.items.length);
     this.backgroundTransform = new Array(this.items.length);
+    this.actionsTransform = new Array(this.items.length);
+    this.isInViewport = new Array(this.items.length);
 
   }
 
@@ -105,24 +117,40 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     this.onScroll();
 
+    // requestAnimationFrame((frameT) => this.animate(frameT));
+
     this._changeDetector.detectChanges();
+  }
+
+  private animate(t: number) {
+
+    if (this._previousT) {
+      const elapsed = t - this._previousT;
+      this.angle1 += 3.5 * elapsed / 1000;
+      this.angle2 += -4.2 * elapsed / 1000;
+    }
+    this._previousT = t;
+    this.updateTransforms(this.distance, this.scale, this.translate);
+    requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
   onScroll() {
     const scrollTop = this._container.nativeElement.scrollTop;
+    const clientHeight = this._container.nativeElement.clientHeight;
 
     const height: number[] = new Array(this.items.length);
-    const scale: number[] = new Array(this.items.length);
-    const translate: number[] = new Array(this.items.length);
-    const distance: number[] = new Array(this.items.length);
+    this.scale = new Array(this.items.length);
+    this.translate = new Array(this.items.length);
+    this.distance = new Array(this.items.length);
+    this.isInViewport = new Array(this.items.length);
 
     for (let i = 0; i < this.items.length; i++) {
-      distance[i] = scrollTop - i * this.itemTotalSize;
-      const r = distance[i] / (this.itemTotalSize * 2);
+      this.distance[i] = scrollTop - i * this.itemTotalSize;
+      const r = this.distance[i] / (this.itemTotalSize * 2);
       const k = (1 + Math.cos(Math.min(1, Math.abs(r)) * Math.PI)) / 2;
 
-      scale[i] = 1 + (this.grow - 1) * k;
-      height[i] = this.itemSize * scale[i];
+      this.scale[i] = 1 + (this.grow - 1) * k;
+      height[i] = this.itemSize * this.scale[i];
     }
 
     const a = Math.floor(scrollTop / this.itemTotalSize);
@@ -132,23 +160,34 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     const p = (scrollTop % this.itemTotalSize) / this.itemTotalSize;
     const dist = (height[a] + heightB) / 2 - this.itemSize;
-    translate[a] = - p * dist;
-    translate[b] = (1 - p) * dist;
+    this.translate[a] = - p * dist;
+    this.translate[b] = (1 - p) * dist;
 
-    let current = translate[a] - (height[a] - this.itemSize) / 2;
+    let current = this.translate[a] - (height[a] - this.itemSize) / 2;
     for (let i = a - 1; i >= 0; i--) {
       current -= (height[i] - this.itemSize) / 2;
-      translate[i] = current;
+      this.translate[i] = current;
       current -= (height[i] - this.itemSize) / 2;
     }
 
-    current = translate[b] + (height[b] - this.itemSize) / 2;
+    current = this.translate[b] + (height[b] - this.itemSize) / 2;
     for (let i = b + 1; i < this.items.length; i++) {
       current += (height[i] - this.itemSize) / 2;
-      translate[i] = current;
+      this.translate[i] = current;
       current += (height[i] - this.itemSize) / 2;
     }
 
+    this.updateTransforms(this.distance, this.scale, this.translate);
+
+    for (let i = 0; i < this.items.length; i++) {
+      const itemCenter = this.center + this.translate[i] + this.itemTotalSize * i - scrollTop;
+      const normalizedCenter = itemCenter / clientHeight;
+      console.log(normalizedCenter);
+      this.isInViewport[i] = normalizedCenter > 0.2 && normalizedCenter < 0.8;
+    }
+  }
+
+  private updateTransforms(distance: number[], scale: number[], translate: number[]) {
     const backgroundScale = 20;
 
     for (let i = 0; i < this.items.length; i++) {
@@ -163,10 +202,15 @@ export class MainComponent implements OnInit, AfterViewInit {
         `translateX(-50%)` +
         `translateZ(-2em)` +
         `translateY(${-parallaxTranslate}px)` +
+        `rotateZ(${this.angle1}deg)` +
         `scale(${backgroundScale / scale[i]})`;
 
       this.backgroundTransform[i] = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);
+
+      const actionTransform = ` translateX(-50%) scale(${1 / scale[i]})`;
+      this.actionsTransform[i] = this._sanitizer.bypassSecurityTrustStyle(actionTransform);
     }
+
   }
 
   public openUrl(url: string) {
