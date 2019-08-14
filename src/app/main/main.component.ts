@@ -1,9 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input, Output } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 import * as IsMobile from 'is-mobile';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Content } from './content';
+import { throttleTime } from 'rxjs/operators';
+import * as StackBlur from 'stackblur-canvas';
 
 @Component({
   selector: 'app-main',
@@ -12,12 +14,10 @@ import { Content } from './content';
   animations: [
     trigger('showHideContent', [
       state('true', style({
-        // opacity: '1',
-        transform: 'translateX(0)'
+        opacity: '1',
       })),
       state('false', style({
-        // opacity: '0',
-        transform: 'translateX(500%)'
+        opacity: '0',
       })),
       transition('false => true', [
         animate('1s ease-out')
@@ -36,42 +36,24 @@ export class MainComponent implements OnInit, AfterViewInit {
   public itemSize: number = IsMobile.isMobile(navigator.userAgent) ? 75 : 100;
   public itemSpacing: number = IsMobile.isMobile(navigator.userAgent) ? 30 : 30;
   public itemTotalSize = this.itemSize + this.itemSpacing;
+  public items = Content.content;
 
-
-  public content = Content.content;
   // -------------
-  // public contentVisible = false;
 
-  @ViewChild('carousel', {static: false})
+  @ViewChild('blurred1', {static: false})
+  private canvas: ElementRef<HTMLCanvasElement>;
+
+  @ViewChild('container', {static: false})
   private _container: ElementRef<HTMLElement>;
 
-  // item currently closest to center
-  public currentItem = 0;
-
-  // item focused when scroll stops
-  public _focusedItem = 0;
-  @Input() public set focusedItem(value: number) {
-
-    if (this.focusedItem === value) {
-      return;
-    }
-    this._focusedItem = value;
-    this.focusedItemChange.next(this.focusedItem);
-  }
-  public get focusedItem(): number { return this._focusedItem; }
-  @Output() public focusedItemChange: Subject<number> = new BehaviorSubject(this.focusedItem);
-
   public itemSizeStyle: string;
-  public contentTopStyle: string;
-  public contentHeightStyle: string;
-  public contentVisible: boolean[];
 
-  public translate: number[] = [];
-  public transforms: SafeStyle[] = [];
-  public focus: number[];
+  public transform: SafeStyle[] = [];
+  public backgroundTransform: SafeStyle[] = [];
 
   public scrollPaddingTop: string;
   public scrollPaddingBottom: string;
+  blurredImages: string[] = [];
 
   public margins: string[] = [];
 
@@ -79,15 +61,25 @@ export class MainComponent implements OnInit, AfterViewInit {
     private _changeDetector: ChangeDetectorRef,
     private sanitizer: DomSanitizer) {
 
-      this.transforms = new Array(this.content.length);
-      this.focus = new Array(this.content.length);
-      this.contentVisible = new Array(this.content.length);
-      this.contentVisible.fill(false);
+      this.transform = new Array(this.items.length);
+      this.backgroundTransform = new Array(this.items.length);
 
-      // this.focusedItemChange.subscribe((value: number) => {
-      //   this.contentVisible.fill(false);
-      //   this.contentVisible[value] = true;
-      // });
+    }
+
+    blur(img: HTMLImageElement, canvas: HTMLCanvasElement, radius: number): string {
+      const w = 512;
+      const h = 512;
+
+      canvas.width = w;
+      canvas.height = h;
+
+      const context = canvas.getContext('2d');
+      context.drawImage( img, 0, 0, w, h);
+      StackBlur.canvasRGBA( canvas, 0, 0, w, h, radius);
+      const imageData = context.getImageData(0, 0, w, h);
+
+      context.putImageData(imageData, 0, 0);
+      return canvas.toDataURL();
     }
 
   ngOnInit() {
@@ -95,44 +87,43 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.margins = new Array(this.content.length);
+    this.margins = new Array(this.items.length);
     this.margins[0] = `${this.center - this.itemSize / 2}px 0 0 0`;
-    for (let i = 1; i < this.content.length - 1; i++) {
+    for (let i = 1; i < this.items.length - 1; i++) {
       this.margins[i] = `${this.itemSpacing}px 0 0 0`;
     }
-    this.margins[this.content.length - 1] =
+    this.margins[this.items.length - 1] =
       `${this.itemSpacing}px 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
 
     this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
     this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
 
-    this.contentTopStyle = -(this.itemSize * (this.grow - 1)) / 2 + 'px';
-    this.contentHeightStyle = (this.itemSize * this.grow) + 'px';
+    for (let i = 0; i < this.items.length; i++) {
+      const img = new Image();
+      img.onload = () => {
+        console.log('Blurring ' + this.items[i].image);
+        this.blurredImages[i] = this.blur(img, this.canvas.nativeElement, 5);
+      };
+      img.src = this.items[i].image;
+    }
 
-    this.onScroll();
+    this.handleScroll();
+
     this._changeDetector.detectChanges();
   }
 
-  setSelected(i: number) {
-    this._container.nativeElement.scrollTo(0, i * this.itemSize);
-  }
-
-  getTransform(top: number, scale: number): SafeStyle {
-    const transform = `translateY(${top}px) scale(${scale})`;
-    return this.sanitizer.bypassSecurityTrustStyle(transform);
-  }
-
-  onScroll() {
+  handleScroll() {
     const scrollTop = this._container.nativeElement.scrollTop;
 
-    const height: number[] = new Array(this.content.length);
-    const scale: number[] = new Array(this.content.length);
+    const height: number[] = new Array(this.items.length);
+    const scale: number[] = new Array(this.items.length);
+    const translate: number[] = new Array(this.items.length);
+    const distance: number[] = new Array(this.items.length);
 
-    for (let i = 0; i < this.content.length; i++) {
-      const scrollDistance = scrollTop - i * this.itemTotalSize;
-      const r = scrollDistance / (this.itemTotalSize * 2);
+    for (let i = 0; i < this.items.length; i++) {
+      distance[i] = scrollTop - i * this.itemTotalSize;
+      const r = distance[i] / (this.itemTotalSize * 2);
       const k = (1 + Math.cos(Math.min(1, Math.abs(r)) * Math.PI)) / 2;
-      this.focus[i] = 1 - r;
 
       scale[i] = 1 + (this.grow - 1) * k;
       height[i] = this.itemSize * scale[i];
@@ -141,47 +132,44 @@ export class MainComponent implements OnInit, AfterViewInit {
     const a = Math.floor(scrollTop / this.itemTotalSize);
     const b = a + 1;
 
-    const heightB = (b < this.content.length) ? height[b] : 0;
+    const heightB = (b < this.items.length) ? height[b] : 0;
 
     const p = (scrollTop % this.itemTotalSize) / this.itemTotalSize;
     const dist = (height[a] + heightB) / 2 - this.itemSize;
-    this.translate[a] = - p * dist;
-    this.translate[b] = (1 - p) * dist;
+    translate[a] = - p * dist;
+    translate[b] = (1 - p) * dist;
 
-    let current = this.translate[a] - (height[a] - this.itemSize) / 2;
+    let current = translate[a] - (height[a] - this.itemSize) / 2;
     for (let i = a - 1; i >= 0; i--) {
       current -= (height[i] - this.itemSize) / 2;
-      this.translate[i] = current;
+      translate[i] = current;
       current -= (height[i] - this.itemSize) / 2;
     }
 
-    current = this.translate[b] + (height[b] - this.itemSize) / 2;
-    for (let i = b + 1; i < this.content.length; i++) {
+    current = translate[b] + (height[b] - this.itemSize) / 2;
+    for (let i = b + 1; i < this.items.length; i++) {
       current += (height[i] - this.itemSize) / 2;
-      this.translate[i] = current;
+      translate[i] = current;
       current += (height[i] - this.itemSize) / 2;
     }
 
-    for (let i = 0; i < this.content.length; i++) {
-      this.transforms[i] = this.getTransform(this.translate[i], scale[i]);
-    }
+    const backgroundScale = 20;
 
-    this.currentItem = p < 0.5 ? a : b;
-    this.currentItem = Math.min(this.currentItem, this.content.length - 1);
-    if (scrollTop % this.itemTotalSize === 0) {
-      this.focusedItem = scrollTop / this.itemTotalSize;
-    } else {
-      this.focusedItem = null;
-    }
+    for (let i = 0; i < this.items.length; i++) {
 
-    for (let i = 0; i < this.content.length; i++) {
-      this.contentVisible[i] = (Math.abs(this.translate[i]) < 200);
+      const transform = `translateY(${translate[i]}px) scale(${scale[i]})`;
+
+      this.transform[i] = this.sanitizer.bypassSecurityTrustStyle(transform);
+      const normalizedDistance = distance[i] / this.itemTotalSize;
+      const parallaxTranslate = normalizedDistance * this.itemTotalSize * 0.5;
+
+      const backgroundTransform = `translateX(-50%) translateZ(-2em) translateY(${-parallaxTranslate}px) scale(${backgroundScale / scale[i] })`;
+      this.backgroundTransform[i] = this.sanitizer.bypassSecurityTrustStyle(backgroundTransform);
     }
   }
+
 
   public openUrl(url: string) {
     window.location.href = url;
   }
-
-
 }
