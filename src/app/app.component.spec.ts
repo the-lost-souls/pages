@@ -1,13 +1,12 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
-import { ParallaxComponent } from './parallax/parallax.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent, MainComponent, ParallaxComponent
+        AppComponent, MainComponent
       ],
     }).compileComponents();
   }));
