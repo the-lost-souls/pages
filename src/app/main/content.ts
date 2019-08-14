@@ -105,5 +105,4 @@ export class Content {
         github: 'https://github.com/the-lost-souls/TiB'
       }
     ];
-  
 }

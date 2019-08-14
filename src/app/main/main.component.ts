@@ -163,7 +163,12 @@ export class MainComponent implements OnInit, AfterViewInit {
       const normalizedDistance = distance[i] / this.itemTotalSize;
       const parallaxTranslate = normalizedDistance * this.itemTotalSize * 0.5;
 
-      const backgroundTransform = `translateX(-50%) translateZ(-2em) translateY(${-parallaxTranslate}px) scale(${backgroundScale / scale[i] })`;
+      const backgroundTransform =
+        `translateX(-50%)` +
+        `translateZ(-2em)` +
+        `translateY(${-parallaxTranslate}px)` +
+        `scale(${backgroundScale / scale[i] })`;
+
       this.backgroundTransform[i] = this.sanitizer.bypassSecurityTrustStyle(backgroundTransform);
     }
   }
