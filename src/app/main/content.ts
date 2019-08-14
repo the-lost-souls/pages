@@ -1,3 +1,5 @@
+import { CarouselItem } from './carouselitem';
+
 export class Content {
     public static content: CarouselItem[] = [
       {

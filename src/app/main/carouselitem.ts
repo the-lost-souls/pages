@@ -1,4 +1,4 @@
-interface CarouselItem {
+export interface CarouselItem {
     image: string;
     title: string;
     year: number;
