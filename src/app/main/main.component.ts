@@ -1,10 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 import * as IsMobile from 'is-mobile';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Content } from './content';
-import { throttleTime } from 'rxjs/operators';
 import * as StackBlur from 'stackblur-canvas';
 
 @Component({
@@ -172,7 +170,6 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.backgroundTransform[i] = this.sanitizer.bypassSecurityTrustStyle(backgroundTransform);
     }
   }
-
 
   public openUrl(url: string) {
     window.location.href = url;
