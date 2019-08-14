@@ -33,15 +33,12 @@ export class MainComponent implements OnInit, AfterViewInit {
   public grow = 3;
   public itemSize: number = IsMobile.isMobile(navigator.userAgent) ? 75 : 100;
   public itemSpacing: number = IsMobile.isMobile(navigator.userAgent) ? 30 : 30;
-  public itemTotalSize = this.itemSize + this.itemSpacing;
   public items = Content.content;
 
   // -------------
+  public itemTotalSize = this.itemSize + this.itemSpacing;
 
-  @ViewChild('blurred1', {static: false})
-  private canvas: ElementRef<HTMLCanvasElement>;
-
-  @ViewChild('container', {static: false})
+  @ViewChild('container', { static: false })
   private _container: ElementRef<HTMLElement>;
 
   public itemSizeStyle: string;
@@ -51,34 +48,34 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   public scrollPaddingTop: string;
   public scrollPaddingBottom: string;
-  blurredImages: string[] = [];
+  public blurredImages: string[] = [];
 
   public margins: string[] = [];
 
   constructor(
     private _changeDetector: ChangeDetectorRef,
-    private sanitizer: DomSanitizer) {
+    private _sanitizer: DomSanitizer) {
 
-      this.transform = new Array(this.items.length);
-      this.backgroundTransform = new Array(this.items.length);
+    this.transform = new Array(this.items.length);
+    this.backgroundTransform = new Array(this.items.length);
 
-    }
+  }
 
-    blur(img: HTMLImageElement, canvas: HTMLCanvasElement, radius: number): string {
-      const w = 512;
-      const h = 512;
+  blur(img: HTMLImageElement, canvas: HTMLCanvasElement, radius: number): string {
+    const w = 512;
+    const h = 512;
 
-      canvas.width = w;
-      canvas.height = h;
+    canvas.width = w;
+    canvas.height = h;
 
-      const context = canvas.getContext('2d');
-      context.drawImage( img, 0, 0, w, h);
-      StackBlur.canvasRGBA( canvas, 0, 0, w, h, radius);
-      const imageData = context.getImageData(0, 0, w, h);
+    const context = canvas.getContext('2d');
+    context.drawImage(img, 0, 0, w, h);
+    StackBlur.canvasRGBA(canvas, 0, 0, w, h, radius);
+    const imageData = context.getImageData(0, 0, w, h);
 
-      context.putImageData(imageData, 0, 0);
-      return canvas.toDataURL();
-    }
+    context.putImageData(imageData, 0, 0);
+    return canvas.toDataURL();
+  }
 
   ngOnInit() {
     this.itemSizeStyle = `${this.itemSize}px`;
@@ -96,21 +93,22 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
     this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
 
+    const c = document.createElement('canvas');
     for (let i = 0; i < this.items.length; i++) {
       const img = new Image();
       img.onload = () => {
         console.log('Blurring ' + this.items[i].image);
-        this.blurredImages[i] = this.blur(img, this.canvas.nativeElement, 5);
+        this.blurredImages[i] = this.blur(img, c, 5);
       };
       img.src = this.items[i].image;
     }
 
-    this.handleScroll();
+    this.onScroll();
 
     this._changeDetector.detectChanges();
   }
 
-  handleScroll() {
+  onScroll() {
     const scrollTop = this._container.nativeElement.scrollTop;
 
     const height: number[] = new Array(this.items.length);
@@ -157,7 +155,7 @@ export class MainComponent implements OnInit, AfterViewInit {
 
       const transform = `translateY(${translate[i]}px) scale(${scale[i]})`;
 
-      this.transform[i] = this.sanitizer.bypassSecurityTrustStyle(transform);
+      this.transform[i] = this._sanitizer.bypassSecurityTrustStyle(transform);
       const normalizedDistance = distance[i] / this.itemTotalSize;
       const parallaxTranslate = normalizedDistance * this.itemTotalSize * 0.5;
 
@@ -165,9 +163,9 @@ export class MainComponent implements OnInit, AfterViewInit {
         `translateX(-50%)` +
         `translateZ(-2em)` +
         `translateY(${-parallaxTranslate}px)` +
-        `scale(${backgroundScale / scale[i] })`;
+        `scale(${backgroundScale / scale[i]})`;
 
-      this.backgroundTransform[i] = this.sanitizer.bypassSecurityTrustStyle(backgroundTransform);
+      this.backgroundTransform[i] = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);
     }
   }
 
