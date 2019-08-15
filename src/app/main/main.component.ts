@@ -1,9 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
-import * as IsMobile from 'is-mobile';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Content } from './content';
 import * as StackBlur from 'stackblur-canvas';
+import { CarouselConfig } from '../carouselconfig';
 
 @Component({
   selector: 'app-main',
@@ -29,16 +28,12 @@ import * as StackBlur from 'stackblur-canvas';
 export class MainComponent implements OnInit, AfterViewInit {
 
   // inputs
-  public center = 250;
-  public grow = 3;
-  public itemSize: number = IsMobile.isMobile(navigator.userAgent) ? 75 : 100;
-  public itemSpacing: number = IsMobile.isMobile(navigator.userAgent) ? 30 : 30;
-  public items = Content.content;
+  public config: CarouselConfig = CarouselConfig.default();
 
   // -------------
-  public itemTotalSize = this.itemSize + this.itemSpacing;
+  public itemTotalSize = this.config.itemSize + this.config.spacing;
 
-  public angle1 = 45;
+  public angle1 = 0;
   public angle2 = -63;
 
   @ViewChild('container', { static: false })
@@ -66,16 +61,16 @@ export class MainComponent implements OnInit, AfterViewInit {
     private _changeDetector: ChangeDetectorRef,
     private _sanitizer: DomSanitizer) {
 
-    this.transform = new Array(this.items.length);
-    this.backgroundTransform = new Array(this.items.length);
-    this.actionsTransform = new Array(this.items.length);
-    this.isInViewport = new Array(this.items.length);
+    this.transform = new Array(this.config.items.length);
+    this.backgroundTransform = new Array(this.config.items.length);
+    this.actionsTransform = new Array(this.config.items.length);
+    this.isInViewport = new Array(this.config.items.length);
 
   }
 
   blur(img: HTMLImageElement, canvas: HTMLCanvasElement, radius: number): string {
-    const w = 512;
-    const h = 512;
+    const w = 256;
+    const h = 256;
 
     canvas.width = w;
     canvas.height = h;
@@ -90,29 +85,29 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.itemSizeStyle = `${this.itemSize}px`;
+    this.itemSizeStyle = `${this.config.itemSize}px`;
   }
 
   ngAfterViewInit() {
-    this.margins = new Array(this.items.length);
-    this.margins[0] = `${this.center - this.itemSize / 2}px 0 0 0`;
-    for (let i = 1; i < this.items.length - 1; i++) {
-      this.margins[i] = `${this.itemSpacing}px 0 0 0`;
+    this.margins = new Array(this.config.items.length);
+    this.margins[0] = `${this.config.center - this.config.itemSize / 2}px 0 0 0`;
+    for (let i = 1; i < this.config.items.length - 1; i++) {
+      this.margins[i] = `${this.config.spacing}px 0 0 0`;
     }
-    this.margins[this.items.length - 1] =
-      `${this.itemSpacing}px 0 ${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px 0`;
+    this.margins[this.config.items.length - 1] =
+      `${this.config.spacing}px 0 ${this._container.nativeElement.clientHeight - this.config.center - this.config.itemSize / 2}px 0`;
 
-    this.scrollPaddingTop = `${this.center - this.itemSize / 2}px`;
-    this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.center - this.itemSize / 2}px`;
+    this.scrollPaddingTop = `${this.config.center - this.config.itemSize / 2}px`;
+    this.scrollPaddingBottom = `${this._container.nativeElement.clientHeight - this.config.center - this.config.itemSize / 2}px`;
 
     const c = document.createElement('canvas');
-    for (let i = 0; i < this.items.length; i++) {
+    for (let i = 0; i < this.config.items.length; i++) {
       const img = new Image();
       img.onload = () => {
-        console.log('Blurring ' + this.items[i].image);
-        this.blurredImages[i] = this.blur(img, c, 5);
+        console.log('Blurring ' + this.config.items[i].image);
+        this.blurredImages[i] = this.blur(img, c, 3);
       };
-      img.src = this.items[i].image;
+      img.src = this.config.items[i].image;
     }
 
     this.onScroll();
@@ -138,59 +133,60 @@ export class MainComponent implements OnInit, AfterViewInit {
     const scrollTop = this._container.nativeElement.scrollTop;
     const clientHeight = this._container.nativeElement.clientHeight;
 
-    const height: number[] = new Array(this.items.length);
-    this.scale = new Array(this.items.length);
-    this.translate = new Array(this.items.length);
-    this.distance = new Array(this.items.length);
-    this.isInViewport = new Array(this.items.length);
+    const height: number[] = new Array(this.config.items.length);
+    this.scale = new Array(this.config.items.length);
+    this.translate = new Array(this.config.items.length);
+    this.distance = new Array(this.config.items.length);
+    this.isInViewport = new Array(this.config.items.length);
 
-    for (let i = 0; i < this.items.length; i++) {
+    for (let i = 0; i < this.config.items.length; i++) {
       this.distance[i] = scrollTop - i * this.itemTotalSize;
       const r = this.distance[i] / (this.itemTotalSize * 2);
       const k = (1 + Math.cos(Math.min(1, Math.abs(r)) * Math.PI)) / 2;
 
-      this.scale[i] = 1 + (this.grow - 1) * k;
-      height[i] = this.itemSize * this.scale[i];
+      this.scale[i] = 1 + (this.config.grow - 1) * k;
+      height[i] = this.config.itemSize * this.scale[i];
     }
 
     const a = Math.floor(scrollTop / this.itemTotalSize);
     const b = a + 1;
 
-    const heightB = (b < this.items.length) ? height[b] : 0;
+    const heightB = (b < this.config.items.length) ? height[b] : 0;
 
     const p = (scrollTop % this.itemTotalSize) / this.itemTotalSize;
-    const dist = (height[a] + heightB) / 2 - this.itemSize;
+    const dist = (height[a] + heightB) / 2 - this.config.itemSize;
     this.translate[a] = - p * dist;
     this.translate[b] = (1 - p) * dist;
 
-    let current = this.translate[a] - (height[a] - this.itemSize) / 2;
+    let current = this.translate[a] - (height[a] - this.config.itemSize) / 2;
     for (let i = a - 1; i >= 0; i--) {
-      current -= (height[i] - this.itemSize) / 2;
+      current -= (height[i] - this.config.itemSize) / 2;
       this.translate[i] = current;
-      current -= (height[i] - this.itemSize) / 2;
+      current -= (height[i] - this.config.itemSize) / 2;
     }
 
-    current = this.translate[b] + (height[b] - this.itemSize) / 2;
-    for (let i = b + 1; i < this.items.length; i++) {
-      current += (height[i] - this.itemSize) / 2;
+    current = this.translate[b] + (height[b] - this.config.itemSize) / 2;
+    for (let i = b + 1; i < this.config.items.length; i++) {
+      current += (height[i] - this.config.itemSize) / 2;
       this.translate[i] = current;
-      current += (height[i] - this.itemSize) / 2;
+      current += (height[i] - this.config.itemSize) / 2;
     }
 
     this.updateTransforms(this.distance, this.scale, this.translate);
 
-    for (let i = 0; i < this.items.length; i++) {
-      const itemCenter = this.center + this.translate[i] + this.itemTotalSize * i - scrollTop;
+    for (let i = 0; i < this.config.items.length; i++) {
+      const itemCenter = this.config.center + this.translate[i] + this.itemTotalSize * i - scrollTop;
       const normalizedCenter = itemCenter / clientHeight;
-      console.log(normalizedCenter);
       this.isInViewport[i] = normalizedCenter > 0.2 && normalizedCenter < 0.8;
     }
+    // this._changeDetector.detectChanges();
+    console.log('hello')
   }
 
   private updateTransforms(distance: number[], scale: number[], translate: number[]) {
-    const backgroundScale = 20;
+    const backgroundScale = 8;
 
-    for (let i = 0; i < this.items.length; i++) {
+    for (let i = 0; i < this.config.items.length; i++) {
 
       const transform = `translateY(${translate[i]}px) scale(${scale[i]})`;
 

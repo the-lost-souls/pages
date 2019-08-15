@@ -1,13 +1,13 @@
 <div #container class="container" (scroll)="onScroll()" [style.scroll-padding-top]="scrollPaddingTop"
     [style.scroll-padding-bottom]="scrollPaddingBottom">
 
-    <div *ngFor="let item of items, let i = index">
+    <div *ngFor="let item of config.items, let i = index">
         <div class="item" [style.transform]="transform[i]" [style.height]="itemSizeStyle" [style.margin]="margins[i]">
 
             <img [src]="blurredImages[i]" class="item-background" [style.transform]="backgroundTransform[i]" />
             <img [src]="item.image" class="item-image" [style.height]="itemSizeStyle" />
 
-            <div class="content" 
+            <!-- <div class="content" 
             [@showHideContent]="isInViewport[i]"
                 [style.height]="contentHeightStyle">
                 <div class="title">{{ item.title }} ({{ item.year }}) </div>
@@ -22,7 +22,7 @@
                         <img src="assets/trumpet.png" class="github-icon">
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
     </div>
