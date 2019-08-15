@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import * as StackBlur from 'stackblur-canvas';
 import { CarouselConfig } from '../carouselconfig';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-main',
@@ -68,22 +68,6 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   }
 
-  blur(img: HTMLImageElement, canvas: HTMLCanvasElement, radius: number): string {
-    const w = 256;
-    const h = 256;
-
-    canvas.width = w;
-    canvas.height = h;
-
-    const context = canvas.getContext('2d');
-    context.drawImage(img, 0, 0, w, h);
-    StackBlur.canvasRGBA(canvas, 0, 0, w, h, radius);
-    const imageData = context.getImageData(0, 0, w, h);
-
-    context.putImageData(imageData, 0, 0);
-    return canvas.toDataURL();
-  }
-
   ngOnInit() {
     this.itemSizeStyle = `${this.config.itemSize}px`;
   }
@@ -105,7 +89,7 @@ export class MainComponent implements OnInit, AfterViewInit {
       const img = new Image();
       img.onload = () => {
         console.log('Blurring ' + this.config.items[i].image);
-        this.blurredImages[i] = this.blur(img, c, 3);
+        this.blurredImages[i] = Utils.blur(img, c, 3);
       };
       img.src = this.config.items[i].image;
     }
