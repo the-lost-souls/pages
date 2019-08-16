@@ -1,9 +1,7 @@
 
 
 
-<div #container class="container"  (scroll)="onScroll()"
-    [style.scroll-padding-top]="scrollPaddingTop"
-    [style.scroll-padding-bottom]="scrollPaddingBottom">
+<div #container class="container"  (scroll)="onScroll()">
     <div class="scroll-container"  [style.height]="scrollContainerHeightStyle">
         <div *ngFor="let item of config.items, let i = index" class="item"
             [style.height]="itemSizeStyle"
