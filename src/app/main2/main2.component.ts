@@ -104,11 +104,12 @@ export class Main2Component implements OnInit, AfterViewInit {
       img.src = this.config.items[i].image;
     }
 
-    this.handleScroll();
 
-    this._changeDetector.detectChanges();
     this.scrollBackgroundHeightStyle = (this.scrollContainerHeight - this.config.center) + 'px';
 
+    this._changeDetector.detectChanges();
+
+    this.handleScroll();
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
@@ -169,14 +170,13 @@ export class Main2Component implements OnInit, AfterViewInit {
       const normalizedDistance = this.layout[i].distance / this.itemTotalSize;
       this.layout[i].isInViewport = Math.abs(normalizedDistance) < 1.5;
     }
-    this._changeDetector.detectChanges();
-
 
     this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
       `translateY(${this.layout[0].center}px)` +
       'translateZ(-3em)'
     );
 
+    this._changeDetector.detectChanges();
   }
 
   private updateTransforms(layout: Layout[]) {
