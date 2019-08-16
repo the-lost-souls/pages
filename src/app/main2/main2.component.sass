@@ -1,1 +1,44 @@
 @import '../carousel'
+
+.container
+    position: absolute
+    top: 0
+    left: 0
+    height: 100vh
+    width: 100vw
+    overflow-x: hidden
+    overflow-y: scroll
+    // display: flexbox
+    // flex-direction: column
+    perspective: 0px
+    transform-style: preserve-3d
+    // display: flexbox
+    // background-image: linear-gradient(to bottom, white, rgb(120, 120, 140))
+    // Needed for the nice smooth slide on devices
+    // -webkit-overflow-scrolling: touch
+    // This feature bugs in IOS (both Safari and Chrome)
+    // https://stackoverflow.com/questions/52989070/css-scroll-snap-visual-glitches-on-ios-when-programmatically-setting-style-on
+    // The bug only happens when used together with animated opacity. Disable for now.
+    // scroll-snap-type: y mandatory
+
+.scroll-container
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    background-color: pink
+
+.item
+    position: absolute
+    overflow: hidden
+    will-change: transform
+    background-color: black
+    width: 100%
+    // transform-origin: 50% 50%
+    // top: 0
+    // left: 0
+    // text-align: center
+    // box-shadow: rgba(0, 0, 40, 0.5) 0 4px 4px
+    // overflow: hidden
+
+

@@ -15,5 +15,9 @@ export class Utils {
 
         context.putImageData(imageData, 0, 0);
         return canvas.toDataURL();
-      }
+    }
+
+    public static clamp(value: number, min: number, max: number): number {
+        return Math.max(min, Math.min(max, value));
+    }
 }
