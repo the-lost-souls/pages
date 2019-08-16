@@ -11,8 +11,11 @@
             <img [src]="layout[i].background" class="item-background" [style.transform]="layout[i].backgroundTransform" />        
             <img [src]="layout[i].foreground" class="item-image" [style.height]="itemSizeStyle" />
 
-            <div class="content" [style.width]="contentWidthStyle">
-                <div class="title">{{ item.title }} ({{ item.year }}) </div>
+            <div class="content" 
+                [@showHideContent]="layout[i].isInViewport" 
+                [style.width]="contentWidthStyle">
+                <div class="title" [style.font-size]="config.titleFontSize">{{ item.title }}</div>
+                <div class="subtitle" [style.font-size]="config.subtitleFontSize"> ({{ item.subtitle }}) </div>
                 <div class="actions" [style.transform]="layout[i].actionsTransform">
                     <div *ngIf="item.github" class="action" (click)=openUrl(item.github)>
                         <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">
