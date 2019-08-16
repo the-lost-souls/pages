@@ -14,7 +14,7 @@ export class Utils {
         return canvas.toDataURL();
     }
 
-    public static prepareBackground(img: HTMLImageElement, canvas: HTMLCanvasElement) {
+    public static prepareBackground(img: HTMLImageElement, canvas: HTMLCanvasElement, blurRadius: number, fadeRadius: number) {
 
         const w = 512;
         const h = 512;
@@ -24,17 +24,16 @@ export class Utils {
 
         const context = canvas.getContext('2d');
         context.drawImage(img, 0, 0, w, h);
-        StackBlur.canvasRGBA(canvas, 0, 0, w, h, 3);
+        StackBlur.canvasRGBA(canvas, 0, 0, w, h, blurRadius);
 
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
-        const radius = 20;
         const xCenter = imageData.width / 2;
         const yCenter = imageData.height / 2;
         for (let x = 0; x < imageData.width; x++) {
             for (let y = 0; y < imageData.height; y++) {
                 const distance = Utils.distance(x, y, xCenter, yCenter);
-                const t = Math.PI * Math.min(1, distance / radius);
+                const t = Math.PI * Math.min(1, distance / fadeRadius);
                 const alpha = 1 - (Math.cos(t) + 1) / 2;
                 // const alpha = distance > radius ? 1 : 0;
                 imageData.data[(y * imageData.width + x) * 4 + 3] = Math.round(alpha * 255);

@@ -4,6 +4,7 @@ import { config } from 'rxjs';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { throttleTime } from 'rxjs/operators';
 import { Utils } from '../utils';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 
 class Layout {
@@ -20,12 +21,29 @@ class Layout {
   public actionsTransform: SafeStyle;
   public background: string;
   public foreground: string;
+  public isInViewport: boolean;
 }
 
 @Component({
   selector: 'app-main2',
   templateUrl: './main2.component.html',
-  styleUrls: ['./main2.component.sass']
+  styleUrls: ['./main2.component.sass'],
+  animations: [
+    trigger('showHideContent', [
+      state('true', style({
+        opacity: '1',
+      })),
+      state('false', style({
+        opacity: '0',
+      })),
+      transition('false => true', [
+        animate('1s 0.5s ease-out')
+      ]),
+      transition('true => false', [
+        animate('0.5s ease-in')
+      ])
+    ])
+  ]
 })
 export class Main2Component implements OnInit, AfterViewInit {
   // inputs
@@ -34,6 +52,8 @@ export class Main2Component implements OnInit, AfterViewInit {
   // derived
   public itemSizeStyle = this.config.itemSize + 'px';
   public itemTotalSize = this.config.itemSize + this.config.spacing;
+  public contentWidth = this.config.itemSize * 2;
+  public contentWidthStyle = this.contentWidth + 'px';
   public scrollContainerHeight = 0;
   public scrollContainerHeightStyle: SafeStyle;
   public itemCenters: number[] = [];
@@ -72,7 +92,7 @@ export class Main2Component implements OnInit, AfterViewInit {
       const img = new Image();
       img.onload = () => {
         console.log('Blurring ' + this.config.items[i].image);
-        this.layout[i].background = Utils.prepareBackground(img, c);
+        this.layout[i].background = Utils.prepareBackground(img, c, this.config.blurRadius, this.config.backgroundFadeRadius);
         this.layout[i].foreground = Utils.fadeEdges(img, c, 0, 640);
       };
       img.src = this.config.items[i].image;
@@ -103,10 +123,6 @@ export class Main2Component implements OnInit, AfterViewInit {
 
   handleScroll() {
     const scrollTop = this._container.nativeElement.scrollTop;
-    const clientHeight = this._container.nativeElement.clientHeight;
-
-    //const height: number[] = new Array(this.config.items.length);
-    // this.isInViewport = new Array(this.config.items.length);
 
     for (let i = 0; i < this.config.items.length; i++) {
       this.layout[i].distance = scrollTop - i * this.itemTotalSize;
@@ -119,25 +135,12 @@ export class Main2Component implements OnInit, AfterViewInit {
     }
 
     const a = Utils.clamp(Math.floor(scrollTop / this.itemTotalSize + 0.5), 0, this.config.items.length - 1);
-    console.log(a);
-    console.log(scrollTop);
-    
-
-    // const b = a + 1;
-
-    // const heightA = this.layout[a].height;
-    // const heightB = (b < this.config.items.length) ? this.layout[b].height : 0;
 
     const p = Utils.clamp(this.layout[a].distance / this.itemTotalSize, -0.5, 0.5);
-    //const p = (scrollTop % this.itemTotalSize) / this.itemTotalSize;
 
     const pushA = (this.layout[a].height - this.itemTotalSize) * p;
     const centerA = this.config.center + a * this.itemTotalSize - pushA;
     this.layout[a].center = centerA;
-
-    // const dist = (this.layout[a].height + heightB + this.config.spacing) / 2;
-    // this.layout[a].center = this.layout[a].virtualCenter - p * dist;
-    // this.layout[b].center = this.layout[b].virtualCenter + (1 - p) * dist;
 
     let current = centerA - this.layout[a].height / 2;
     for (let i = a - 1; i >= 0; i--) {
@@ -155,13 +158,11 @@ export class Main2Component implements OnInit, AfterViewInit {
 
     this.updateTransforms(this.layout);
 
-    // for (let i = 0; i < this.config.items.length; i++) {
-    //   const itemCenter = this.config.center + this.layout[i].translate + this.itemTotalSize * i - scrollTop;
-    //   const normalizedCenter = itemCenter / clientHeight;
-    //   this.isInViewport[i] = normalizedCenter > 0.2 && normalizedCenter < 0.8;
-    // }
-    // this._changeDetector.detectChanges();
-    // console.log('hello')
+    for (let i = 0; i < this.config.items.length; i++) {
+      const normalizedDistance = this.layout[i].distance / this.itemTotalSize;
+      this.layout[i].isInViewport = Math.abs(normalizedDistance) < 1.5;
+    }
+    this._changeDetector.detectChanges();
   }
 
   private updateTransforms(layout: Layout[]) {

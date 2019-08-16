@@ -7,6 +7,8 @@ export class CarouselConfig {
         public grow: number,
         public itemSize: number,
         public spacing: number,
+        public blurRadius: number,
+        public backgroundFadeRadius: number,
         public items: CarouselItem[]) { }
 
     public static default(): CarouselConfig {
@@ -123,6 +125,8 @@ export class CarouselConfig {
             250, 3,
             IsMobile.isMobile(navigator.userAgent) ? 60 : 100,
             IsMobile.isMobile(navigator.userAgent) ? 10 : 15,
+            IsMobile.isMobile(navigator.userAgent) ? 3 : 5,
+            IsMobile.isMobile(navigator.userAgent) ? 20 : 50,
             content
         );
     }
