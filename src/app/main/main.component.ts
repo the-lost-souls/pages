@@ -163,8 +163,6 @@ export class MainComponent implements OnInit, AfterViewInit {
       const normalizedCenter = itemCenter / clientHeight;
       this.isInViewport[i] = normalizedCenter > 0.2 && normalizedCenter < 0.8;
     }
-    // this._changeDetector.detectChanges();
-    console.log('hello')
   }
 
   private updateTransforms(distance: number[], scale: number[], translate: number[]) {

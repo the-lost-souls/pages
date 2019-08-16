@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Main2Component } from './main2.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('Main2Component', () => {
   let component: Main2Component;
@@ -8,7 +9,9 @@ describe('Main2Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Main2Component ]
+      declarations: [ Main2Component ],
+      imports: [ NoopAnimationsModule ]
+
     })
     .compileComponents();
   }));

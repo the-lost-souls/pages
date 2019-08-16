@@ -71,7 +71,9 @@ export class Main2Component implements OnInit, AfterViewInit {
     for (let i = 0; i < this.layout.length; i++) {
       this.layout[i] = new Layout();
     }
-    this._onScrollThrottled.pipe(throttleTime(1000 / 60, undefined, { leading: true, trailing: true })).subscribe(() => this.handleScroll());
+    this._onScrollThrottled
+      .pipe(throttleTime(1000 / 60, undefined, { leading: true, trailing: true }))
+      .subscribe(() => this.handleScroll());
   }
 
   ngOnInit() { }
@@ -102,7 +104,7 @@ export class Main2Component implements OnInit, AfterViewInit {
 
     this._changeDetector.detectChanges();
 
-    requestAnimationFrame((frameT) => this.animate(frameT));
+    // requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
   private animate(t: number) {
@@ -197,6 +199,9 @@ export class Main2Component implements OnInit, AfterViewInit {
 
   }
 
+  public openUrl(url: string) {
+    window.location.href = url;
+  }
 
 
 }
