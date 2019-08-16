@@ -19,6 +19,7 @@ class Layout {
   public backgroundTransform: SafeStyle;
   public actionsTransform: SafeStyle;
   public background: string;
+  public foreground: string;
 }
 
 @Component({
@@ -38,6 +39,7 @@ export class Main2Component implements OnInit, AfterViewInit {
   public itemCenters: number[] = [];
   public layout: Layout[] = [];
   public angle1 = 0;
+  private _previousT: number;
 
   private _onScrollThrottled: EventEmitter<void> = new EventEmitter<void>();
 
@@ -70,7 +72,8 @@ export class Main2Component implements OnInit, AfterViewInit {
       const img = new Image();
       img.onload = () => {
         console.log('Blurring ' + this.config.items[i].image);
-        this.layout[i].background = Utils.blur(img, c, 3);
+        this.layout[i].background = Utils.prepareBackground(img, c);
+        this.layout[i].foreground = Utils.fadeEdges(img, c, 0, 640);
       };
       img.src = this.config.items[i].image;
     }
@@ -78,6 +81,20 @@ export class Main2Component implements OnInit, AfterViewInit {
     this.handleScroll();
 
     this._changeDetector.detectChanges();
+
+    // requestAnimationFrame((frameT) => this.animate(frameT));
+  }
+
+  private animate(t: number) {
+
+    if (this._previousT) {
+      const elapsed = t - this._previousT;
+      this.angle1 += 3.5 * elapsed / 1000;
+      // this.angle2 += -4.2 * elapsed / 1000;
+    }
+    this._previousT = t;
+    this.updateTransforms(this.layout);
+    requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
   onScroll() {
@@ -94,7 +111,6 @@ export class Main2Component implements OnInit, AfterViewInit {
     for (let i = 0; i < this.config.items.length; i++) {
       this.layout[i].distance = scrollTop - i * this.itemTotalSize;
       const normalizedDistance = this.layout[i].distance / this.itemTotalSize;
-      console.log(normalizedDistance);
       const spread = 2;
       const k = (1 + Math.cos(Math.min(1, Math.abs(normalizedDistance / spread)) * Math.PI)) / 2;
 
@@ -102,7 +118,10 @@ export class Main2Component implements OnInit, AfterViewInit {
       this.layout[i].height = this.itemTotalSize * this.layout[i].scale;
     }
 
-    const a = Math.floor(scrollTop / this.itemTotalSize + 0.5);
+    const a = Utils.clamp(Math.floor(scrollTop / this.itemTotalSize + 0.5), 0, this.config.items.length - 1);
+    console.log(a);
+    console.log(scrollTop);
+    
 
     // const b = a + 1;
 
@@ -110,8 +129,6 @@ export class Main2Component implements OnInit, AfterViewInit {
     // const heightB = (b < this.config.items.length) ? this.layout[b].height : 0;
 
     const p = Utils.clamp(this.layout[a].distance / this.itemTotalSize, -0.5, 0.5);
-    console.log(p)
-    console.log(scrollTop)
     //const p = (scrollTop % this.itemTotalSize) / this.itemTotalSize;
 
     const pushA = (this.layout[a].height - this.itemTotalSize) * p;
@@ -168,7 +185,7 @@ export class Main2Component implements OnInit, AfterViewInit {
         `translateZ(-2em)` +
         `translateY(${-parallaxTranslate}px)` +
         `rotateZ(${this.angle1}deg)` +
-        `scale(${backgroundScale})` + 
+        `scale(${backgroundScale})` +
         `scale( ${ 1 / layout[i].scale})`;
 
       layout[i].backgroundTransform = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);

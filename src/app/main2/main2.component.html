@@ -9,7 +9,8 @@
             [style.height]="itemSizeStyle"
             [style.transform]="layout[i].transform">
             <img [src]="layout[i].background" class="item-background" [style.transform]="layout[i].backgroundTransform" />
-            <img [src]="item.image" class="item-image" [style.height]="itemSizeStyle" />
+        
+            <img [src]="layout[i].foreground" class="item-image" [style.height]="itemSizeStyle" />
             <!-- <div class="item" [style.transform]="transform[i]" [style.height]="itemSizeStyle" [style.margin]="margins[i]">
                 
                 

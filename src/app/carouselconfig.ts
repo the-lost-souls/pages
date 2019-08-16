@@ -121,8 +121,8 @@ export class CarouselConfig {
 
         return new CarouselConfig(
             250, 3,
-            IsMobile.isMobile(navigator.userAgent) ? 75 : 100,
-            IsMobile.isMobile(navigator.userAgent) ? 30 : 15,
+            IsMobile.isMobile(navigator.userAgent) ? 60 : 100,
+            IsMobile.isMobile(navigator.userAgent) ? 10 : 15,
             content
         );
     }
