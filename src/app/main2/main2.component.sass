@@ -9,19 +9,19 @@
     width: 100vw
     overflow-x: hidden
     overflow-y: auto
-    // display: flexbox
-    // flex-direction: column
+    overscroll-behavior: none
     perspective: 0px
     transform-style: preserve-3d
     // display: flexbox
     // background-image: linear-gradient(to bottom, white, rgb(120, 120, 140))
-    // Needed for the nice smooth slide on devices
+    // Needed for the nice smooth slide on devices.
+    // Combined with animated opacity, this feature causes some weird, shaking bugs when you scroll to either end
+    // on ios webkit
     -webkit-overflow-scrolling: touch
     // This feature bugs in IOS (both Safari and Chrome)
     // https://stackoverflow.com/questions/52989070/css-scroll-snap-visual-glitches-on-ios-when-programmatically-setting-style-on
     // The bug only happens when used together with animated opacity. Disable for now.
     // scroll-snap-type: y mandatory
-    overscroll-behavior: none
 
 .scroll-container
     position: absolute
@@ -43,5 +43,40 @@
     // text-align: center
     box-shadow: rgba(0, 0, 30, 0.7) 0 5px 5px
     // overflow: hidden
+
+
+
+.header
+    position: absolute
+    width: 100%
+    top: 0
+    // left: 50%
+    // transform: translateX(-50%)
+    // will-change: opacity
+    // font-size: 35pt
+
+.header-title
+    position: relative
+    text-align: center
+    // top: 0
+    // left: 50%
+    // transform: translateX(-50%)
+    font-size: 35pt
+
+.header-tagline
+    position: relative
+    text-align: center
+    // top: 10%
+    // left: 50%
+    // transform: translateX(-50%)
+    // will-change: opacity
+    font-size: 15pt
+
+.scroll-container-background
+    will-change: transform
+    position: absolute
+    background-color: white
+    width: 100%
+    transform: translateZ(-3em)
 
 

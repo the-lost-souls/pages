@@ -122,16 +122,30 @@ export class CarouselConfig {
             }
           ];
 
+        const mobile: CarouselConfig = {
+            center: 250,
+            grow: 3,
+            itemSize: 60,
+            spacing: 10,
+            blurRadius: 3,
+            backgroundFadeRadius: 20,
+            titleFontSize: '8pt',
+            subtitleFontSize: '5pt',
+            items: content
+        };
 
-        return new CarouselConfig(
-            250, 3,
-            IsMobile.isMobile(navigator.userAgent) ? 60 : 100,
-            IsMobile.isMobile(navigator.userAgent) ? 10 : 15,
-            IsMobile.isMobile(navigator.userAgent) ? 3 : 5,
-            IsMobile.isMobile(navigator.userAgent) ? 20 : 50,
-            IsMobile.isMobile(navigator.userAgent) ? '8pt' : '12pt',
-            IsMobile.isMobile(navigator.userAgent) ? '5pt' : '5pt',
-            content
-        );
+        const desktop: CarouselConfig = {
+            center: 400,
+            grow: 3,
+            itemSize: 100,
+            spacing: 15,
+            blurRadius: 5,
+            backgroundFadeRadius: 50,
+            titleFontSize: '12pt',
+            subtitleFontSize: '5pt',
+            items: content
+        };
+
+        return IsMobile.isMobile(navigator.userAgent) ? mobile : desktop;
     }
 }

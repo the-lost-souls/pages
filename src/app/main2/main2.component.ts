@@ -59,7 +59,11 @@ export class Main2Component implements OnInit, AfterViewInit {
   public itemCenters: number[] = [];
   public layout: Layout[] = [];
   public angle1 = 0;
+  public isHeaderVisible = true;
+  public scrollBackgroundTransform: SafeStyle;
+  public scrollBackgroundHeightStyle: string;
   private _previousT: number;
+
 
   private _onScrollThrottled: EventEmitter<void> = new EventEmitter<void>();
 
@@ -103,6 +107,7 @@ export class Main2Component implements OnInit, AfterViewInit {
     this.handleScroll();
 
     this._changeDetector.detectChanges();
+    this.scrollBackgroundHeightStyle = (this.scrollContainerHeight - this.config.center) + 'px';
 
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
@@ -165,6 +170,13 @@ export class Main2Component implements OnInit, AfterViewInit {
       this.layout[i].isInViewport = Math.abs(normalizedDistance) < 1.5;
     }
     this._changeDetector.detectChanges();
+
+
+    this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
+      `translateY(${this.layout[0].center}px)` + 
+      'translateZ(-3em)'
+    );
+
   }
 
   private updateTransforms(layout: Layout[]) {

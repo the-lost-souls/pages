@@ -1,8 +1,21 @@
 
 
 
+<div  class="header">
+    <div class="header-title" >
+        THE LOST SOULS
+    </div>
+    <div class="header-tagline" >
+        Visually in control. Still. Sort of.
+    </div>
+</div>
+
 <div #container class="container"  (scroll)="onScroll()">
     <div class="scroll-container"  [style.height]="scrollContainerHeightStyle">
+            <div class="scroll-container-background"        
+                [style.transform]="scrollBackgroundTransform"
+                [style.height]="scrollBackgroundHeightStyle"></div>
+    
         <div *ngFor="let item of config.items, let i = index" class="item"
             [style.height]="itemSizeStyle"
             [style.transform]="layout[i].transform">
@@ -28,7 +41,9 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div> 
+        
+
     </div>
 </div>
 
