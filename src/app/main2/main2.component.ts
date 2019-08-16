@@ -173,7 +173,7 @@ export class Main2Component implements OnInit, AfterViewInit {
 
 
     this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
-      `translateY(${this.layout[0].center}px)` + 
+      `translateY(${this.layout[0].center}px)` +
       'translateZ(-3em)'
     );
 
