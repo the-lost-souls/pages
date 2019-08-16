@@ -13,7 +13,9 @@
                 [@showHideContent]="layout[i].isInViewport" 
                 [style.width]="contentWidthStyle">
                 <div class="title" [style.font-size]="config.titleFontSize">{{ item.title }}</div>
-                <div class="subtitle" [style.font-size]="config.subtitleFontSize"> ({{ item.subtitle }}) </div>
+                <div *ngFor="let line of item.subtitle">
+                    <div class="subtitle" [style.font-size]="config.subtitleFontSize"> {{ line }} </div>
+                </div>
                 <div class="actions" [style.transform]="layout[i].actionsTransform">
                     <div *ngIf="item.github" class="action" (click)=openUrl(item.github)>
                         <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">

@@ -104,7 +104,7 @@ export class Main2Component implements OnInit, AfterViewInit {
 
     this._changeDetector.detectChanges();
 
-    // requestAnimationFrame((frameT) => this.animate(frameT));
+    requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
   private animate(t: number) {
