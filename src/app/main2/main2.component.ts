@@ -83,7 +83,10 @@ export class Main2Component implements OnInit, AfterViewInit {
   ngOnInit() { }
 
   ngAfterViewInit(): void {
-    this.scrollContainerHeight = this.itemTotalSize * (this.config.items.length - 1) + this._container.nativeElement.clientHeight;
+    // On safari, using container.clientHeight gives the wrong value, for some reason
+    const viewportHeight = window.innerHeight;
+
+    this.scrollContainerHeight = this.itemTotalSize * (this.config.items.length - 1) + viewportHeight;
     this.scrollContainerHeightStyle = this._sanitizer.bypassSecurityTrustStyle(this.scrollContainerHeight + 'px');
 
     for (let i = 0; i < this.config.items.length; i++) {
