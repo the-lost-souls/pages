@@ -23,7 +23,7 @@
             <img [src]="layout[i].foreground" class="item-image" [style.height]="itemSizeStyle" />
 
             <div class="content" 
-                [@showHideContent]="layout[i].isInViewport" 
+                
                 [style.width]="contentWidthStyle">
                 <div class="title" [style.font-size]="config.titleFontSize">{{ item.title }}</div>
                 <div *ngFor="let line of item.subtitle">
