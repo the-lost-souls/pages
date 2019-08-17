@@ -16,8 +16,8 @@ export class Utils {
 
     public static prepareBackground(img: HTMLImageElement, canvas: HTMLCanvasElement, blurRadius: number, fadeRadius: number) {
 
-        const w = 512;
-        const h = 512;
+        const w = 256;
+        const h = 256;
 
         canvas.width = w;
         canvas.height = h;
