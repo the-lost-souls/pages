@@ -29,7 +29,7 @@
     transform: translateX(-50%)
     user-select: none
     pointer-events: none
-    will-change: opacity 
+    will-change: opacity
 
 .title
     width: 100%
@@ -77,6 +77,8 @@
     padding: 0 8px 0 8px
     cursor: pointer
     pointer-events: auto
+    // For some reason I don't understand, the action icons kept getting repainted so promoted to their own layer.
+    will-change: transform
 
 .github-icon
     width: 20px
