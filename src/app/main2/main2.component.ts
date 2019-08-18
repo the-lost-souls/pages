@@ -57,7 +57,7 @@ export class Main2Component implements OnInit, AfterViewInit {
   private _previousScrollTop: number;
 
   public flares = [
-    new Flare(100, 50, this.config.spacing),
+    new Flare(50, 80, this.config.spacing),
     new Flare(-this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing),
     new Flare(-this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing)
   ];
