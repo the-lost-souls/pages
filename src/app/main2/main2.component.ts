@@ -56,7 +56,8 @@ export class Main2Component implements OnInit, AfterViewInit {
   private _previousT: number;
   private _previousScrollTop: number;
 
-  public flare = new Flare(200, this.config.center + this.itemTotalSize * this.config.grow * 0.5, 20);
+  public flare = new Flare(-this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, 20);
+  // public flare = new Flare(200, this.config.center + this.itemTotalSize * this.config.grow * 0.5, 20);
 
   // private _onScrollThrottled: EventEmitter<void> = new EventEmitter<void>();
 
@@ -152,10 +153,12 @@ export class Main2Component implements OnInit, AfterViewInit {
 
     const transform =
       `translateZ(1em)` +
-      // `translateX(-50%)` +
-      `translateX(${this.flare.x}px)` +
+      `translateX(-50%)` +
+      `translateY(-50%)` +
       `translateY(${this.flare.y}px)` +
+      `translateX(${this.flare.x}px)` +
       `scale(${visibility * 0.8})`;
+      //  +
 
     this.flare.transform = this._sanitizer.bypassSecurityTrustStyle(transform);
   }
