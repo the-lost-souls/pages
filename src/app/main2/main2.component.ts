@@ -10,7 +10,7 @@ import { Layout } from './layout';
 
 
 class Flare {
-  constructor(public x: number, public y: number, public size: number = 20) {}
+  constructor(public x: number, public y: number, public size: number = 20) { }
 
   public transform: SafeStyle;
 }
@@ -56,13 +56,17 @@ export class Main2Component implements OnInit, AfterViewInit {
   private _previousT: number;
   private _previousScrollTop: number;
 
-  public flare = new Flare(-this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, 20);
+  public flares = [
+    new Flare(100, 50, this.config.spacing),
+    new Flare(-this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing),
+    new Flare(-this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing)
+  ];
   // public flare = new Flare(200, this.config.center + this.itemTotalSize * this.config.grow * 0.5, 20);
 
   // private _onScrollThrottled: EventEmitter<void> = new EventEmitter<void>();
 
-  @ViewChild('container', { static: false })
-  private _container: ElementRef<HTMLElement>;
+  @ViewChild('carousel', { static: false })
+  private _carousel: ElementRef<HTMLElement>;
 
   constructor(private _changeDetector: ChangeDetectorRef, private _sanitizer: DomSanitizer) {
     this.layout = new Array(this.config.items.length);
@@ -107,7 +111,7 @@ export class Main2Component implements OnInit, AfterViewInit {
 
     this._changeDetector.detectChanges();
 
-    this.handleScroll(this._container.nativeElement.scrollTop);
+    this.handleScroll(this._carousel.nativeElement.scrollTop);
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
@@ -118,7 +122,7 @@ export class Main2Component implements OnInit, AfterViewInit {
       this.angle1 += 3.5 * elapsed / 1000;
     }
 
-    const scrollTop = this._container.nativeElement.scrollTop;
+    const scrollTop = this._carousel.nativeElement.scrollTop;
 
     if (scrollTop !== this._previousScrollTop) {
       this.handleScroll(scrollTop);
@@ -136,31 +140,32 @@ export class Main2Component implements OnInit, AfterViewInit {
 
   updateFlares(scrollTop: number) {
 
-    const y0 = (this.flare.y + scrollTop) - this.flare.size / 2;
-    const y1 = y0 + this.flare.size;
+    for (const flare of this.flares) {
+      const y0 = (flare.y + scrollTop) - flare.size / 2;
+      const y1 = y0 + flare.size;
 
-    let line: [number, number] = [y0, y1];
-    for (const l of this.layout) {
+      let line: [number, number] = [y0, y1];
+      for (const l of this.layout) {
 
-      const itemHeight = this.config.itemSize * l.scale;
-      const sectionTop = l.center - itemHeight / 2;
-      const sectionBottom = l.center + itemHeight / 2;
+        const itemHeight = this.config.itemSize * l.scale;
+        const sectionTop = l.center - itemHeight / 2;
+        const sectionBottom = l.center + itemHeight / 2;
 
-      line = Utils.subtractRange(line, [sectionTop, sectionBottom]);
+        line = Utils.subtractRange(line, [sectionTop, sectionBottom]);
+      }
+
+      const visibility = (line[1] - line[0]) / flare.size;
+
+      const transform =
+        `translateZ(1em)` +
+        `translateX(-50%)` +
+        `translateY(-50%)` +
+        `translateY(${flare.y}px)` +
+        `translateX(${flare.x}px)` +
+        `scale(${visibility * 0.8})`;
+
+      flare.transform = this._sanitizer.bypassSecurityTrustStyle(transform);
     }
-
-    const visibility = (line[1] - line[0]) / this.flare.size;
-
-    const transform =
-      `translateZ(1em)` +
-      `translateX(-50%)` +
-      `translateY(-50%)` +
-      `translateY(${this.flare.y}px)` +
-      `translateX(${this.flare.x}px)` +
-      `scale(${visibility * 0.8})`;
-      //  +
-
-    this.flare.transform = this._sanitizer.bypassSecurityTrustStyle(transform);
   }
 
   handleScroll(scrollTop: number) {
@@ -234,7 +239,7 @@ export class Main2Component implements OnInit, AfterViewInit {
         `translateY(${-parallaxTranslate}px)` +
         `rotateZ(${this.angle1}deg)` +
         `scale(${backgroundScale})` +
-        `scale( ${ 1 / layout[i].scale})`;
+        `scale( ${1 / layout[i].scale})`;
 
       layout[i].backgroundTransform = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);
 
