@@ -5,23 +5,14 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { throttleTime } from 'rxjs/operators';
 import { Utils } from '../utils';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Layout } from './layout';
 
 
-class Layout {
 
-  public virtualCenter = 0;
-  public virtualTop = 0;
-  public virtualTopStyle = '';
-  public scale: number;
-  public center: number;
-  public distance: number;
-  public height: number;
+class Flare {
+  constructor(public x: number, public y: number, public size: number = 20) {}
+
   public transform: SafeStyle;
-  public backgroundTransform: SafeStyle;
-  public actionsTransform: SafeStyle;
-  public background: string;
-  public foreground: string;
-  public isInViewport: boolean;
 }
 
 @Component({
@@ -63,9 +54,11 @@ export class Main2Component implements OnInit, AfterViewInit {
   public scrollBackgroundTransform: SafeStyle;
   public scrollBackgroundHeightStyle: string;
   private _previousT: number;
+  private _previousScrollTop: number;
 
+  public flare = new Flare(200, this.config.center + this.itemTotalSize * this.config.grow * 0.5, 20);
 
-  private _onScrollThrottled: EventEmitter<void> = new EventEmitter<void>();
+  // private _onScrollThrottled: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild('container', { static: false })
   private _container: ElementRef<HTMLElement>;
@@ -75,9 +68,10 @@ export class Main2Component implements OnInit, AfterViewInit {
     for (let i = 0; i < this.layout.length; i++) {
       this.layout[i] = new Layout();
     }
-    this._onScrollThrottled
-      .pipe(throttleTime(1000 / 60, undefined, { leading: true, trailing: true }))
-      .subscribe(() => this.handleScroll());
+
+    // this._onScrollThrottled
+    //   .pipe(throttleTime(1000 / 60, undefined, { leading: true, trailing: true }))
+    //   .subscribe(() => this.handleScroll(this._container.nativeElement.scrollTop));
   }
 
   ngOnInit() { }
@@ -112,7 +106,7 @@ export class Main2Component implements OnInit, AfterViewInit {
 
     this._changeDetector.detectChanges();
 
-    this.handleScroll();
+    this.handleScroll(this._container.nativeElement.scrollTop);
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
@@ -121,19 +115,52 @@ export class Main2Component implements OnInit, AfterViewInit {
     if (this._previousT) {
       const elapsed = t - this._previousT;
       this.angle1 += 3.5 * elapsed / 1000;
-      // this.angle2 += -4.2 * elapsed / 1000;
     }
+
+    const scrollTop = this._container.nativeElement.scrollTop;
+
+    if (scrollTop !== this._previousScrollTop) {
+      this.handleScroll(scrollTop);
+      this.updateFlares(scrollTop);
+    }
+    this._previousScrollTop = scrollTop;
     this._previousT = t;
     this.updateTransforms(this.layout);
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
-  onScroll() {
-    this._onScrollThrottled.next();
+  // onScroll() {
+  //   this._onScrollThrottled.next();
+  // }
+
+  updateFlares(scrollTop: number) {
+
+    const y0 = (this.flare.y + scrollTop) - this.flare.size / 2;
+    const y1 = y0 + this.flare.size;
+
+    let line: [number, number] = [y0, y1];
+    for (const l of this.layout) {
+
+      const itemHeight = this.config.itemSize * l.scale;
+      const sectionTop = l.center - itemHeight / 2;
+      const sectionBottom = l.center + itemHeight / 2;
+
+      line = Utils.subtractRange(line, [sectionTop, sectionBottom]);
+    }
+
+    const visibility = (line[1] - line[0]) / this.flare.size;
+
+    const transform =
+      `translateZ(1em)` +
+      // `translateX(-50%)` +
+      `translateX(${this.flare.x}px)` +
+      `translateY(${this.flare.y}px)` +
+      `scale(${visibility * 0.8})`;
+
+    this.flare.transform = this._sanitizer.bypassSecurityTrustStyle(transform);
   }
 
-  handleScroll() {
-    const scrollTop = this._container.nativeElement.scrollTop;
+  handleScroll(scrollTop: number) {
 
     for (let i = 0; i < this.config.items.length; i++) {
       this.layout[i].distance = scrollTop - i * this.itemTotalSize;
