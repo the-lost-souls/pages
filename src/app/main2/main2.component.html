@@ -24,7 +24,7 @@
                     <div *ngFor="let line of item.subtitle">
                         <div class="subtitle" [style.font-size]="config.subtitleFontSize"> {{ line }} </div>
                     </div>
-                    <div class="actions" [style.transform]="layout[i].actionsTransform">
+                    <div class="actions" >
                         <div *ngIf="item.github" class="action" (click)=openUrl(item.github)>
                             <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">
                         </div>
