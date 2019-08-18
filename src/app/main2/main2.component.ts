@@ -10,7 +10,7 @@ import { Layout } from './layout';
 
 
 class Flare {
-  constructor(public x: number, public y: number, public size: number = 20) { }
+  constructor(public x: number, public y: number, public size: number, public scale: number) { }
 
   public transform: SafeStyle;
 }
@@ -57,9 +57,9 @@ export class Main2Component implements OnInit, AfterViewInit {
   private _previousScrollTop: number;
 
   public flares = [
-    new Flare(50, 80, this.config.spacing),
-    new Flare(-this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing),
-    new Flare(-this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing)
+    new Flare(-this.contentWidth, 80, this.config.spacing, 1.2),
+    new Flare(this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing, 1.5),
+    new Flare(-this.contentWidth / 2, this.config.center + this.itemTotalSize * this.config.grow, this.config.spacing, 1)
   ];
   // public flare = new Flare(200, this.config.center + this.itemTotalSize * this.config.grow * 0.5, 20);
 
@@ -154,7 +154,7 @@ export class Main2Component implements OnInit, AfterViewInit {
         line = Utils.subtractRange(line, [sectionTop, sectionBottom]);
       }
 
-      const visibility = (line[1] - line[0]) / flare.size;
+      const visibility = flare.scale * (line[1] - line[0]) / flare.size;
 
       const transform =
         `translateZ(1em)` +
@@ -162,7 +162,7 @@ export class Main2Component implements OnInit, AfterViewInit {
         `translateY(-50%)` +
         `translateY(${flare.y}px)` +
         `translateX(${flare.x}px)` +
-        `scale(${visibility * 0.8})`;
+        `scale(${visibility})`;
 
       flare.transform = this._sanitizer.bypassSecurityTrustStyle(transform);
     }
