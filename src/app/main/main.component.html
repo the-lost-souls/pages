@@ -5,7 +5,7 @@
         <div class="item" [style.transform]="layout[i].transform" [style.height]="itemSizeStyle" [style.margin]="margins[i]">
 
             <img [src]="layout[i].background" class="item-background" [style.transform]="layout[i].backgroundTransform" />
-            <img [src]="item.image" class="item-image" [style.height]="itemSizeStyle" />
+            <img [src]="layout[i].foreground" class="item-image" [style.height]="itemSizeStyle" />
 
             <!-- <div class="content" 
             [@showHideContent]="isInViewport[i]"

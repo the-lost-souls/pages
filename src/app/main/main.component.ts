@@ -81,7 +81,8 @@ export class MainComponent implements OnInit, AfterViewInit {
       const img = new Image();
       img.onload = () => {
         console.log('Blurring ' + this.config.items[i].image);
-        this.layout[i].background = Utils.blur(img, c, 3);
+        this.layout[i].background = Utils.prepareBackground(img, c, this.config.blurRadius, this.config.backgroundFadeRadius);
+        this.layout[i].foreground = Utils.fadeEdges(img, c, 0, 640);
       };
       img.src = this.config.items[i].image;
     }
