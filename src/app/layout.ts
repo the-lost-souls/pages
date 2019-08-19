@@ -16,6 +16,10 @@ export class Layout {
   public foreground: string;
   public isInViewport: boolean;
 
+  // temporary
+  public translate: number;
+
+
   public contains(y: number): boolean {
     const sectionTop = this.center - this.height / 2;
     const sectionBottom = this.center + this.height / 2;

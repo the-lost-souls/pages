@@ -2,9 +2,9 @@
     [style.scroll-padding-bottom]="scrollPaddingBottom">
 
     <div class="item-container" *ngFor="let item of config.items, let i = index">
-        <div class="item" [style.transform]="transform[i]" [style.height]="itemSizeStyle" [style.margin]="margins[i]">
+        <div class="item" [style.transform]="layout[i].transform" [style.height]="itemSizeStyle" [style.margin]="margins[i]">
 
-            <img [src]="blurredImages[i]" class="item-background" [style.transform]="backgroundTransform[i]" />
+            <img [src]="layout[i].background" class="item-background" [style.transform]="layout[i].backgroundTransform" />
             <img [src]="item.image" class="item-image" [style.height]="itemSizeStyle" />
 
             <!-- <div class="content" 
