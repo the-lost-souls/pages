@@ -7,14 +7,9 @@ import { Utils } from '../utils';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Layout } from '../layout';
 import { CarouselUtils } from '../carouselutils';
+import { Flare } from '../flare';
 
 
-
-class Flare {
-  constructor(public x: number, public y: number, public size: number, public scale: number) { }
-
-  public transform: SafeStyle;
-}
 
 @Component({
   selector: 'app-main2',
@@ -130,7 +125,7 @@ export class Main2Component implements OnInit, AfterViewInit {
     if (scrollTop !== this._previousScrollTop) {
       CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
 
-      this.updateFlares(scrollTop);
+      CarouselUtils.updateFlares(scrollTop, this.layout, this.flares, this.config, this._sanitizer);
     }
     this._previousScrollTop = scrollTop;
     this._previousT = t;
@@ -141,36 +136,6 @@ export class Main2Component implements OnInit, AfterViewInit {
   // onScroll() {
   //   this._onScrollThrottled.next();
   // }
-
-  updateFlares(scrollTop: number) {
-
-    for (const flare of this.flares) {
-      const y0 = (flare.y + scrollTop) - flare.size / 2;
-      const y1 = y0 + flare.size;
-
-      let line: [number, number] = [y0, y1];
-      for (const l of this.layout) {
-
-        const itemHeight = this.config.itemSize * l.scale;
-        const sectionTop = l.center - itemHeight / 2;
-        const sectionBottom = l.center + itemHeight / 2;
-
-        line = Utils.subtractRange(line, [sectionTop, sectionBottom]);
-      }
-
-      const visibility = flare.scale * (line[1] - line[0]) / flare.size;
-
-      const transform =
-        `translateZ(1em)` +
-        `translateX(-50%)` +
-        `translateY(-50%)` +
-        `translateY(${flare.y}px)` +
-        `translateX(${flare.x}px)` +
-        `scale(${visibility})`;
-
-      flare.transform = this._sanitizer.bypassSecurityTrustStyle(transform);
-    }
-  }
 
   // handleScroll(scrollTop: number) {
 

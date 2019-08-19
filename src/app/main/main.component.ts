@@ -5,6 +5,7 @@ import { CarouselConfig } from '../carouselconfig';
 import { Utils } from '../utils';
 import { Layout } from '../layout';
 import { CarouselUtils } from '../carouselutils';
+import { Flare } from '../flare';
 
 @Component({
   selector: 'app-main',
@@ -34,6 +35,8 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   // -------------
   public itemTotalSize = this.config.itemSize + this.config.spacing;
+  public contentWidth = this.config.itemSize * 2;
+  public contentWidthStyle = this.contentWidth + 'px';
 
   public angle1 = 0;
   public angle2 = -63;
@@ -50,8 +53,15 @@ export class MainComponent implements OnInit, AfterViewInit {
   public margins: string[] = [];
 
   private _previousT: number;
+  private _previousScrollTop: number;
   public scrollBackgroundTransform: SafeStyle;
   public scrollBackgroundHeightStyle: string;
+
+  public flares = [
+    new Flare(-this.contentWidth, 80, this.config.spacing, 1.5),
+    new Flare(this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing, 1.2),
+    new Flare(-this.contentWidth / 2, this.config.center + this.itemTotalSize * this.config.grow, this.config.spacing, 1)
+  ];
 
   constructor(
     private _changeDetector: ChangeDetectorRef,
@@ -105,9 +115,9 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.scrollBackgroundHeightStyle = 10000 + 'px';
 
 
-    this.handleScroll();
+    // this.handleScroll();
 
-    // requestAnimationFrame((frameT) => this.animate(frameT));
+    requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
   private animate(t: number) {
@@ -115,24 +125,37 @@ export class MainComponent implements OnInit, AfterViewInit {
     if (this._previousT) {
       const elapsed = t - this._previousT;
       this.angle1 += 3.5 * elapsed / 1000;
-      this.angle2 += -4.2 * elapsed / 1000;
     }
+
+    const scrollTop = this._carousel.nativeElement.scrollTop;
+
+    if (scrollTop !== this._previousScrollTop) {
+      CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
+
+      CarouselUtils.updateFlares(scrollTop, this.layout, this.flares, this.config, this._sanitizer);
+      this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
+        `translateY(${this.layout[0].center}px)` +
+        'translateZ(-3em)'
+      );
+    }
+    this._previousScrollTop = scrollTop;
     this._previousT = t;
     CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
-  public handleScroll() {
-    CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
-    CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
+  // public handleScroll() {
+  //   CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
+  //   CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
 
-    this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
-      `translateY(${this.layout[0].center}px)` +
-      'translateZ(-3em)'
-    );
+  //   console.log(this.layout[0].center)
+  //   this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
+  //     `translateY(${this.layout[0].center}px)` +
+  //     'translateZ(-3em)'
+  //   );
 
-    this._changeDetector.detectChanges();
-  }
+  //   this._changeDetector.detectChanges();
+  // }
 
   public openUrl(url: string) {
     window.location.href = url;
