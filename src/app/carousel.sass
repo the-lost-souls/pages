@@ -1,5 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css?family=Sue+Ellen+Francisco&display=swap')
+@import '../../shared'
+
 .item-image
     top: 0
     left: 50%
@@ -86,3 +88,59 @@
     height: 32px
     box-sizing: content-box
     padding: 2px
+
+.header
+    position: absolute
+    width: 100%
+    top: 0
+    // height: 500px
+    // background-color: white
+    will-change: transform
+    transform: translateZ(0em)
+    color: rgb(200, 200, 200)
+    // left: 50%
+    // transform: translateX(-50%)
+    // will-change: opacity
+    // font-size: 35pt
+
+.header-title
+    position: relative
+    text-align: center
+    // top: 0
+    // left: 50%
+    // transform: translateX(-50%)
+    font-size: 35pt
+
+.header-tagline
+    position: relative
+    text-align: center
+    // top: 10%
+    // left: 50%
+    // transform: translateX(-50%)
+    // will-change: opacity
+    font-size: 15pt
+
+
+.scroll-container-background
+    will-change: transform
+    position: absolute
+    background-color: $background-color
+    width: 100%
+
+
+.flare
+    position: absolute
+    left: 50%
+    top: 0
+    width: 1220px
+    height: 880px
+    mix-blend-mode: screen
+    will-change: transform
+    user-select: none
+    pointer-events: none
+    transform-origin: 50% 50%
+
+
+
+
+

@@ -1,0 +1,90 @@
+import { Layout } from './layout';
+import { Utils } from './utils';
+import { CarouselConfig } from './carouselconfig';
+import { DomSanitizer } from '@angular/platform-browser';
+
+export class CarouselUtils {
+
+  public static handleScroll(layout: Layout[], config: CarouselConfig, scrollTop: number) {
+
+    const itemTotalSize = config.itemSize + config.spacing;
+
+    for (let i = 0; i < config.items.length; i++) {
+      layout[i].distance = scrollTop - i * itemTotalSize;
+      const normalizedDistance = layout[i].distance / itemTotalSize;
+      const spread = 2;
+      const k = (1 + Math.cos(Math.min(1, Math.abs(normalizedDistance / spread)) * Math.PI)) / 2;
+
+      layout[i].scale = 1 + (config.grow - 1) * k;
+      layout[i].height = itemTotalSize * layout[i].scale;
+    }
+
+    const a = Utils.clamp(Math.floor(scrollTop / itemTotalSize + 0.5), 0, config.items.length - 1);
+
+    const p = Utils.clamp(layout[a].distance / itemTotalSize, -0.5, 0.5);
+
+    const pushA = (layout[a].height - itemTotalSize) * p;
+    const centerA = config.center + a * itemTotalSize - pushA;
+    layout[a].center = centerA;
+    layout[a].translate = layout[a].center - layout[a].virtualCenter;
+
+    let current = centerA - layout[a].height / 2;
+    for (let i = a - 1; i >= 0; i--) {
+      current -= layout[i].height / 2;
+      layout[i].center = current;
+      layout[i].translate = layout[i].center - layout[i].virtualCenter;
+      current -= layout[i].height / 2;
+    }
+
+    current = centerA + layout[a].height / 2;
+    for (let i = a + 1; i < config.items.length; i++) {
+      current += layout[i].height / 2;
+      layout[i].center = current;
+      layout[i].translate = layout[i].center - layout[i].virtualCenter;
+      current += layout[i].height / 2;
+    }
+
+    for (let i = 0; i < config.items.length; i++) {
+      const normalizedDistance = layout[i].distance / itemTotalSize;
+      layout[i].isInViewport = Math.abs(normalizedDistance) < 1.5;
+    }
+
+    // this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
+    //   `translateY(${layout[0].center}px)` +
+    //   'translateZ(-3em)'
+    // );
+  }
+
+  public static updateTransforms(layout: Layout[], config: CarouselConfig, sanitizer: DomSanitizer, angle: number) {
+    const backgroundScale = 8;
+    const itemTotalSize = config.itemSize + config.spacing;
+
+
+    for (let i = 0; i < config.items.length; i++) {
+
+      const transform =
+        // `translateY(${-this.config.itemSize / 2}px)` +
+        `translateY(${layout[i].translate}px)` +
+        `translateZ(-1em)` +
+        `scale(${layout[i].scale})`;
+
+      layout[i].transform = sanitizer.bypassSecurityTrustStyle(transform);
+      const normalizedDistance = layout[i].distance / itemTotalSize;
+      const parallaxTranslate = normalizedDistance * itemTotalSize * 0.5;
+
+      const backgroundTransform =
+        `translateY(-50%)` +
+        `translateX(-50%)` +
+        `translateZ(-2em)` +
+        `translateY(${-parallaxTranslate}px)` +
+        `rotateZ(${angle}deg)` +
+        `scale(${backgroundScale})` +
+        `scale( ${1 / layout[i].scale})`;
+
+      layout[i].backgroundTransform = sanitizer.bypassSecurityTrustStyle(backgroundTransform);
+
+      const actionTransform = ` translateX(-50%) scale(${1 / layout[i].scale})`;
+      layout[i].actionsTransform = sanitizer.bypassSecurityTrustStyle(actionTransform);
+    }
+  }
+}

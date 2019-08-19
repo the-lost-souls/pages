@@ -6,6 +6,7 @@ import { throttleTime } from 'rxjs/operators';
 import { Utils } from '../utils';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Layout } from '../layout';
+import { CarouselUtils } from '../carouselutils';
 
 
 
@@ -90,7 +91,7 @@ export class Main2Component implements OnInit, AfterViewInit {
 
     for (let i = 0; i < this.config.items.length; i++) {
 
-      this.layout[i].virtualCenter = this.config.center + this.itemTotalSize * i;
+      this.layout[i].virtualCenter = 0;
       this.layout[i].virtualTop = this.layout[i].virtualCenter - this.config.itemSize / 2;
       this.layout[i].virtualTopStyle = this.layout[i].virtualTop + 'px';
     }
@@ -109,9 +110,11 @@ export class Main2Component implements OnInit, AfterViewInit {
 
     this.scrollBackgroundHeightStyle = (this.scrollContainerHeight - this.config.center) + 'px';
 
-    this._changeDetector.detectChanges();
+    // this._changeDetector.detectChanges();
 
-    this.handleScroll(this._carousel.nativeElement.scrollTop);
+    CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
+    CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
+    this._changeDetector.detectChanges();
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
@@ -125,12 +128,13 @@ export class Main2Component implements OnInit, AfterViewInit {
     const scrollTop = this._carousel.nativeElement.scrollTop;
 
     if (scrollTop !== this._previousScrollTop) {
-      this.handleScroll(scrollTop);
+      CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
+
       this.updateFlares(scrollTop);
     }
     this._previousScrollTop = scrollTop;
     this._previousT = t;
-    this.updateTransforms(this.layout);
+    CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
@@ -168,86 +172,86 @@ export class Main2Component implements OnInit, AfterViewInit {
     }
   }
 
-  handleScroll(scrollTop: number) {
+  // handleScroll(scrollTop: number) {
 
-    for (let i = 0; i < this.config.items.length; i++) {
-      this.layout[i].distance = scrollTop - i * this.itemTotalSize;
-      const normalizedDistance = this.layout[i].distance / this.itemTotalSize;
-      const spread = 2;
-      const k = (1 + Math.cos(Math.min(1, Math.abs(normalizedDistance / spread)) * Math.PI)) / 2;
+  //   for (let i = 0; i < this.config.items.length; i++) {
+  //     this.layout[i].distance = scrollTop - i * this.itemTotalSize;
+  //     const normalizedDistance = this.layout[i].distance / this.itemTotalSize;
+  //     const spread = 2;
+  //     const k = (1 + Math.cos(Math.min(1, Math.abs(normalizedDistance / spread)) * Math.PI)) / 2;
 
-      this.layout[i].scale = 1 + (this.config.grow - 1) * k;
-      this.layout[i].height = this.itemTotalSize * this.layout[i].scale;
-    }
+  //     this.layout[i].scale = 1 + (this.config.grow - 1) * k;
+  //     this.layout[i].height = this.itemTotalSize * this.layout[i].scale;
+  //   }
 
-    const a = Utils.clamp(Math.floor(scrollTop / this.itemTotalSize + 0.5), 0, this.config.items.length - 1);
+  //   const a = Utils.clamp(Math.floor(scrollTop / this.itemTotalSize + 0.5), 0, this.config.items.length - 1);
 
-    const p = Utils.clamp(this.layout[a].distance / this.itemTotalSize, -0.5, 0.5);
+  //   const p = Utils.clamp(this.layout[a].distance / this.itemTotalSize, -0.5, 0.5);
 
-    const pushA = (this.layout[a].height - this.itemTotalSize) * p;
-    const centerA = this.config.center + a * this.itemTotalSize - pushA;
-    this.layout[a].center = centerA;
+  //   const pushA = (this.layout[a].height - this.itemTotalSize) * p;
+  //   const centerA = this.config.center + a * this.itemTotalSize - pushA;
+  //   this.layout[a].center = centerA;
 
-    let current = centerA - this.layout[a].height / 2;
-    for (let i = a - 1; i >= 0; i--) {
-      current -= this.layout[i].height / 2;
-      this.layout[i].center = current;
-      current -= this.layout[i].height / 2;
-    }
+  //   let current = centerA - this.layout[a].height / 2;
+  //   for (let i = a - 1; i >= 0; i--) {
+  //     current -= this.layout[i].height / 2;
+  //     this.layout[i].center = current;
+  //     current -= this.layout[i].height / 2;
+  //   }
 
-    current = centerA + this.layout[a].height / 2;
-    for (let i = a + 1; i < this.config.items.length; i++) {
-      current += this.layout[i].height / 2;
-      this.layout[i].center = current;
-      current += this.layout[i].height / 2;
-    }
+  //   current = centerA + this.layout[a].height / 2;
+  //   for (let i = a + 1; i < this.config.items.length; i++) {
+  //     current += this.layout[i].height / 2;
+  //     this.layout[i].center = current;
+  //     current += this.layout[i].height / 2;
+  //   }
 
-    this.updateTransforms(this.layout);
+  //   this.updateTransforms(this.layout);
 
-    for (let i = 0; i < this.config.items.length; i++) {
-      const normalizedDistance = this.layout[i].distance / this.itemTotalSize;
-      this.layout[i].isInViewport = Math.abs(normalizedDistance) < 1.5;
-    }
+  //   for (let i = 0; i < this.config.items.length; i++) {
+  //     const normalizedDistance = this.layout[i].distance / this.itemTotalSize;
+  //     this.layout[i].isInViewport = Math.abs(normalizedDistance) < 1.5;
+  //   }
 
-    this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
-      `translateY(${this.layout[0].center}px)` +
-      'translateZ(-3em)'
-    );
+  //   this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
+  //     `translateY(${this.layout[0].center}px)` +
+  //     'translateZ(-3em)'
+  //   );
 
-    this._changeDetector.detectChanges();
-  }
+  //   this._changeDetector.detectChanges();
+  // }
 
-  private updateTransforms(layout: Layout[]) {
-    const backgroundScale = 8;
+  // private updateTransforms(layout: Layout[]) {
+  //   const backgroundScale = 8;
 
-    for (let i = 0; i < this.config.items.length; i++) {
+  //   for (let i = 0; i < this.config.items.length; i++) {
 
-      const transform =
-        `translateY(${-this.config.itemSize / 2}px)` +
-        `translateY(${layout[i].center}px)` +
-        `translateZ(-1em)` +
-        `scale(${layout[i].scale})`;
+  //     const transform =
+  //       `translateY(${-this.config.itemSize / 2}px)` +
+  //       `translateY(${layout[i].center}px)` +
+  //       `translateZ(-1em)` +
+  //       `scale(${layout[i].scale})`;
 
-      layout[i].transform = this._sanitizer.bypassSecurityTrustStyle(transform);
-      const normalizedDistance = layout[i].distance / this.itemTotalSize;
-      const parallaxTranslate = normalizedDistance * this.itemTotalSize * 0.5;
+  //     layout[i].transform = this._sanitizer.bypassSecurityTrustStyle(transform);
+  //     const normalizedDistance = layout[i].distance / this.itemTotalSize;
+  //     const parallaxTranslate = normalizedDistance * this.itemTotalSize * 0.5;
 
-      const backgroundTransform =
-        `translateY(-50%)` +
-        `translateX(-50%)` +
-        `translateZ(-2em)` +
-        `translateY(${-parallaxTranslate}px)` +
-        `rotateZ(${this.angle1}deg)` +
-        `scale(${backgroundScale})` +
-        `scale( ${1 / layout[i].scale})`;
+  //     const backgroundTransform =
+  //       `translateY(-50%)` +
+  //       `translateX(-50%)` +
+  //       `translateZ(-2em)` +
+  //       `translateY(${-parallaxTranslate}px)` +
+  //       `rotateZ(${this.angle1}deg)` +
+  //       `scale(${backgroundScale})` +
+  //       `scale( ${1 / layout[i].scale})`;
 
-      layout[i].backgroundTransform = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);
+  //     layout[i].backgroundTransform = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);
 
-      const actionTransform = ` translateX(-50%) scale(${1 / layout[i].scale})`;
-      layout[i].actionsTransform = this._sanitizer.bypassSecurityTrustStyle(actionTransform);
-    }
+  //     const actionTransform = ` translateX(-50%) scale(${1 / layout[i].scale})`;
+  //     layout[i].actionsTransform = this._sanitizer.bypassSecurityTrustStyle(actionTransform);
+  //   }
 
-  }
+  // }
 
   public openUrl(url: string) {
     window.location.href = url;

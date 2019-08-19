@@ -1,32 +1,54 @@
-<div #container class="container" (scroll)="handleScroll()" [style.scroll-padding-top]="scrollPaddingTop"
-    [style.scroll-padding-bottom]="scrollPaddingBottom">
-
-    <div class="item-container" *ngFor="let item of config.items, let i = index">
-        <div class="item" [style.transform]="layout[i].transform" [style.height]="itemSizeStyle" [style.margin]="margins[i]">
-
-            <img [src]="layout[i].background" class="item-background" [style.transform]="layout[i].backgroundTransform" />
-            <img [src]="layout[i].foreground" class="item-image" [style.height]="itemSizeStyle" />
-
-            <!-- <div class="content" 
-            [@showHideContent]="isInViewport[i]"
-                [style.height]="contentHeightStyle">
-                <div class="title">{{ item.title }} ({{ item.year }}) </div>
-                <div class="actions" [style.transform]="actionsTransform[i]">
-                    <div *ngIf="item.github" class="action" (click)=openUrl(item.github)>
-                        <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">
-                    </div>
-                    <div *ngIf="item.youtube" class="action" (click)=openUrl(item.youtube)>
-                        <img src="assets/YouTube_Play_Button.png" class="github-icon">
-                    </div>
-                    <div *ngIf="item.pouet" class="action" (click)=openUrl(item.pouet)>
-                        <img src="assets/trumpet.png" class="github-icon">
-                    </div>
-                </div>
-            </div> -->
+<div>
+    <div class="header">
+        <div class="header-title">
+            THE LOST SOULS
         </div>
-
+        <div class="header-tagline">
+            Visually in control. Still. Sort of.
+        </div>
     </div>
-</div>
 
-<div style="position: absolute; width: 100%; height: 1px; background-color: red; left: 0" [style.top]="config.center + 'px'">
+    <div #carousel class="carousel" (scroll)="handleScroll()" [style.scroll-padding-top]="scrollPaddingTop"
+        [style.scroll-padding-bottom]="scrollPaddingBottom">
+
+        <div class="scroll-container-background" [style.transform]="scrollBackgroundTransform"
+        [style.height]="scrollBackgroundHeightStyle"></div>
+
+        <div class="item-container" *ngFor="let item of config.items, let i = index">
+            <div class="item" [style.transform]="layout[i].transform" [style.height]="itemSizeStyle"
+                [style.margin]="margins[i]">
+
+                <img [src]="layout[i].background" class="item-background"
+                    [style.transform]="layout[i].backgroundTransform" />
+                <img [src]="layout[i].foreground" class="item-image" [style.height]="itemSizeStyle" />
+
+                <div class="content" [style.width]="contentWidthStyle">
+                        <div class="title" [style.font-size]="config.titleFontSize">{{ item.title }}</div>
+                        <div *ngFor="let line of item.subtitle">
+                            <div class="subtitle" [style.font-size]="config.subtitleFontSize"> {{ line }} </div>
+                        </div>
+                        <div class="actions" >
+                            <div *ngIf="item.github" class="action" (click)=openUrl(item.github)>
+                                <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">
+                            </div>
+                            <div *ngIf="item.youtube" class="action" (click)=openUrl(item.youtube)>
+                                <img src="assets/YouTube_Play_Button.png" class="github-icon">
+                            </div>
+                            <div *ngIf="item.pouet" class="action" (click)=openUrl(item.pouet)>
+                                <img src="assets/trumpet.png" class="github-icon">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div *ngFor="let flare of flares">
+        <img class="flare" src="assets/flare5.jpg" [style.transform]="flare.transform" />
+    </div>
+
+    <div style="position: absolute; width: 100%; height: 1px; background-color: red; left: 0"
+        [style.top]="config.center + 'px'">
+    </div>
 </div>

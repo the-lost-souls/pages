@@ -1,12 +1,25 @@
 @import '../carousel'
+@import '../../shared'
 
 .container
+    position: absolute
+    top: 0
+    left: 0
+    // For some reason using viewport units makes scrolling faster than e.g. percentage
+    height: 100vh
+    width: 100vw
+    overflow: hidden
+    perspective: 0px
+    transform-style: preserve-3d
+    background-color: $background-color
+
+.carousel
     position: relative
     height: 100vh
     overflow-x: hidden
     overflow-y: auto
-    perspective: 0px
-    transform-style: preserve-3d
+    // perspective: 0px
+    // transform-style: preserve-3d
     display: flexbox
     // background-image: linear-gradient(to bottom, white, rgb(120, 120, 140))
     // Needed for the nice smooth slide on devices
@@ -30,7 +43,7 @@
     background-color: black
     width: 100vw
     text-align: center
-    // box-shadow: rgba(0, 0, 40, 0.5) 0 4px 4px
+    box-shadow: rgba(0, 0, 40, 0.5) 0 4px 4px
     overflow: hidden
 
 
