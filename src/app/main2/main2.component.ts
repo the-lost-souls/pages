@@ -5,7 +5,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { throttleTime } from 'rxjs/operators';
 import { Utils } from '../utils';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Layout } from './layout';
+import { Layout } from '../layout';
 
 
 
