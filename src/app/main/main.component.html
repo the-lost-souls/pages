@@ -14,6 +14,7 @@
         <div class="scroll-container-background" [style.transform]="scrollBackgroundTransform"
         [style.height]="scrollBackgroundHeightStyle"></div>
 
+        <!-- It seems like we need a wrapper-container here for the scroll-snap to work -->
         <div class="item-container" *ngFor="let item of config.items, let i = index">
             <div class="item" [style.transform]="layout[i].transform" [style.height]="itemSizeStyle"
                 [style.margin]="margins[i]">

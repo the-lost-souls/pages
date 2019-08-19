@@ -24,21 +24,17 @@
     // background-image: linear-gradient(to bottom, white, rgb(120, 120, 140))
     // Needed for the nice smooth slide on devices
     -webkit-overflow-scrolling: touch
-    // This feature bugs in IOS (both Safari and Chrome)
+    // The scroll-snap feature causes weird bugs when combined with animated opacity (IOS/webkit, both Safari and Chrome)
     // https://stackoverflow.com/questions/52989070/css-scroll-snap-visual-glitches-on-ios-when-programmatically-setting-style-on
-    // The bug only happens when used together with animated opacity. Disable for now.
     scroll-snap-type: y mandatory
 
 .item-container
-    display: block
     position: relative
     width: 100%
     scroll-snap-align: start
-    pointer-events: none
 
 .item
     position: relative
-    overflow: hidden
     will-change: transform
     background-color: black
     width: 100vw
