@@ -110,7 +110,7 @@ export class MainComponent implements OnInit, AfterViewInit {
       };
       img.src = this.config.items[i].image;
     }
-    this.scrollBackgroundHeightStyle = 10000 + 'px';
+    this.scrollBackgroundHeightStyle = this.itemTotalSize * this.config.items.length + 'px';
 
     requestAnimationFrame((frameT) => this.animate(frameT));
   }

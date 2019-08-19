@@ -7,8 +7,8 @@
     top: 0
     left: 0
     // For some reason using viewport units makes scrolling faster than e.g. percentage
-    height: 100vh
-    width: 100vw
+    height: 100%
+    width: 100%
     overflow: hidden
     perspective: 0px
     transform-style: preserve-3d
@@ -19,9 +19,6 @@
     left: 50%
     position: absolute
     transform: translateX(-50%) translateZ(-1em)
-    // will-change: transform
-    // mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0))
-    // mix-blend-mode: screen
 
 .item-background
     position: absolute
@@ -30,8 +27,6 @@
     height: 256px
     width: 256px
     will-change: transform
-    // mask-image: radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 70%)
-    // background-color: black
     overflow: hidden
 
 
@@ -47,7 +42,6 @@
 
 .title
     width: 100%
-    // text-align: left
     color: white
     pointer-events: none
     user-select: none
@@ -57,21 +51,9 @@
     width: 100%
     text-align: left
     color: white
-    // font-size: 8px
-    // box-sizing: border-box
     pointer-events: none
     user-select: none
     
-    // padding: 5px 0 0 0
-
-.year
-    width: 100%
-    text-align: center
-    color: white
-    font-size: 8pt
-    box-sizing: border-box
-    pointer-events: none
-    user-select: none
 
 .actions
     position: absolute
@@ -105,38 +87,26 @@
     position: absolute
     width: 100%
     top: 0
-    // height: 500px
-    // background-color: white
     will-change: transform
     transform: translateZ(0em)
     color: rgb(200, 200, 200)
-    // left: 50%
-    // transform: translateX(-50%)
-    // will-change: opacity
-    // font-size: 35pt
 
 .header-title
     position: relative
     text-align: center
-    // top: 0
-    // left: 50%
-    // transform: translateX(-50%)
     font-size: 35pt
 
 .header-tagline
     position: relative
     text-align: center
-    // top: 10%
-    // left: 50%
-    // transform: translateX(-50%)
-    // will-change: opacity
     font-size: 15pt
 
 
 .scroll-container-background
     will-change: transform
     position: absolute
-    background-color: $background-color
+    // background-color: $background-color
+    background-image: linear-gradient(to bottom, $background-color 0%, rgb(20, 20, 30))
     width: 100%
 
 
