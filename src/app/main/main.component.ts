@@ -110,12 +110,7 @@ export class MainComponent implements OnInit, AfterViewInit {
       };
       img.src = this.config.items[i].image;
     }
-    // this.scrollContainerHeight = this.itemTotalSize * (this.config.items.length - 1) + viewportHeight;
-    // this.scrollContainerHeightStyle = this._sanitizer.bypassSecurityTrustStyle(this.scrollContainerHeight + 'px');
     this.scrollBackgroundHeightStyle = 10000 + 'px';
-
-
-    // this.handleScroll();
 
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
@@ -143,19 +138,6 @@ export class MainComponent implements OnInit, AfterViewInit {
     CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
-
-  // public handleScroll() {
-  //   CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
-  //   CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
-
-  //   console.log(this.layout[0].center)
-  //   this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
-  //     `translateY(${this.layout[0].center}px)` +
-  //     'translateZ(-3em)'
-  //   );
-
-  //   this._changeDetector.detectChanges();
-  // }
 
   public openUrl(url: string) {
     window.location.href = url;
