@@ -87,8 +87,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.margins[this.config.items.length - 1] =
       `${this.config.spacing}px 0 ${viewportHeight - this.config.center - this.config.itemSize / 2}px 0`;
 
-    this.scrollPaddingTop = `${this.config.center - this.config.itemSize / 2}px`;
-    this.scrollPaddingBottom = `${viewportHeight - this.config.center - this.config.itemSize / 2}px`;
+    this.scrollPaddingTop = `${this.config.center - this.itemTotalSize / 2}px`;
+    this.scrollPaddingBottom = `${viewportHeight - this.config.center - this.itemTotalSize / 2}px`;
 
 
     for (let i = 0; i < this.config.items.length; i++) {

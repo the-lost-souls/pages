@@ -14,9 +14,9 @@
         [style.padding-top]="scrollPaddingTop"
         [style.padding-bottom]="scrollPaddingBottom">
 
-        <div class="scroll-container-background" 
+        <!-- <div class="scroll-container-background" 
             [style.transform]="scrollBackgroundTransform"
-            [style.height]="scrollBackgroundHeight | suffix: 'px'"></div>
+            [style.height]="scrollBackgroundHeight | suffix: 'px'"></div> -->
 
         <div *ngFor="let item of config.items, let i = index" class="section-wrapper"
             [style.height]="itemTotalSize | suffix: 'px'">
