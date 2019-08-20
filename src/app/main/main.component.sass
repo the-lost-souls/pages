@@ -12,20 +12,32 @@
     // The scroll-snap feature causes weird bugs when combined with animated opacity (IOS/webkit, both Safari and Chrome)
     // https://stackoverflow.com/questions/52989070/css-scroll-snap-visual-glitches-on-ios-when-programmatically-setting-style-on
     scroll-snap-type: y mandatory
+    pointer-events: auto
 
-.item-container
+.section-wrapper
+    pointer-events: none
     position: relative
     width: 100%
     scroll-snap-align: start
-    width: 100%
-    max-width: 600px
+    max-width: 1600px
+    left: 50%
+    transform: translateX(-50%)
 
-.item
-    position: relative
+.section-transform
     will-change: transform
+    width: 100%
+    height: 100%
+    position: absolute
+    top: 0
+    left: 0
+
+.section
+    position: absolute
+    left: 0
+    top: 50%
+    transform: translateY(-50%)
     background-color: black
     width: 100%
-    max-width: 600px
     box-shadow: rgba(0, 0, 40, 0.5) 0 4px 4px
     overflow: hidden
 

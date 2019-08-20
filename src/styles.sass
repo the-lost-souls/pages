@@ -7,6 +7,10 @@ html, body
     font-family: 'Sue Ellen Francisco', cursive
     background-color: $background-color
 
+    // Because of all the layers, just disable all interaction here and enable it the few places we need it.
+    user-select: none
+    pointer-events: none
+
     // Disable overscroll/bounce on IOS
     overflow: hidden
     position: fixed

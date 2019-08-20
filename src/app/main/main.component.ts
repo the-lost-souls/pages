@@ -35,8 +35,6 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   // -------------
   public itemTotalSize = this.config.itemSize + this.config.spacing;
-  public contentWidth = this.config.itemSize * 2;
-  public contentWidthStyle = this.contentWidth + 'px';
 
   public angle1 = 0;
   public angle2 = -63;
@@ -55,12 +53,12 @@ export class MainComponent implements OnInit, AfterViewInit {
   private _previousT: number;
   private _previousScrollTop: number;
   public scrollBackgroundTransform: SafeStyle;
-  public scrollBackgroundHeightStyle: string;
+  public scrollBackgroundHeight: number;
 
   public flares = [
-    new Flare(-this.contentWidth, 80, this.config.spacing, 1.5),
-    new Flare(this.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing, 1.2),
-    new Flare(-this.contentWidth / 2, this.config.center + this.itemTotalSize * this.config.grow, this.config.spacing, 1)
+    new Flare(-this.config.contentWidth, 80, this.config.spacing, 1.5),
+    new Flare(this.config.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing, 1.2),
+    new Flare(-this.config.contentWidth / 2, this.config.center + this.itemTotalSize * this.config.grow, this.config.spacing, 1)
   ];
 
   constructor(
@@ -110,7 +108,7 @@ export class MainComponent implements OnInit, AfterViewInit {
       };
       img.src = this.config.items[i].image;
     }
-    this.scrollBackgroundHeightStyle = this.itemTotalSize * this.config.items.length + 'px';
+    this.scrollBackgroundHeight = this.itemTotalSize * this.config.items.length;
 
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
@@ -119,7 +117,7 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     if (this._previousT) {
       const elapsed = t - this._previousT;
-      this.angle1 += 3.5 * elapsed / 1000;
+      // this.angle1 += 3.5 * elapsed / 1000;
     }
 
     const scrollTop = this._carousel.nativeElement.scrollTop;
@@ -132,10 +130,10 @@ export class MainComponent implements OnInit, AfterViewInit {
         `translateY(${this.layout[0].center}px)` +
         'translateZ(-3em)'
       );
+      CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
     }
     this._previousScrollTop = scrollTop;
     this._previousT = t;
-    CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 

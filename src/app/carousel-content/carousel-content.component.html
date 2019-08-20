@@ -1,0 +1,22 @@
+
+
+<img [src]="geometry.background" class="item-background" [style.transform]="geometry.backgroundTransform" />
+<img [src]="geometry.foreground" class="item-image"/>
+
+<div class="content" [style.width]="options.contentWidth | suffix: 'px'">
+    <div class="title" [style.font-size]="options.titleFontSize">{{ content.title }}</div>
+    <div *ngFor="let line of content.subtitle">
+        <div class="subtitle" [style.font-size]="options.subtitleFontSize"> {{ line }} </div>
+    </div>
+    <div class="actions">
+        <div *ngIf="content.github" class="action" (click)=openUrl(content.github)>
+            <img src="assets/GitHub-Mark-Light-32px.png" class="github-icon">
+        </div>
+        <div *ngIf="content.youtube" class="action" (click)=openUrl(content.youtube)>
+            <img src="assets/YouTube_Play_Button.png" class="github-icon">
+        </div>
+        <div *ngIf="content.pouet" class="action" (click)=openUrl(content.pouet)>
+            <img src="assets/trumpet.png" class="github-icon">
+        </div>
+    </div>
+</div>

@@ -15,9 +15,11 @@
     background-color: $background-color
 
 .item-image
+    display: block
+    position: absolute
     top: 0
     left: 50%
-    position: absolute
+    max-height: 100%
     transform: translateX(-50%) translateZ(-1em)
 
 .item-background
@@ -38,7 +40,9 @@
     transform: translateX(-50%) translateZ(2em)
     user-select: none
     pointer-events: none
-    will-change: opacity
+    // will-change: opacity
+    color: white
+    oveflow: hidden
 
 .title
     width: 100%

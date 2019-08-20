@@ -65,6 +65,7 @@ export class CarouselUtils {
 
       const transform =
         // `translateY(${-this.config.itemSize / 2}px)` +
+        // `translateX(-50%)` +
         `translateY(${layout[i].translate}px)` +
         `translateZ(-1em)` +
         `scale(${layout[i].scale})`;

@@ -6,12 +6,16 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { Main2Component } from './main2/main2.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CarouselContentComponent } from './carousel-content/carousel-content.component';
+import { SuffixPipe } from './suffix.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    Main2Component
+    Main2Component,
+    CarouselContentComponent,
+    SuffixPipe
   ],
   imports: [
     BrowserModule,
