@@ -10,7 +10,7 @@ export class CarouselUtils {
 
     const itemTotalSize = config.itemSize + config.spacing;
 
-    for (let i = 0; i < config.items.length; i++) {
+    for (let i = 0; i < config.sections.length; i++) {
       layout[i].distance = scrollTop - i * itemTotalSize;
       const normalizedDistance = layout[i].distance / itemTotalSize;
       const spread = 2;
@@ -20,7 +20,7 @@ export class CarouselUtils {
       layout[i].height = itemTotalSize * layout[i].scale;
     }
 
-    const a = Utils.clamp(Math.floor(scrollTop / itemTotalSize + 0.5), 0, config.items.length - 1);
+    const a = Utils.clamp(Math.floor(scrollTop / itemTotalSize + 0.5), 0, config.sections.length - 1);
 
     const p = Utils.clamp(layout[a].distance / itemTotalSize, -0.5, 0.5);
 
@@ -38,7 +38,7 @@ export class CarouselUtils {
     }
 
     current = centerA + layout[a].height / 2;
-    for (let i = a + 1; i < config.items.length; i++) {
+    for (let i = a + 1; i < config.sections.length; i++) {
       current += layout[i].height / 2;
       layout[i].center = current;
       layout[i].translate = layout[i].center - layout[i].virtualCenter;
@@ -51,7 +51,7 @@ export class CarouselUtils {
     const itemTotalSize = config.itemSize + config.spacing;
 
 
-    for (let i = 0; i < config.items.length; i++) {
+    for (let i = 0; i < config.sections.length; i++) {
 
       const transform =
         // `translateY(${-this.config.itemSize / 2}px)` +

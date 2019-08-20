@@ -14,12 +14,16 @@
         [style.padding-top]="scrollPaddingTop"
         [style.padding-bottom]="scrollPaddingBottom">
 
-        <div *ngFor="let item of config.items, let i = index" class="section-wrapper"
+        <div *ngFor="let section of config.sections, let i = index" 
+            class="section-wrapper"
             [style.height]="itemTotalSize | suffix: 'px'">
 
             <!-- It seems like for the scroll-snap to work in safari, the snap-elements cannot be transformed -->
             <div class="section-transform" [style.transform]="layout[i].transform">
-                <app-carousel-section class="section" [style.height]="config.itemSize | suffix: 'px'" [content]="item"
+                <app-carousel-section 
+                    class="section" 
+                    [style.height]="config.itemSize | suffix: 'px'" 
+                    [content]="section"
                     [options]="config" [geometry]="layout[i]">
                 </app-carousel-section>
             </div>

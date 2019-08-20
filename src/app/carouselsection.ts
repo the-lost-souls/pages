@@ -1,4 +1,4 @@
-export interface CarouselItem {
+export interface CarouselSection {
     image: string;
     title: string;
     subtitle: string[];

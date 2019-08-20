@@ -65,7 +65,7 @@ export class Main2Component implements OnInit, AfterViewInit {
   private _carousel: ElementRef<HTMLElement>;
 
   constructor(private _changeDetector: ChangeDetectorRef, private _sanitizer: DomSanitizer) {
-    this.layout = new Array(this.config.items.length);
+    this.layout = new Array(this.config.sections.length);
     for (let i = 0; i < this.layout.length; i++) {
       this.layout[i] = new Layout();
     }
@@ -81,10 +81,10 @@ export class Main2Component implements OnInit, AfterViewInit {
     // On safari, using container.clientHeight gives the wrong value, for some reason
     const viewportHeight = window.innerHeight;
 
-    this.scrollContainerHeight = this.itemTotalSize * (this.config.items.length - 1) + viewportHeight;
+    this.scrollContainerHeight = this.itemTotalSize * (this.config.sections.length - 1) + viewportHeight;
     this.scrollContainerHeightStyle = this._sanitizer.bypassSecurityTrustStyle(this.scrollContainerHeight + 'px');
 
-    for (let i = 0; i < this.config.items.length; i++) {
+    for (let i = 0; i < this.config.sections.length; i++) {
 
       this.layout[i].virtualCenter = 0;
       this.layout[i].virtualTop = this.layout[i].virtualCenter - this.config.itemSize / 2;
@@ -92,14 +92,14 @@ export class Main2Component implements OnInit, AfterViewInit {
     }
 
     const c = document.createElement('canvas');
-    for (let i = 0; i < this.config.items.length; i++) {
+    for (let i = 0; i < this.config.sections.length; i++) {
       const img = new Image();
       img.onload = () => {
-        console.log('Blurring ' + this.config.items[i].image);
+        console.log('Blurring ' + this.config.sections[i].image);
         this.layout[i].background = Utils.prepareBackground(img, c, this.config.blurRadius, this.config.backgroundFadeRadius);
         this.layout[i].foreground = Utils.fadeEdges(img, c, 0, 640);
       };
-      img.src = this.config.items[i].image;
+      img.src = this.config.sections[i].image;
     }
 
 

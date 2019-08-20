@@ -63,7 +63,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     private _changeDetector: ChangeDetectorRef,
     private _sanitizer: DomSanitizer) {
 
-    this.layout = new Array(this.config.items.length);
+    this.layout = new Array(this.config.sections.length);
     for (let i = 0; i < this.layout.length; i++) {
       this.layout[i] = new Layout();
     }
@@ -77,19 +77,19 @@ export class MainComponent implements OnInit, AfterViewInit {
     // On safari, using container.clientHeight gives the wrong value, for some reason
     const viewportHeight = window.innerHeight;
 
-    this.margins = new Array(this.config.items.length);
+    this.margins = new Array(this.config.sections.length);
     this.margins[0] = `${this.config.center - this.config.itemSize / 2}px 0 0 0`;
-    for (let i = 1; i < this.config.items.length - 1; i++) {
+    for (let i = 1; i < this.config.sections.length - 1; i++) {
       this.margins[i] = `${this.config.spacing}px 0 0 0`;
     }
-    this.margins[this.config.items.length - 1] =
+    this.margins[this.config.sections.length - 1] =
       `${this.config.spacing}px 0 ${viewportHeight - this.config.center - this.config.itemSize / 2}px 0`;
 
     this.scrollPaddingTop = `${this.config.center - this.itemTotalSize / 2}px`;
     this.scrollPaddingBottom = `${viewportHeight - this.config.center - this.itemTotalSize / 2}px`;
 
 
-    for (let i = 0; i < this.config.items.length; i++) {
+    for (let i = 0; i < this.config.sections.length; i++) {
 
       this.layout[i].virtualCenter = this.config.center + this.itemTotalSize * i;
       this.layout[i].virtualTop = this.layout[i].virtualCenter - this.config.itemSize / 2;
@@ -97,14 +97,14 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     const c = document.createElement('canvas');
-    for (let i = 0; i < this.config.items.length; i++) {
+    for (let i = 0; i < this.config.sections.length; i++) {
       const img = new Image();
       img.onload = () => {
-        console.log('Blurring ' + this.config.items[i].image);
+        console.log('Blurring ' + this.config.sections[i].image);
         this.layout[i].background = Utils.prepareBackground(img, c, this.config.blurRadius, this.config.backgroundFadeRadius);
         this.layout[i].foreground = Utils.fadeEdges(img, c, 0, 640);
       };
-      img.src = this.config.items[i].image;
+      img.src = this.config.sections[i].image;
     }
 
     requestAnimationFrame((frameT) => this.animate(frameT));

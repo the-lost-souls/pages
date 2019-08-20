@@ -1,5 +1,5 @@
 import * as IsMobile from 'is-mobile';
-import { CarouselItem } from './carouselitem';
+import { CarouselSection } from './carouselsection';
 
 export class CarouselConfig {
     public constructor(
@@ -12,11 +12,11 @@ export class CarouselConfig {
         public backgroundFadeRadius: number,
         public titleFontSize: string,
         public subtitleFontSize: string,
-        public items: CarouselItem[]) { }
+        public sections: CarouselSection[]) { }
 
     public static default(): CarouselConfig {
 
-        const content: CarouselItem[] = [
+        const content: CarouselSection[] = [
             {
               image: 'assets/iv.jpg',
               title: 'IV - Racer',
@@ -133,7 +133,7 @@ export class CarouselConfig {
             backgroundFadeRadius: 20,
             titleFontSize: '8pt',
             subtitleFontSize: '5pt',
-            items: content
+            sections: content
         };
 
         const desktop: CarouselConfig = {
@@ -146,7 +146,7 @@ export class CarouselConfig {
             backgroundFadeRadius: 50,
             titleFontSize: '12pt',
             subtitleFontSize: '5pt',
-            items: content
+            sections: content
         };
 
         return IsMobile.isMobile(navigator.userAgent) ? mobile : desktop;

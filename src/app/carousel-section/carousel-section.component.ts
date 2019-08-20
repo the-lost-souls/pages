@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CarouselItem } from '../carouselitem';
+import { CarouselSection } from '../carouselsection';
 import { CarouselConfig } from '../carouselconfig';
 import { Layout } from '../layout';
 
@@ -11,7 +11,7 @@ import { Layout } from '../layout';
 export class CarouselSectionComponent implements OnInit {
 
   @Input()
-  content: CarouselItem;
+  content: CarouselSection;
 
   @Input()
   geometry: Layout;
