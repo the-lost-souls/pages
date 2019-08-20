@@ -52,8 +52,6 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   private _previousT: number;
   private _previousScrollTop: number;
-  public scrollBackgroundTransform: SafeStyle;
-  public scrollBackgroundHeight: number;
 
   public flares = [
     new Flare(-this.config.contentWidth, 80, this.config.spacing, 1.5),
@@ -108,7 +106,6 @@ export class MainComponent implements OnInit, AfterViewInit {
       };
       img.src = this.config.items[i].image;
     }
-    this.scrollBackgroundHeight = this.itemTotalSize * this.config.items.length;
 
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
@@ -126,10 +123,6 @@ export class MainComponent implements OnInit, AfterViewInit {
       CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
 
       CarouselUtils.updateFlares(scrollTop, this.layout, this.flares, this.config, this._sanitizer);
-      this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
-        `translateY(${this.layout[0].center}px)` +
-        'translateZ(-3em)'
-      );
       CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
     }
     this._previousScrollTop = scrollTop;
