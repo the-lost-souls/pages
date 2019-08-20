@@ -107,6 +107,8 @@ export class MainComponent implements OnInit, AfterViewInit {
       img.src = this.config.sections[i].image;
     }
 
+    this._changeDetector.detectChanges();
+
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
@@ -130,7 +132,4 @@ export class MainComponent implements OnInit, AfterViewInit {
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
-  public openUrl(url: string) {
-    window.location.href = url;
-  }
 }

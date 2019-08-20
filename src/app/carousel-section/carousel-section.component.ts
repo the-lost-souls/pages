@@ -24,4 +24,7 @@ export class CarouselSectionComponent implements OnInit {
   ngOnInit() {
   }
 
+  public openUrl(url: string) {
+    window.location.href = url;
+  }
 }
