@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { Main2Component } from './main2/main2.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CarouselContentComponent } from './carousel-content/carousel-content.component';
+import { CarouselSectionComponent } from './carousel-section/carousel-section.component';
 import { SuffixPipe } from './suffix.pipe';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { SuffixPipe } from './suffix.pipe';
     AppComponent,
     MainComponent,
     Main2Component,
-    CarouselContentComponent,
+    CarouselSectionComponent,
     SuffixPipe
   ],
   imports: [

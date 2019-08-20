@@ -4,11 +4,11 @@ import { CarouselConfig } from '../carouselconfig';
 import { Layout } from '../layout';
 
 @Component({
-  selector: 'app-carousel-content',
-  templateUrl: './carousel-content.component.html',
-  styleUrls: ['./carousel-content.component.sass']
+  selector: 'app-carousel-section',
+  templateUrl: './carousel-section.component.html',
+  styleUrls: ['./carousel-section.component.sass']
 })
-export class CarouselContentComponent implements OnInit {
+export class CarouselSectionComponent implements OnInit {
 
   @Input()
   content: CarouselItem;
