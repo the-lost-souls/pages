@@ -13,7 +13,6 @@ export class Layout {
   public backgroundTransform: SafeStyle;
   public background: string;
   public foreground: string;
-  public isInViewport: boolean;
 
   // temporary
   public translate: number;

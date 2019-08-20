@@ -44,16 +44,6 @@ export class CarouselUtils {
       layout[i].translate = layout[i].center - layout[i].virtualCenter;
       current += layout[i].height / 2;
     }
-
-    for (let i = 0; i < config.items.length; i++) {
-      const normalizedDistance = layout[i].distance / itemTotalSize;
-      layout[i].isInViewport = Math.abs(normalizedDistance) < 1.5;
-    }
-
-    // this.scrollBackgroundTransform = this._sanitizer.bypassSecurityTrustStyle(
-    //   `translateY(${layout[0].center}px)` +
-    //   'translateZ(-3em)'
-    // );
   }
 
   public static updateTransforms(layout: Layout[], config: CarouselConfig, sanitizer: DomSanitizer, angle: number) {
