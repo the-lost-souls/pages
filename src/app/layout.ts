@@ -11,7 +11,6 @@ export class Layout {
   public height: number;
   public transform: SafeStyle;
   public backgroundTransform: SafeStyle;
-  public actionsTransform: SafeStyle;
   public background: string;
   public foreground: string;
   public isInViewport: boolean;

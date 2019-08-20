@@ -84,9 +84,6 @@ export class CarouselUtils {
         `scale( ${1 / layout[i].scale})`;
 
       layout[i].backgroundTransform = sanitizer.bypassSecurityTrustStyle(backgroundTransform);
-
-      const actionTransform = ` translateX(-50%) scale(${1 / layout[i].scale})`;
-      layout[i].actionsTransform = sanitizer.bypassSecurityTrustStyle(actionTransform);
     }
   }
 
