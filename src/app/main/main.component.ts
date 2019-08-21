@@ -6,6 +6,7 @@ import { Utils } from '../utils';
 import { Layout } from '../layout';
 import { CarouselUtils } from '../carouselutils';
 import { Flare } from '../flare';
+import { CarouselService } from '../carousel.service';
 
 @Component({
   selector: 'app-main',
@@ -60,6 +61,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   ];
 
   constructor(
+    private _carouselService: CarouselService, 
     private _changeDetector: ChangeDetectorRef,
     private _sanitizer: DomSanitizer) {
 
@@ -122,10 +124,10 @@ export class MainComponent implements OnInit, AfterViewInit {
     const scrollTop = this._carousel.nativeElement.scrollTop;
 
     if (scrollTop !== this._previousScrollTop) {
-      CarouselUtils.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
+      this._carouselService.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
 
-      CarouselUtils.updateFlares(scrollTop, this.layout, this.flares, this.config, this._sanitizer);
-      CarouselUtils.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
+      this._carouselService.updateFlares(scrollTop, this.layout, this.flares, this.config, this._sanitizer);
+      this._carouselService.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
     }
     this._previousScrollTop = scrollTop;
     this._previousT = t;
