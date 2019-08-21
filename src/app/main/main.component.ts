@@ -44,7 +44,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   ];
 
   constructor(
-    private _carouselService: CarouselService, 
+    private _carouselService: CarouselService,
     private _changeDetector: ChangeDetectorRef,
     private _sanitizer: DomSanitizer,
     private _flaresService: FlaresService) {

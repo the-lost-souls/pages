@@ -1,13 +1,19 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MainComponent } from './main/main.component';
-import { Main2Component } from './main2/main2.component';
+import { SuffixPipe } from './suffix.pipe';
+import { CarouselSectionComponent } from './carousel-section/carousel-section.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       declarations: [
-        AppComponent, MainComponent, Main2Component
+        AppComponent, MainComponent, SuffixPipe, CarouselSectionComponent
+
       ],
     }).compileComponents();
   }));
