@@ -7,6 +7,7 @@ import { Layout } from '../layout';
 import { CarouselUtils } from '../carouselutils';
 import { Flare } from '../flare';
 import { CarouselService } from '../carousel.service';
+import { FlaresService } from '../flares.service';
 
 @Component({
   selector: 'app-main',
@@ -63,7 +64,8 @@ export class MainComponent implements OnInit, AfterViewInit {
   constructor(
     private _carouselService: CarouselService, 
     private _changeDetector: ChangeDetectorRef,
-    private _sanitizer: DomSanitizer) {
+    private _sanitizer: DomSanitizer,
+    private _flaresService: FlaresService) {
 
     this.layout = new Array(this.config.sections.length);
     for (let i = 0; i < this.layout.length; i++) {
@@ -126,7 +128,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     if (scrollTop !== this._previousScrollTop) {
       this._carouselService.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
 
-      this._carouselService.updateFlares(scrollTop, this.layout, this.flares, this.config, this._sanitizer);
+      this._flaresService.updateFlares(scrollTop, this.layout, this.flares, this.config, this._sanitizer);
       this._carouselService.updateTransforms(this.layout, this.config, this._sanitizer, this.angle1);
     }
     this._previousScrollTop = scrollTop;
