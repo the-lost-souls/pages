@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CarouselConfig } from '../carouselconfig';
+import { CarouselOptions } from '../carouseloptions';
 import { Utils } from '../utils';
 import { Layout } from '../layout';
 import { Flare } from '../flare';
@@ -15,7 +15,7 @@ import { FlaresService } from '../flares.service';
 export class MainComponent implements OnInit, AfterViewInit {
 
   // inputs
-  public config: CarouselConfig = CarouselConfig.default();
+  public config: CarouselOptions = CarouselOptions.default();
 
   // -------------
   public itemTotalSize = this.config.itemSize + this.config.spacing;

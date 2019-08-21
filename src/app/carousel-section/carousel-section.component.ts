@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CarouselSection } from '../carouselsection';
-import { CarouselConfig } from '../carouselconfig';
+import { CarouselOptions } from '../carouseloptions';
 import { Layout } from '../layout';
 
 @Component({
@@ -17,7 +17,7 @@ export class CarouselSectionComponent implements OnInit {
   geometry: Layout;
 
   @Input()
-  options: CarouselConfig;
+  options: CarouselOptions;
 
   constructor() { }
 

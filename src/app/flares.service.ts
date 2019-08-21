@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Layout } from './layout';
 import { Flare } from './flare';
-import { CarouselConfig } from './carouselconfig';
+import { CarouselOptions } from './carouseloptions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Utils } from './utils';
 
@@ -12,7 +12,7 @@ export class FlaresService {
 
   constructor() { }
 
-  public updateFlares(scrollTop: number, layout: Layout[], flares: Flare[], config: CarouselConfig, sanitizer: DomSanitizer, ) {
+  public updateFlares(scrollTop: number, layout: Layout[], flares: Flare[], config: CarouselOptions, sanitizer: DomSanitizer, ) {
 
     for (const flare of flares) {
       const y0 = (flare.y + scrollTop) - flare.size / 2;

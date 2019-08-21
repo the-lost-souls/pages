@@ -1,7 +1,7 @@
 export interface CarouselSection {
     image: string;
     title: string;
-    subtitle: string[];
+    text: string[];
     youtube: string;
     pouet: string;
     github: string;

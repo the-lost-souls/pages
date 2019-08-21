@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Layout } from './layout';
-import { CarouselConfig } from './carouselconfig';
+import { CarouselOptions } from './carouseloptions';
 import { Utils } from './utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Flare } from './flare';
@@ -12,7 +12,7 @@ export class CarouselService {
 
   constructor() { }
 
-  public handleScroll(layout: Layout[], config: CarouselConfig, scrollTop: number) {
+  public handleScroll(layout: Layout[], config: CarouselOptions, scrollTop: number) {
 
     const itemTotalSize = config.itemSize + config.spacing;
 
@@ -52,7 +52,7 @@ export class CarouselService {
     }
   }
 
-  public updateTransforms(layout: Layout[], config: CarouselConfig, sanitizer: DomSanitizer, angle: number) {
+  public updateTransforms(layout: Layout[], config: CarouselOptions, sanitizer: DomSanitizer, angle: number) {
     const backgroundScale = 8;
     const itemTotalSize = config.itemSize + config.spacing;
 
