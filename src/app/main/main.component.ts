@@ -1,10 +1,8 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { CarouselConfig } from '../carouselconfig';
 import { Utils } from '../utils';
 import { Layout } from '../layout';
-import { CarouselUtils } from '../carouselutils';
 import { Flare } from '../flare';
 import { CarouselService } from '../carousel.service';
 import { FlaresService } from '../flares.service';
@@ -12,23 +10,7 @@ import { FlaresService } from '../flares.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.sass'],
-  animations: [
-    trigger('showHideContent', [
-      state('true', style({
-        opacity: '1',
-      })),
-      state('false', style({
-        opacity: '0',
-      })),
-      transition('false => true', [
-        animate('1s 0.5s ease-out')
-      ]),
-      transition('true => false', [
-        animate('0.5s ease-in')
-      ])
-    ])
-  ]
+  styleUrls: ['./main.component.sass']
 })
 export class MainComponent implements OnInit, AfterViewInit {
 
@@ -119,7 +101,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   private animate(t: number) {
 
     if (this._previousT) {
-      const elapsed = t - this._previousT;
       // this.angle1 += 3.5 * elapsed / 1000;
     }
 
