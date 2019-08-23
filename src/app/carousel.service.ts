@@ -14,24 +14,22 @@ export class CarouselService {
 
   public handleScroll(layout: Layout[], config: CarouselOptions, scrollTop: number) {
 
-    const itemTotalSize = config.itemSize + config.spacing;
-
     for (let i = 0; i < config.sections.length; i++) {
-      layout[i].distance = scrollTop - i * itemTotalSize;
-      const normalizedDistance = layout[i].distance / itemTotalSize;
+      layout[i].distance = scrollTop - i * config.sectionHeight;
+      const normalizedDistance = layout[i].distance / config.sectionHeight;
       const spread = 2;
       const k = (1 + Math.cos(Math.min(1, Math.abs(normalizedDistance / spread)) * Math.PI)) / 2;
 
       layout[i].scale = 1 + (config.grow - 1) * k;
-      layout[i].height = itemTotalSize * layout[i].scale;
+      layout[i].height = config.sectionHeight * layout[i].scale;
     }
 
-    const a = Utils.clamp(Math.floor(scrollTop / itemTotalSize + 0.5), 0, config.sections.length - 1);
+    const a = Utils.clamp(Math.floor(scrollTop / config.sectionHeight + 0.5), 0, config.sections.length - 1);
 
-    const p = Utils.clamp(layout[a].distance / itemTotalSize, -0.5, 0.5);
+    const p = Utils.clamp(layout[a].distance / config.sectionHeight, -0.5, 0.5);
 
-    const pushA = (layout[a].height - itemTotalSize) * p;
-    const centerA = config.center + a * itemTotalSize - pushA;
+    const pushA = (layout[a].height - config.sectionHeight) * p;
+    const centerA = config.center + a * config.sectionHeight - pushA;
     layout[a].center = centerA;
     layout[a].translate = layout[a].center - layout[a].virtualCenter;
 
@@ -54,8 +52,6 @@ export class CarouselService {
 
   public updateTransforms(layout: Layout[], config: CarouselOptions, sanitizer: DomSanitizer, angle: number) {
     const backgroundScale = 8;
-    const itemTotalSize = config.itemSize + config.spacing;
-
 
     for (let i = 0; i < config.sections.length; i++) {
 
@@ -67,8 +63,8 @@ export class CarouselService {
         `scale(${layout[i].scale})`;
 
       layout[i].transform = sanitizer.bypassSecurityTrustStyle(transform);
-      const normalizedDistance = layout[i].distance / itemTotalSize;
-      const parallaxTranslate = normalizedDistance * itemTotalSize * 0.5;
+      const normalizedDistance = layout[i].distance / config.sectionHeight;
+      const parallaxTranslate = normalizedDistance * config.sectionHeight * 0.5;
 
       const backgroundTransform =
         `translateY(-50%)` +

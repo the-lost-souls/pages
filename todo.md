@@ -8,6 +8,7 @@
 - remove unused styles
 - clarify/cleanup style naming
 - cleanup use of viewport units vs percentage, make consistent
+- add box-sizing border-box to all elements globally
 
 ### Bugs
 - The first/last element does not cover the header correctly

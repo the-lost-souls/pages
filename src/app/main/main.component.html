@@ -16,13 +16,13 @@
 
         <div *ngFor="let section of config.sections, let i = index" 
             class="section-wrapper"
-            [style.height]="itemTotalSize | suffix: 'px'">
+            [style.height]="config.sectionHeight | suffix: 'px'">
 
             <!-- It seems like for the scroll-snap to work in safari, the snap-elements cannot be transformed -->
             <div class="section-transform" [style.transform]="layout[i].transform">
                 <app-carousel-section 
                     class="section" 
-                    [style.height]="config.itemSize | suffix: 'px'" 
+                    [style.height]="sectionContentHeight | suffix: 'px'" 
                     [content]="section"
                     [options]="config" [geometry]="layout[i]">
                 </app-carousel-section>

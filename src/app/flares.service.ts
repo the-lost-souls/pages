@@ -21,7 +21,7 @@ export class FlaresService {
       let line: [number, number] = [y0, y1];
       for (const l of layout) {
 
-        const itemHeight = config.itemSize * l.scale;
+        const itemHeight = config.sectionHeight * l.scale;
         const sectionTop = l.center - itemHeight / 2;
         const sectionBottom = l.center + itemHeight / 2;
 

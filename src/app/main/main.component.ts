@@ -18,7 +18,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   public config: CarouselOptions = CarouselOptions.default();
 
   // -------------
-  public itemTotalSize = this.config.itemSize + this.config.spacing;
+  public sectionContentHeight = this.config.sectionHeight - this.config.padding;
 
   public angle1 = 0;
   public angle2 = -63;
@@ -38,9 +38,9 @@ export class MainComponent implements OnInit, AfterViewInit {
   private _previousScrollTop: number;
 
   public flares = [
-    new Flare(-this.config.contentWidth, 80, this.config.spacing, 1.5),
-    new Flare(this.config.contentWidth, this.config.center + this.itemTotalSize * this.config.grow * 0.5, this.config.spacing, 1.2),
-    new Flare(-this.config.contentWidth / 2, this.config.center + this.itemTotalSize * this.config.grow, this.config.spacing, 1)
+    new Flare(-this.config.contentWidth, 80, this.config.padding, 1.5),
+    new Flare(this.config.contentWidth, this.config.center + this.config.sectionHeight * this.config.grow * 0.5, this.config.padding, 1.2),
+    new Flare(-this.config.contentWidth / 2, this.config.center + this.config.sectionHeight * this.config.grow, this.config.padding, 1)
   ];
 
   constructor(
@@ -56,7 +56,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.itemSizeStyle = `${this.config.itemSize}px`;
+    this.itemSizeStyle = `${this.config.sectionHeight}px`;
   }
 
   ngAfterViewInit() {
@@ -64,21 +64,21 @@ export class MainComponent implements OnInit, AfterViewInit {
     const viewportHeight = window.innerHeight;
 
     this.margins = new Array(this.config.sections.length);
-    this.margins[0] = `${this.config.center - this.config.itemSize / 2}px 0 0 0`;
+    this.margins[0] = `${this.config.center - this.config.sectionHeight / 2}px 0 0 0`;
     for (let i = 1; i < this.config.sections.length - 1; i++) {
-      this.margins[i] = `${this.config.spacing}px 0 0 0`;
+      this.margins[i] = `${this.config.padding}px 0 0 0`;
     }
     this.margins[this.config.sections.length - 1] =
-      `${this.config.spacing}px 0 ${viewportHeight - this.config.center - this.config.itemSize / 2}px 0`;
+      `${this.config.padding}px 0 ${viewportHeight - this.config.center - this.config.sectionHeight / 2}px 0`;
 
-    this.scrollPaddingTop = `${this.config.center - this.itemTotalSize / 2}px`;
-    this.scrollPaddingBottom = `${viewportHeight - this.config.center - this.itemTotalSize / 2}px`;
+    this.scrollPaddingTop = `${this.config.center - this.config.sectionHeight / 2}px`;
+    this.scrollPaddingBottom = `${viewportHeight - this.config.center - this.config.sectionHeight / 2}px`;
 
 
     for (let i = 0; i < this.config.sections.length; i++) {
 
-      this.layout[i].virtualCenter = this.config.center + this.itemTotalSize * i;
-      this.layout[i].virtualTop = this.layout[i].virtualCenter - this.config.itemSize / 2;
+      this.layout[i].virtualCenter = this.config.center + this.config.sectionHeight * i;
+      this.layout[i].virtualTop = this.layout[i].virtualCenter - this.config.sectionHeight / 2;
       this.layout[i].virtualTopStyle = this.layout[i].virtualTop + 'px';
     }
 
