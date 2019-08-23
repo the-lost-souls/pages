@@ -21,11 +21,11 @@ export class FlaresService {
       let line: [number, number] = [y0, y1];
       for (const l of layout) {
 
-        const itemHeight = config.sectionHeight * l.scale;
-        const sectionTop = l.center - itemHeight / 2;
-        const sectionBottom = l.center + itemHeight / 2;
+        const contentHeight = (config.sectionHeight - config.padding) * l.scale;
+        const contentTop = l.center - contentHeight / 2;
+        const contentBottom = l.center + contentHeight / 2;
 
-        line = Utils.subtractRange(line, [sectionTop, sectionBottom]);
+        line = Utils.subtractRange(line, [contentTop, contentBottom]);
       }
 
       const visibility = flare.scale * (line[1] - line[0]) / flare.size;
