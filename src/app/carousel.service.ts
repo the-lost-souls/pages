@@ -10,7 +10,7 @@ import { Flare } from './flare';
 })
 export class CarouselService {
 
-  constructor() { }
+  constructor(private _sanitizer: DomSanitizer) { }
 
   public handleScroll(layout: Layout[], config: CarouselOptions, scrollTop: number) {
 
@@ -50,7 +50,7 @@ export class CarouselService {
     }
   }
 
-  public updateTransforms(layout: Layout[], config: CarouselOptions, sanitizer: DomSanitizer, angle: number) {
+  public updateTransforms(layout: Layout[], config: CarouselOptions, angle: number) {
     const backgroundScale = 8;
 
     for (let i = 0; i < config.sections.length; i++) {
@@ -62,7 +62,7 @@ export class CarouselService {
         `translateZ(-1em)` +
         `scale(${layout[i].scale})`;
 
-      layout[i].transform = sanitizer.bypassSecurityTrustStyle(transform);
+      layout[i].transform = this._sanitizer.bypassSecurityTrustStyle(transform);
       const normalizedDistance = layout[i].distance / config.sectionHeight;
       const parallaxTranslate = normalizedDistance * config.sectionHeight * 0.5;
 
@@ -75,7 +75,7 @@ export class CarouselService {
         `scale(${backgroundScale})` +
         `scale( ${1 / layout[i].scale})`;
 
-      layout[i].backgroundTransform = sanitizer.bypassSecurityTrustStyle(backgroundTransform);
+      layout[i].backgroundTransform = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);
     }
   }
 }

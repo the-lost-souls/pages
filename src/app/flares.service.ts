@@ -10,9 +10,9 @@ import { Utils } from './utils';
 })
 export class FlaresService {
 
-  constructor() { }
+  constructor(private _sanitizer: DomSanitizer) { }
 
-  public updateFlares(scrollTop: number, layout: Layout[], flares: Flare[], config: CarouselOptions, sanitizer: DomSanitizer, ) {
+  public updateFlares(scrollTop: number, layout: Layout[], flares: Flare[], config: CarouselOptions) {
 
     for (const flare of flares) {
       const y0 = (flare.y + scrollTop) - flare.size / 2;
@@ -38,7 +38,7 @@ export class FlaresService {
         `translateX(${flare.x}px)` +
         `scale(${visibility})`;
 
-      flare.transform = sanitizer.bypassSecurityTrustStyle(transform);
+      flare.transform = this._sanitizer.bypassSecurityTrustStyle(transform);
     }
   }
 }
