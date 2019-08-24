@@ -109,7 +109,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     if (scrollTop !== this._previousScrollTop) {
       this._carouselService.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
 
-      this._flaresService.updateFlares(scrollTop, this.layout, this.flares, this.config);
+      const polygons = this._carouselService.getPolygons(this.layout, this.config, scrollTop);
+      this._flaresService.updateFlares(polygons, this.flares);
       this._carouselService.updateTransforms(this.layout, this.config, this.angle1);
     }
     this._previousScrollTop = scrollTop;

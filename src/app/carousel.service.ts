@@ -78,4 +78,23 @@ export class CarouselService {
       layout[i].backgroundTransform = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);
     }
   }
+
+  public getPolygons(layout: Layout[], config: CarouselOptions, scrollTop: number): [number, number][][] {
+
+    const polygons = [];
+    for (const l of layout) {
+
+      const screenCenter = l.center - scrollTop;
+      const contentHeight = (config.sectionHeight - config.padding) * l.scale;
+      const contentTop = screenCenter - contentHeight / 2;
+      const contentBottom = screenCenter + contentHeight / 2;
+
+      // TODO: these should be calculated from viewport width and/or align with the css logic
+      const contentLeft = -2000;
+      const contentRight = 2000;
+
+      polygons.push([[contentLeft, contentTop], [contentRight, contentTop], [contentRight, contentBottom], [contentLeft, contentBottom]]);
+    }
+    return polygons;
+  }
 }
