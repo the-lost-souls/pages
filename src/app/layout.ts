@@ -11,8 +11,6 @@ export class Layout {
   public height: number;
   public transform: SafeStyle;
   public backgroundTransform: SafeStyle;
-  public background: string;
-  public foreground: string;
 
   // temporary
   public translate: number;
