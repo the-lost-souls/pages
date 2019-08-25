@@ -30,8 +30,8 @@ export class MainComponent implements OnInit, AfterViewInit {
   public polygons: [number, number][][];
 
   public showCenter = false;
+  public animateBackground = true;
 
-  private _previousT: number;
   private _previousScrollTop: number;
 
   public flares = [
@@ -67,6 +67,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     const params = this.route.snapshot.queryParamMap;
 
     this.showCenter = this.getBooleanOrDefault(params, 'showcenter', false);
+    this.animateBackground = this.getBooleanOrDefault(params, 'animatebackground', true);
   }
 
   ngAfterViewInit() {
@@ -89,8 +90,9 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   private animate(t: number) {
 
-    if (this._previousT) {
-      // this.angle1 += 3.5 * elapsed / 1000;
+    if (this.animateBackground) {
+      this.angle1 = t * 3.6 / 1000;
+      this._carouselService.updateTransforms(this.layout, this.config, this.angle1);
     }
 
     const scrollTop = this._carousel.nativeElement.scrollTop;
@@ -102,7 +104,6 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.polygons = this._carouselService.getPolygons(this.layout, this.config, scrollTop);
     }
     this._previousScrollTop = scrollTop;
-    this._previousT = t;
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
 
@@ -111,8 +112,6 @@ export class MainComponent implements OnInit, AfterViewInit {
       return defaultValue;
     }
 
-    return Boolean(map.get(key));
+    return map.get(key) === 'true';
   }
-
-
 }
