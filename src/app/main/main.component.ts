@@ -90,10 +90,6 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   private animate(t: number) {
 
-    if (this.animateBackground) {
-      this.angle1 = t * 3.6 / 1000;
-      this._carouselService.updateTransforms(this.layout, this.config, this.angle1);
-    }
 
     const scrollTop = this._carousel.nativeElement.scrollTop;
 
@@ -101,8 +97,15 @@ export class MainComponent implements OnInit, AfterViewInit {
       this._carouselService.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
 
       this._carouselService.updateTransforms(this.layout, this.config, this.angle1);
+      this._carouselService.updateBackgroundTransforms(this.layout, this.config, this.angle1);
       this.polygons = this._carouselService.getPolygons(this.layout, this.config, scrollTop);
     }
+
+    if (this.animateBackground) {
+      this.angle1 = t * 3.6 / 1000;
+      this._carouselService.updateBackgroundTransforms(this.layout, this.config, this.angle1);
+    }
+
     this._previousScrollTop = scrollTop;
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
