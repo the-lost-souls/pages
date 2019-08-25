@@ -31,11 +31,9 @@ describe('CarouselContentComponent', () => {
       github: 'https://github.com/the-lost-souls/IV'
     };
 
-    const testLayout = new Layout();
-
     component.content = testSection;
     component.options = CarouselOptions.default();
-    component.geometry = testLayout;
+    component.backgroundTransform = undefined;
     fixture.detectChanges();
   });
 

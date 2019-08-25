@@ -1,11 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { CarouselOptions } from '../carouseloptions';
-import { Utils } from '../utils';
 import { Layout } from '../layout';
 import { Flare } from '../flare';
 import { CarouselService } from '../carousel.service';
-import { ParamMap, Router, ActivatedRoute } from '@angular/router';
+import { ParamMap, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -82,17 +80,6 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.layout[i].virtualCenter = this.config.center + this.config.sectionHeight * i;
       this.layout[i].virtualTop = this.layout[i].virtualCenter - this.config.sectionHeight / 2;
       this.layout[i].virtualTopStyle = this.layout[i].virtualTop + 'px';
-    }
-
-    const c = document.createElement('canvas');
-    for (let i = 0; i < this.config.sections.length; i++) {
-      const img = new Image();
-      img.onload = () => {
-        console.log('Blurring ' + this.config.sections[i].image);
-        this.layout[i].background = Utils.prepareBackground(img, c, this.config.blurRadius, this.config.backgroundFadeRadius);
-        this.layout[i].foreground = Utils.fadeEdges(img, c, 0, 640);
-      };
-      img.src = this.config.sections[i].image;
     }
 
     this._changeDetector.detectChanges();

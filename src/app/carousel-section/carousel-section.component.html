@@ -1,7 +1,7 @@
 
 
-<img [src]="geometry.background" class="item-background" [style.transform]="geometry.backgroundTransform" />
-<img [src]="geometry.foreground" class="item-image"/>
+<img [src]="backgroundImage" class="item-background" [style.transform]="backgroundTransform" />
+<img [src]="foregroundImage" class="item-image"/>
 
 <div class="content" [style.width]="options.contentWidth | suffix: 'px'">
     <div class="title" [style.font-size]="options.titleFontSize">{{ content.title }}</div>

@@ -24,7 +24,8 @@
                     class="section" 
                     [style.height]="sectionContentHeight | suffix: 'px'" 
                     [content]="section"
-                    [options]="config" [geometry]="layout[i]">
+                    [options]="config" 
+                    [backgroundTransform]="layout[i].backgroundTransform">
                 </app-carousel-section>
             </div>
         </div>
