@@ -5,7 +5,6 @@ import { Utils } from '../utils';
 import { Layout } from '../layout';
 import { Flare } from '../flare';
 import { CarouselService } from '../carousel.service';
-import { FlaresService } from '../flares.service';
 
 @Component({
   selector: 'app-main',
@@ -31,6 +30,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   public scrollPaddingTop: string;
   public scrollPaddingBottom: string;
   public layout: Layout[] = [];
+  public polygons: [number, number][][];
 
   public margins: string[] = [];
 
@@ -38,16 +38,26 @@ export class MainComponent implements OnInit, AfterViewInit {
   private _previousScrollTop: number;
 
   public flares = [
-    new Flare(-this.config.contentWidth, 80, this.config.padding, 1.5),
-    new Flare(this.config.contentWidth, this.config.center + this.config.sectionHeight * this.config.grow * 0.5, this.config.padding, 1.2),
-    new Flare(-this.config.contentWidth / 2, this.config.center + this.config.sectionHeight * this.config.grow, this.config.padding, 1)
+    new Flare(
+      { x: -this.config.contentWidth, y: 80 },
+      'assets/flare5.jpg',
+      this.config.padding,
+      1.5),
+    new Flare(
+      { x: this.config.contentWidth, y: this.config.center + this.config.sectionHeight * this.config.grow * 0.5 },
+      'assets/flare5.jpg',
+      this.config.padding,
+      1.2),
+    new Flare(
+      { x: -this.config.contentWidth / 2, y: this.config.center + this.config.sectionHeight * this.config.grow },
+      'assets/flare5.jpg',
+      this.config.padding,
+      1)
   ];
 
   constructor(
     private _carouselService: CarouselService,
-    private _changeDetector: ChangeDetectorRef,
-    private _sanitizer: DomSanitizer,
-    private _flaresService: FlaresService) {
+    private _changeDetector: ChangeDetectorRef) {
 
     this.layout = new Array(this.config.sections.length);
     for (let i = 0; i < this.layout.length; i++) {
@@ -109,9 +119,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     if (scrollTop !== this._previousScrollTop) {
       this._carouselService.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
 
-      const polygons = this._carouselService.getPolygons(this.layout, this.config, scrollTop);
-      this._flaresService.updateFlares(polygons, this.flares);
       this._carouselService.updateTransforms(this.layout, this.config, this.angle1);
+      this.polygons = this._carouselService.getPolygons(this.layout, this.config, scrollTop);
     }
     this._previousScrollTop = scrollTop;
     this._previousT = t;
