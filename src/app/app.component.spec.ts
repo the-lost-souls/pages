@@ -10,7 +10,9 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule.withRoutes(
+          [{ path: '', component: MainComponent }]
+        )
       ],
       declarations: [
         AppComponent, MainComponent, SuffixPipe, CarouselSectionComponent, LensflareComponent
