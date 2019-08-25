@@ -26,16 +26,12 @@ export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild('carousel', { static: false })
   private _carousel: ElementRef<HTMLElement>;
 
-  public itemSizeStyle: string;
-
   public scrollPaddingTop: string;
   public scrollPaddingBottom: string;
   public layout: Layout[] = [];
   public polygons: [number, number][][];
 
   public showCenter = false;
-
-  public margins: string[] = [];
 
   private _previousT: number;
   private _previousScrollTop: number;
@@ -61,7 +57,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   constructor(
     private _carouselService: CarouselService,
     private _changeDetector: ChangeDetectorRef,
-    private router: Router,
     private route: ActivatedRoute) {
 
     this.layout = new Array(this.config.sections.length);
@@ -71,8 +66,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.itemSizeStyle = `${this.config.sectionHeight}px`;
-
     const params = this.route.snapshot.queryParamMap;
 
     this.showCenter = this.getBooleanOrDefault(params, 'showcenter', false);
@@ -82,20 +75,10 @@ export class MainComponent implements OnInit, AfterViewInit {
     // On safari, using container.clientHeight gives the wrong value, for some reason
     const viewportHeight = window.innerHeight;
 
-    this.margins = new Array(this.config.sections.length);
-    this.margins[0] = `${this.config.center - this.config.sectionHeight / 2}px 0 0 0`;
-    for (let i = 1; i < this.config.sections.length - 1; i++) {
-      this.margins[i] = `${this.config.padding}px 0 0 0`;
-    }
-    this.margins[this.config.sections.length - 1] =
-      `${this.config.padding}px 0 ${viewportHeight - this.config.center - this.config.sectionHeight / 2}px 0`;
-
     this.scrollPaddingTop = `${this.config.center - this.config.sectionHeight / 2}px`;
     this.scrollPaddingBottom = `${viewportHeight - this.config.center - this.config.sectionHeight / 2}px`;
 
-
     for (let i = 0; i < this.config.sections.length; i++) {
-
       this.layout[i].virtualCenter = this.config.center + this.config.sectionHeight * i;
       this.layout[i].virtualTop = this.layout[i].virtualCenter - this.config.sectionHeight / 2;
       this.layout[i].virtualTopStyle = this.layout[i].virtualTop + 'px';
