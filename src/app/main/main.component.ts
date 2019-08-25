@@ -5,6 +5,7 @@ import { Utils } from '../utils';
 import { Layout } from '../layout';
 import { Flare } from '../flare';
 import { CarouselService } from '../carousel.service';
+import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -32,6 +33,8 @@ export class MainComponent implements OnInit, AfterViewInit {
   public layout: Layout[] = [];
   public polygons: [number, number][][];
 
+  public showCenter = false;
+
   public margins: string[] = [];
 
   private _previousT: number;
@@ -57,7 +60,9 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _carouselService: CarouselService,
-    private _changeDetector: ChangeDetectorRef) {
+    private _changeDetector: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute) {
 
     this.layout = new Array(this.config.sections.length);
     for (let i = 0; i < this.layout.length; i++) {
@@ -67,6 +72,10 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.itemSizeStyle = `${this.config.sectionHeight}px`;
+
+    const params = this.route.snapshot.queryParamMap;
+
+    this.showCenter = this.getBooleanOrDefault(params, 'showcenter', false);
   }
 
   ngAfterViewInit() {
@@ -126,5 +135,14 @@ export class MainComponent implements OnInit, AfterViewInit {
     this._previousT = t;
     requestAnimationFrame((frameT) => this.animate(frameT));
   }
+
+  private getBooleanOrDefault(map: ParamMap, key: string, defaultValue: boolean): boolean {
+    if (!map.has(key)) {
+      return defaultValue;
+    }
+
+    return Boolean(map.get(key));
+  }
+
 
 }
