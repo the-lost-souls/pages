@@ -4,6 +4,7 @@ import { MainComponent } from './main.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SuffixPipe } from '../suffix.pipe';
 import { CarouselSectionComponent } from '../carousel-section/carousel-section.component';
+import { LensflareComponent } from '../lensflare/lensflare.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -12,7 +13,7 @@ describe('MainComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ NoopAnimationsModule ],
-      declarations: [ MainComponent, SuffixPipe, CarouselSectionComponent],
+      declarations: [ MainComponent, SuffixPipe, CarouselSectionComponent, LensflareComponent],
     })
     .compileComponents();
   }));

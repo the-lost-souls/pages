@@ -6,7 +6,7 @@ import * as p from 'polygon-tools';
 const polygonTools: any = p;
 
 // just a few sanity checks to make sure the handmade typings file works.
-fdescribe('PolygonTools', () => {
+describe('PolygonTools', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('test area', () => {

@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MainComponent } from './main/main.component';
 import { SuffixPipe } from './suffix.pipe';
 import { CarouselSectionComponent } from './carousel-section/carousel-section.component';
+import { LensflareComponent } from './lensflare/lensflare.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -12,7 +13,7 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent, MainComponent, SuffixPipe, CarouselSectionComponent
+        AppComponent, MainComponent, SuffixPipe, CarouselSectionComponent, LensflareComponent
 
       ],
     }).compileComponents();
