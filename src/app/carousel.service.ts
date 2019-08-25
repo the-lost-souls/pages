@@ -63,24 +63,10 @@ export class CarouselService {
         `scale(${layout[i].scale})`;
 
       layout[i].transform = this._sanitizer.bypassSecurityTrustStyle(transform);
-      const normalizedDistance = layout[i].distance / config.sectionHeight;
-      const parallaxTranslate = normalizedDistance * config.sectionHeight * 0.5;
-
-      const backgroundTransform =
-        `translateY(-50%)` +
-        `translateX(-50%)` +
-        `translateZ(-2em)` +
-        `translateY(${-parallaxTranslate}px)` +
-        `rotateZ(${angle}deg)` +
-        `scale(${backgroundScale})` +
-        `scale( ${1 / layout[i].scale})`;
-
-      layout[i].backgroundTransform = this._sanitizer.bypassSecurityTrustStyle(backgroundTransform);
     }
   }
 
-  public updateBackgroundTransforms(layout: Layout[], config: CarouselOptions, angle: number) {
-    const backgroundScale = 8;
+  public updateBackgroundTransforms(layout: Layout[], config: CarouselOptions, angle: number, backgroundScale: number) {
 
     for (let i = 0; i < config.sections.length; i++) {
 

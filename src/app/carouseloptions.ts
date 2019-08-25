@@ -1,5 +1,6 @@
 import * as IsMobile from 'is-mobile';
 import { CarouselSection } from './carouselsection';
+import { Flare } from './flare';
 
 export class CarouselOptions {
     public constructor(
@@ -126,11 +127,11 @@ export class CarouselOptions {
         const mobile: CarouselOptions = {
             center: 250,
             grow: 3,
-            sectionHeight: 80,
+            sectionHeight: 70,
             contentWidth: 60 * 2,
             padding: 10,
-            blurRadius: 3,
-            backgroundFadeRadius: 20,
+            blurRadius: 7,
+            backgroundFadeRadius: 80,
             titleFontSize: '8pt',
             subtitleFontSize: '5pt',
             sections: content
@@ -150,5 +151,46 @@ export class CarouselOptions {
         };
 
         return IsMobile.isMobile(navigator.userAgent) ? mobile : desktop;
+    }
+
+    public static flares(options: CarouselOptions): Flare[] {
+
+      const desktop = [
+        new Flare(
+          { x: -options.contentWidth, y: 80 },
+          'assets/flare5.jpg',
+          options.padding,
+          1.5),
+        new Flare(
+          { x: options.contentWidth, y: options.center + options.sectionHeight * options.grow * 0.5 },
+          'assets/flare5.jpg',
+          options.padding,
+          1.2),
+        new Flare(
+          { x: -options.contentWidth / 2, y: options.center + options.sectionHeight * options.grow },
+          'assets/flare5.jpg',
+          options.padding,
+          1)
+      ];
+
+      const mobile = [
+        new Flare(
+          { x: -options.contentWidth, y: 80 },
+          'assets/flare5.jpg',
+          options.padding,
+          0.5),
+        new Flare(
+          { x: options.contentWidth, y: options.center + options.sectionHeight * options.grow * 0.5 },
+          'assets/flare5.jpg',
+          options.padding,
+          0.9),
+        new Flare(
+          { x: -options.contentWidth / 2, y: options.center + options.sectionHeight * options.grow },
+          'assets/flare5.jpg',
+          options.padding,
+          0.7)
+      ];
+
+      return IsMobile.isMobile(navigator.userAgent) ? mobile : desktop;
     }
 }

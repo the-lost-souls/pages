@@ -34,23 +34,7 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   private _previousScrollTop: number;
 
-  public flares = [
-    new Flare(
-      { x: -this.config.contentWidth, y: 80 },
-      'assets/flare5.jpg',
-      this.config.padding,
-      1.5),
-    new Flare(
-      { x: this.config.contentWidth, y: this.config.center + this.config.sectionHeight * this.config.grow * 0.5 },
-      'assets/flare5.jpg',
-      this.config.padding,
-      1.2),
-    new Flare(
-      { x: -this.config.contentWidth / 2, y: this.config.center + this.config.sectionHeight * this.config.grow },
-      'assets/flare5.jpg',
-      this.config.padding,
-      1)
-  ];
+  public flares = CarouselOptions.flares(this.config);
 
   constructor(
     private _carouselService: CarouselService,
@@ -89,21 +73,26 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   private animate(t: number) {
-
-
     const scrollTop = this._carousel.nativeElement.scrollTop;
+
+    const width = this._carousel.nativeElement.clientWidth;
+    const height = this.config.sectionHeight * this.config.grow;
+
+    const k = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
+    const backgroundScale = 1.2 * k / 256; // add 20% to compensate for parralax
+
 
     if (scrollTop !== this._previousScrollTop) {
       this._carouselService.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
 
       this._carouselService.updateTransforms(this.layout, this.config, this.angle1);
-      this._carouselService.updateBackgroundTransforms(this.layout, this.config, this.angle1);
+      this._carouselService.updateBackgroundTransforms(this.layout, this.config, this.angle1, backgroundScale);
       this.polygons = this._carouselService.getPolygons(this.layout, this.config, scrollTop);
     }
 
     if (this.animateBackground) {
       this.angle1 = t * 3.6 / 1000;
-      this._carouselService.updateBackgroundTransforms(this.layout, this.config, this.angle1);
+      this._carouselService.updateBackgroundTransforms(this.layout, this.config, this.angle1, backgroundScale);
     }
 
     this._previousScrollTop = scrollTop;
