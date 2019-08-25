@@ -27,13 +27,13 @@ export class CarouselSectionComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const img = new Image();
-    const c = document.createElement('canvas');
-    img.onload = () => {
-      this.backgroundImage = Utils.prepareBackground(img, c, this.options.blurRadius, this.options.backgroundFadeRadius);
-      this.foregroundImage = Utils.fadeEdges(img, c   , 0, 640);
+    const image = new Image();
+    const canvas = document.createElement('canvas');
+    image.onload = () => {
+      this.backgroundImage = Utils.prepareBackground(image, canvas, this.options.blurRadius, this.options.backgroundFadeRadius);
+      this.foregroundImage = Utils.fadeEdges(image, canvas, 0, 640);
     };
-    img.src = this.content.image;
+    image.src = this.content.image;
   }
 
   public openUrl(url: string) {
