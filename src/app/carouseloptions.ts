@@ -26,10 +26,10 @@ export class CarouselOptions {
               category: 'pc demo',
               ranked: 2,
               credits: [
-                {name: 'Cyberfish', role: 'code, gfx, modeling, animation'},
                 {name: 'Rawhead', role: 'gfx, modeling'},
                 {name: 'Kezoomer', role: 'music'},
-                {name: 'Kezoomer\'s aunt', role: 'vocals'}
+                {name: 'Kezoomer\'s aunt', role: 'vocals'},
+                {name: 'Cyberfish', role: 'code, gfx, modeling, animation'},
               ],
               youtube: 'https://www.youtube.com/watch?v=mHV_oIYZyEg',
               pouet: 'http://www.pouet.net/prod.php?which=5555',

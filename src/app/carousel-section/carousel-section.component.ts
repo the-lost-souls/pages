@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { CarouselSection } from '../carouselsection';
 import { CarouselOptions } from '../carouseloptions';
 import { Utils } from '../utils';
