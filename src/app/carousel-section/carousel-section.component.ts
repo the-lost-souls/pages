@@ -15,13 +15,13 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
         opacity : 1
       })),
       state('false', style({
-        opacity: 0.5,
+        opacity: 0.0,
       })),
       transition('false => true', [
-        animate('0.1s')
+        animate('1s 0.5s')
       ]),
       transition('true => false', [
-        animate('1s')
+        animate('0.5s')
       ])
     ]),
   ]

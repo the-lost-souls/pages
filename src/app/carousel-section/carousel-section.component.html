@@ -1,22 +1,19 @@
-
-
 <img [src]="backgroundImage" class="item-background" [style.transform]="backgroundTransform" />
-<img [src]="foregroundImage" class="item-image"/>
+<img [src]="foregroundImage" class="item-image" />
 
 <div class="content" 
     [style.width]="contentWidth | suffix: 'px'" 
     [style.height]="contentHeight | suffix: 'px'"
     [style.transform]="contentTransform">
 
-    
-    <div class="title" [style.font-size]="options.titleFontSize">{{ content.title }}</div>
 
-    <div class="right-area">
+    <div class="title" [style.font-size]="options.titleFontSize" [style.opacity]="focus">{{ content.title }}</div>
+
+    <div class="right-area" [@fadeInOut]="focus == 1">
         <div>
-        <div *ngFor="let line of content.text">
+            <div *ngFor="let line of content.text">
                 <div class="subtitle" [style.font-size]="options.subtitleFontSize"> {{ line }} </div>
-        </div>                
-
+            </div>
         </div>
         <div class="separator" [style.height]="contentHeight | suffix: 'px'"></div>
         <div class="actions">
@@ -29,6 +26,6 @@
             <div *ngIf="content.pouet" class="action" (click)=openUrl(content.pouet)>
                 <img src="assets/trumpet.png" class="action-icon">
             </div>
-        </div>        
+        </div>
     </div>
 </div>
