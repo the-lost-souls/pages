@@ -3,30 +3,13 @@ import { CarouselSection } from '../carouselsection';
 import { CarouselOptions } from '../carouseloptions';
 import { Utils } from '../utils';
 import { SafeStyle, DomSanitizer } from '@angular/platform-browser';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import * as IsMobile from 'is-mobile';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-carousel-section',
   templateUrl: './carousel-section.component.html',
-  styleUrls: ['./carousel-section.component.sass'],
-  animations: [
-    trigger('fadeInOut', [
-      state('true', style({
-        opacity : 1
-      })),
-      state('false', style({
-        opacity: 0.0,
-      })),
-      transition('false => true', [
-        animate('1s 0.5s')
-      ]),
-      transition('true => false', [
-        animate('0.5s')
-      ])
-    ]),
-  ]
+  styleUrls: ['./carousel-section.component.sass']
 })
 export class CarouselSectionComponent implements OnInit, AfterViewInit {
 
