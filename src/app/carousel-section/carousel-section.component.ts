@@ -4,6 +4,7 @@ import { CarouselOptions } from '../carouseloptions';
 import { Utils } from '../utils';
 import { SafeStyle, DomSanitizer } from '@angular/platform-browser';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import * as IsMobile from 'is-mobile';
 
 @Component({
   selector: 'app-carousel-section',
@@ -48,6 +49,11 @@ export class CarouselSectionComponent implements OnInit {
   public contentWidth: number;
   public contentHeight: number;
 
+  public titleFontSize = IsMobile.isMobile(navigator.userAgent) ? 14 : 22;
+  public eventFontSize = IsMobile.isMobile(navigator.userAgent) ? 14 : 22;
+  public nameFontSize = IsMobile.isMobile(navigator.userAgent) ? 10 : 18;
+  public roleFontSize = IsMobile.isMobile(navigator.userAgent) ? 8 : 12;
+
   constructor(private _sanitizer: DomSanitizer) { }
 
   ngOnInit() {
@@ -60,11 +66,10 @@ export class CarouselSectionComponent implements OnInit {
     };
     image.src = this.content.image;
 
-    // this.titleTransform = `scale(${1 / this.options.grow })`;
-
     this.contentWidth = this.options.contentWidth * this.options.grow;
     this.contentHeight = (this.options.sectionHeight - this.options.padding * 2) * this.options.grow;
-    this.contentTransform = this._sanitizer.bypassSecurityTrustStyle(`translateX(-50%) translateY(-50%) translateZ(2em) scale(${ 1 / this.options.grow }) `);
+    this.contentTransform =
+      this._sanitizer.bypassSecurityTrustStyle(`translateX(-50%) translateY(-50%) translateZ(2em) scale(${ 1 / this.options.grow }) `);
   }
 
   public openUrl(url: string) {

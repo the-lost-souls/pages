@@ -18,6 +18,10 @@ hovers over them
 - cleanup use of viewport units vs percentage, make consistent
 - add box-sizing border-box to all elements globally
 - cleanup use of flex vs flexbox ('flex' is apparently the latest standard)
+- use 'undefined' instead of 'null' in teh contents
+- split 'options' from 'content'
+- rename 'config' to 'options' everywhere
+- rename 'item' to section everywhere
 
 ### Bugs
 - The first/last element does not cover the header correctly

@@ -43,9 +43,9 @@ export class CarouselOptions {
               category: 'pc demo',
               ranked: 1,
               credits: [
-                {name: 'Cyberfish', role: 'code, gfx, modeling, animation'},
                 {name: 'Rawhead', role: 'gfx, modeling'},
                 {name: 'Kezoomer', role: 'music'},
+                {name: 'Cyberfish', role: 'code, gfx, modeling, animation'},
               ],
               youtube: 'https://www.youtube.com/watch?v=_ubBTbGcLv8',
               pouet: 'http://www.pouet.net/prod.php?which=4244',
@@ -67,86 +67,165 @@ export class CarouselOptions {
               pouet: 'http://www.pouet.net/prod.php?which=5919',
               github: 'https://github.com/the-lost-souls/III'
             },
-            // {
-            //   image: 'assets/cucumber01.png',
-            //   title: '"Cucumber Slumber"',
-            //   text: ['The Gathering 1999', '#1 fast demo'],
-            //   youtube: 'https://youtu.be/ClB6vvaWzMg',
-            //   pouet: 'https://www.pouet.net/prod.php?which=81547',
-            //   github: null
-            // },
-            // {
-            //   image: 'assets/FYH.jpg',
-            //   title: '"Follow your Heart"',
-            //   text: ['Aasheim Party 1999', '#1 combined demo'],
-            //   youtube: 'https://youtu.be/AAPkby4EDQY',
-            //   pouet: 'https://www.pouet.net/prod.php?which=81546',
-            //   github: null
-            // },
-            // {
-            //   image: 'assets/II.jpg',
-            //   title: '"II"',
-            //   text: ['The Gathering 1998', '#5 pc demo'],
-            //   youtube: 'https://youtu.be/stSv0y_zg1o',
-            //   pouet: 'http://www.pouet.net/prod.php?which=5923',
-            //   github: 'https://github.com/the-lost-souls/II'
-            // },
-            // {
-            //   image: 'assets/pgp.gif',
-            //   title: '"pgp"',
-            //   text: ['The Gathering 1997', '#7 pc 4k'],
-            //   youtube: 'https://youtu.be/Fg-FixaV6ws',
-            //   pouet: 'http://www.pouet.net/prod.php?which=15848',
-            //   github: 'https://github.com/the-lost-souls/pgp'
-            // },
-            // {
-            //   image: 'assets/mom02.png',
-            //   title: '"Mind over Matter"',
-            //   text: ['The Gathering 1996', '#8 pc demo'],
-            //   youtube: 'https://youtu.be/UtopQ09WZ9c',
-            //   pouet: 'http://www.pouet.net/prod.php?which=58683',
-            //   github: 'https://github.com/the-lost-souls/mind-over-matter'
-            // },
-            // {
-            //   image: 'assets/pese01.png',
-            //   title: '"PESE"',
-            //   text: ['The Gathering 1996', '#3 fast intro'],
-            //   youtube: 'https://youtu.be/OlRxaUWLNgU',
-            //   pouet: null,
-            //   github: null
-            // },
-            // {
-            //   image: 'assets/time01.png',
-            //   title: '"Time"',
-            //   text: ['Tonstad 1996'],
-            //   youtube: 'https://youtu.be/AyIQb7SAhP0',
-            //   pouet: 'http://www.pouet.net/prod.php?which=58684',
-            //   github: 'https://github.com/the-lost-souls/time'
-            // },
-            // {
-            //   image: 'assets/synthetic.png',
-            //   title: '"Synthetic"',
-            //   text: ['Tonstad 1995'],
-            //   youtube: 'https://youtu.be/tJvQbS8wOok',
-            //   pouet: null,
-            //   github: 'https://github.com/the-lost-souls/synthetic'
-            // },
-            // {
-            //   image: 'assets/sorcerer.png',
-            //   title: '"Sorcerer"',
-            //   text: ['1995', 'BBS Intro'],
-            //   youtube: 'https://youtu.be/F_KWflqlF1g',
-            //   pouet: null,
-            //   github: 'https://github.com/the-lost-souls/sorcerer'
-            // },
-            // {
-            //   image: 'assets/tib.png',
-            //   title: '"Tiß"',
-            //   text: ['Melhus Party 1994'],
-            //   youtube: 'https://youtu.be/Qd8WPVmYhX8',
-            //   pouet: null,
-            //   github: 'https://github.com/the-lost-souls/TiB'
-            // }
+            {
+              image: 'assets/cucumber01.png',
+              title: 'Cucumber Overdose',
+              event: 'The Gathering',
+              year: 1999,
+              category: 'fast intro',
+              ranked: 1,
+              credits: [
+                {name: 'Cyberfish', role: 'code, gfx, animation'},
+                {name: 'Kezoomer', role: 'music, gfx, modeling'},
+                {name: 'tChr', role: 'gfx'},
+              ],
+              youtube: 'https://youtu.be/ClB6vvaWzMg',
+              pouet: 'https://www.pouet.net/prod.php?which=81547',
+              github: null
+            },
+            {
+              image: 'assets/FYH.jpg',
+              title: 'Follow your Heart',
+              event: 'Aasheim Party',
+              year: 1999,
+              category: 'combined demo',
+              ranked: 1,
+              credits: [
+                {name: 'Rawhead', role: 'gfx, modeling'},
+                {name: 'Kezoomer', role: 'music'},
+                {name: 'Cyberfish', role: 'code'},
+              ],
+              youtube: 'https://youtu.be/AAPkby4EDQY',
+              pouet: 'https://www.pouet.net/prod.php?which=81546',
+              github: null
+            },
+            {
+              image: 'assets/II.jpg',
+              title: 'II',
+              event: 'The Gathering',
+              year: 1998,
+              category: 'pc demo',
+              ranked: 5,
+              credits: [
+                {name: 'Rawhead', role: 'gfx, modeling, animation'},
+                {name: 'Kezoomer', role: 'music, choreography'},
+                {name: 'Cyberfish', role: 'code, animation'},
+              ],
+              youtube: 'https://youtu.be/stSv0y_zg1o',
+              pouet: 'http://www.pouet.net/prod.php?which=5923',
+              github: 'https://github.com/the-lost-souls/II'
+            },
+            {
+              image: 'assets/pgp.gif',
+              title: 'pgp',
+              event: 'The Gathering',
+              year: 1997,
+              category: '4k intro',
+              ranked: 7,
+              credits: [
+                {name: 'Cyberfish', role: 'code, gfx'},
+              ],
+              youtube: 'https://youtu.be/Fg-FixaV6ws',
+              pouet: 'http://www.pouet.net/prod.php?which=15848',
+              github: 'https://github.com/the-lost-souls/pgp'
+            },
+            {
+              image: 'assets/mom02.png',
+              title: 'Mind over Matter',
+              event: 'The Gathering',
+              year: 1996,
+              category: 'pc demo',
+              ranked: 8,
+              credits: [
+                {name: 'Kezoomer', role: 'music'},
+                {name: 'Cyberfish', role: 'code'},
+                {name: 'Rawhead', role: 'gfx, modeling'},
+              ],
+              youtube: 'https://youtu.be/UtopQ09WZ9c',
+              pouet: 'http://www.pouet.net/prod.php?which=58683',
+              github: 'https://github.com/the-lost-souls/mind-over-matter'
+            },
+            {
+              image: 'assets/pese01.png',
+              title: 'PESE',
+              event: 'The Gathering',
+              year: 1996,
+              category: 'fast intro',
+              ranked: 3,
+              credits: [
+                {name: 'Kezoomer', role: 'music'},
+                {name: 'Cyberfish', role: 'code'},
+                {name: 'Rawhead', role: 'gfx, modeling'},
+              ],
+              youtube: 'https://youtu.be/OlRxaUWLNgU',
+              pouet: null,
+              github: null
+            },
+            {
+              image: 'assets/time01.png',
+              title: 'Time',
+              event: 'Tonstad Party',
+              year: 1996,
+              category: undefined,
+              ranked: undefined,
+              credits: [
+                {name: 'Kezoomer', role: 'music, gfx'},
+                {name: 'Cyberfish', role: 'code, modeling'},
+                {name: 'Rawhead', role: 'gfx, modeling'},
+              ],
+              youtube: 'https://youtu.be/AyIQb7SAhP0',
+              pouet: 'http://www.pouet.net/prod.php?which=58684',
+              github: 'https://github.com/the-lost-souls/time'
+            },
+            {
+              image: 'assets/synthetic.png',
+              title: 'Synthetic',
+              event: 'Tonstad Party',
+              year: 1995,
+              category: undefined,
+              ranked: undefined,
+              credits: [
+                {name: 'Kezoomer', role: 'music, modeling'},
+                {name: 'Cyberfish', role: 'code, gfx'},
+                {name: 'Rawhead', role: 'gfx, modeling'},
+              ],
+              youtube: 'https://youtu.be/tJvQbS8wOok',
+              pouet: null,
+              github: 'https://github.com/the-lost-souls/synthetic'
+            },
+            {
+              image: 'assets/sorcerer.png',
+              title: 'Sorcerer',
+              event: 'BBS Intro',
+              year: 1995,
+              category: undefined,
+              ranked: undefined,
+              credits: [
+                {name: 'Kezoomer', role: 'modeling'},
+                {name: 'Cyberfish', role: 'code, gfx'},
+              ],
+              youtube: 'https://youtu.be/F_KWflqlF1g',
+              pouet: null,
+              github: 'https://github.com/the-lost-souls/sorcerer'
+            },
+            {
+              image: 'assets/tib.png',
+              title: 'Tiß',
+              event: 'Melhus Party',
+              year: 1994,
+              category: undefined,
+              ranked: undefined,
+              credits: [
+                {name: 'Kezoomer', role: 'music, gfx'},
+                {name: 'Cyberfish', role: 'code'},
+                {name: 'Rawhead', role: 'code, gfx'},
+                {name: 'MTB', role: 'code'},
+                {name: 'Euronymous', role: 'gfx'}
+              ],
+              youtube: 'https://youtu.be/Qd8WPVmYhX8',
+              pouet: null,
+              github: 'https://github.com/the-lost-souls/TiB'
+            }
           ];
 
         const mobile: CarouselOptions = {
@@ -170,7 +249,7 @@ export class CarouselOptions {
             padding: 6,
             blurRadius: 5,
             backgroundFadeRadius: 50,
-            titleFontSize: '25pt',
+            titleFontSize: '20pt',
             subtitleFontSize: '15pt',
             sections: content
         };
@@ -182,38 +261,38 @@ export class CarouselOptions {
 
       const desktop = [
         new Flare(
-          { x: -options.contentWidth, y: 80 },
+          { x: -options.contentWidth * 1.5, y: options.center - options.sectionHeight * options.grow * 0.5 },
           'assets/flare5.jpg',
           options.padding,
           1.5),
         new Flare(
-          { x: options.contentWidth, y: options.center + options.sectionHeight * options.grow * 0.5 },
+          { x: options.contentWidth * 1.3, y: options.center + options.sectionHeight * options.grow * 0.5 },
           'assets/flare5.jpg',
           options.padding,
-          1.2),
-        new Flare(
-          { x: -options.contentWidth / 2, y: options.center + options.sectionHeight * options.grow },
-          'assets/flare5.jpg',
-          options.padding,
-          1)
+          0.7),
       ];
 
       const mobile = [
+        // new Flare(
+        //   { x: -options.contentWidth, y: 80 },
+        //   'assets/flare5.jpg',
+        //   options.padding,
+        //   0.5),
         new Flare(
-          { x: -options.contentWidth, y: 80 },
+          { x: -options.contentWidth, y: options.center - options.sectionHeight * options.grow * 0.5 },
+          'assets/flare5.jpg',
+          options.padding,
+          0.8),
+        new Flare(
+          { x: options.contentWidth * 1.3, y: options.center + options.sectionHeight * options.grow * 0.5 },
           'assets/flare5.jpg',
           options.padding,
           0.5),
-        new Flare(
-          { x: options.contentWidth, y: options.center + options.sectionHeight * options.grow * 0.5 },
-          'assets/flare5.jpg',
-          options.padding,
-          0.9),
-        new Flare(
-          { x: -options.contentWidth / 2, y: options.center + options.sectionHeight * options.grow },
-          'assets/flare5.jpg',
-          options.padding,
-          0.7)
+          // new Flare(
+          // { x: -options.contentWidth / 2, y: options.center + options.sectionHeight * options.grow },
+          // 'assets/flare5.jpg',
+          // options.padding,
+          // 0.7)
       ];
 
       return IsMobile.isMobile(navigator.userAgent) ? mobile : desktop;

@@ -7,19 +7,18 @@
     [style.transform]="contentTransform">
 
 
-    <div class="title" [style.font-size]="options.titleFontSize" [style.opacity]="focus">"{{ content.title }}" ({{ content.year }})</div>
+    <div class="title" [style.font-size]="titleFontSize | suffix: 'pt'" [style.opacity]="focus">"{{ content.title }}" ({{ content.year }})</div>
 
     <div class="right-area" [@fadeInOut]="focus == 1" [style.font-size]="options.subtitleFontSize">
         <div class="subtitle">
-            <div class="event">
-                {{ content.event }} <br>
-                #{{ content.ranked }} {{ content.category }}
+            <div class="event" [style.font-size]="eventFontSize | suffix: 'pt'">
+                <div>{{ content.event }}</div>
+                <div *ngIf="content.ranked">#{{ content.ranked }} {{ content.category }}</div>
             </div>
              
-            <div *ngFor="let credit of content.credits">
-                <br>
-                <div class="role"> {{ credit.role }} </div>
-                <div class="subtitle"> {{ credit.name }} </div>
+            <div *ngFor="let credit of content.credits" class="credit">
+                <div class="role" [style.font-size]="roleFontSize | suffix: 'pt'"> {{ credit.role }} </div>
+                <div class="name"  [style.font-size]="nameFontSize | suffix: 'pt'"> {{ credit.name }} </div>
             </div>
         </div>
         <div class="separator" [style.height]="contentHeight | suffix: 'px'"></div>
