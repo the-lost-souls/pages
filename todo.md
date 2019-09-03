@@ -4,6 +4,12 @@
 - Only show items after they're done loading/preparing
 - make buttons bounce when they're clicked
 - find a more stylish font
+- show a symbol to indicate you can scroll down
+- add a member list and a quick description of what TLS is
+- the text is blurry when scaled up. Must fix
+- github icon is blurry. Seems to only be a problem on Safari OSX.
+- would be cool to fade out the lens flares when the mouse 
+hovers over them
 
 ### Cleanup
 - remove unused styles
@@ -11,6 +17,7 @@
 - cleanup use of 'item' vs 'section'
 - cleanup use of viewport units vs percentage, make consistent
 - add box-sizing border-box to all elements globally
+- cleanup use of flex vs flexbox ('flex' is apparently the latest standard)
 
 ### Bugs
 - The first/last element does not cover the header correctly

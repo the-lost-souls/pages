@@ -16,7 +16,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   public config: CarouselOptions = CarouselOptions.default();
 
   // -------------
-  public sectionContentHeight = this.config.sectionHeight - this.config.padding;
+  public sectionContentHeight = this.config.sectionHeight - this.config.padding * 2;
 
   public angle1 = 0;
   public angle2 = -63;
@@ -79,7 +79,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     const height = this.config.sectionHeight * this.config.grow;
 
     const k = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
-    const backgroundScale = 1.2 * k / 256; // add 20% to compensate for parralax
+    const backgroundScale = 1.3 * k / 256; // add 20% to compensate for parralax
 
 
     if (scrollTop !== this._previousScrollTop) {

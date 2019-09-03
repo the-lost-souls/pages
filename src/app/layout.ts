@@ -9,6 +9,7 @@ export class Layout {
   public center: number;
   public distance: number;
   public height: number;
+  public focus: number;
   public transform: SafeStyle;
   public backgroundTransform: SafeStyle;
 

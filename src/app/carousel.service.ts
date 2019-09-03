@@ -4,6 +4,7 @@ import { CarouselOptions } from './carouseloptions';
 import { Utils } from './utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Flare } from './flare';
+import { Options } from 'selenium-webdriver';
 
 @Injectable({
   providedIn: 'root'
@@ -48,16 +49,17 @@ export class CarouselService {
       layout[i].translate = layout[i].center - layout[i].virtualCenter;
       current += layout[i].height / 2;
     }
+
+    for (let i = 0; i < config.sections.length; i++) {
+      layout[i].focus = Utils.clamp(1 - Math.abs(layout[i].distance / config.sectionHeight), 0, 1);
+    }
   }
 
   public updateTransforms(layout: Layout[], config: CarouselOptions, angle: number) {
-    const backgroundScale = 8;
 
     for (let i = 0; i < config.sections.length; i++) {
 
       const transform =
-        // `translateY(${-this.config.itemSize / 2}px)` +
-        // `translateX(-50%)` +
         `translateY(${layout[i].translate}px)` +
         `translateZ(-1em)` +
         `scale(${layout[i].scale})`;

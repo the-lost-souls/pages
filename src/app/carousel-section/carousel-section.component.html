@@ -3,20 +3,32 @@
 <img [src]="backgroundImage" class="item-background" [style.transform]="backgroundTransform" />
 <img [src]="foregroundImage" class="item-image"/>
 
-<div class="content" [style.width]="options.contentWidth | suffix: 'px'">
+<div class="content" 
+    [style.width]="contentWidth | suffix: 'px'" 
+    [style.height]="contentHeight | suffix: 'px'"
+    [style.transform]="contentTransform">
+
+    
     <div class="title" [style.font-size]="options.titleFontSize">{{ content.title }}</div>
-    <div *ngFor="let line of content.text">
-        <div class="subtitle" [style.font-size]="options.subtitleFontSize"> {{ line }} </div>
-    </div>
-    <div class="actions">
-        <div *ngIf="content.github" class="action" (click)=openUrl(content.github)>
-            <img src="assets/GitHub-Mark-Light-32px.png" class="action-icon">
+
+    <div class="right-area">
+        <div>
+        <div *ngFor="let line of content.text">
+                <div class="subtitle" [style.font-size]="options.subtitleFontSize"> {{ line }} </div>
+        </div>                
+
         </div>
-        <div *ngIf="content.youtube" class="action" (click)=openUrl(content.youtube)>
-            <img src="assets/YouTube_Play_Button.png" class="action-icon">
-        </div>
-        <div *ngIf="content.pouet" class="action" (click)=openUrl(content.pouet)>
-            <img src="assets/trumpet.png" class="action-icon">
-        </div>
+        <div class="separator" [style.height]="contentHeight | suffix: 'px'"></div>
+        <div class="actions">
+            <div *ngIf="content.github" class="action" (click)=openUrl(content.github)>
+                <img src="assets/GitHub-Mark-120px-plus.png" class="action-icon">
+            </div>
+            <div *ngIf="content.youtube" class="action" (click)=openUrl(content.youtube)>
+                <img src="assets/YouTube_Play_Button.png" class="action-icon">
+            </div>
+            <div *ngIf="content.pouet" class="action" (click)=openUrl(content.pouet)>
+                <img src="assets/trumpet.png" class="action-icon">
+            </div>
+        </div>        
     </div>
 </div>

@@ -35,7 +35,7 @@ export class Utils {
                 const distance = Utils.distance(x, y, xCenter, yCenter);
                 const t = Math.PI * Math.min(1, distance / fadeRadius);
                 const alpha = 1 - (Math.cos(t) + 1) / 2;
-                // const alpha = distance > radius ? 1 : 0;
+                // const alpha = distance > fadeRadius ? 1 : 0;
                 imageData.data[(y * imageData.width + x) * 4 + 3] = Math.round(alpha * 255);
             }
         }

@@ -20,15 +20,22 @@ export class CarouselOptions {
         const content: CarouselSection[] = [
             {
               image: 'assets/iv.jpg',
-              title: 'IV - Racer',
-              text: ['The Gathering 2002', '#2 pc demo'],
+              title: '"IV - Racer"',
+              text: [
+                'The Gathering 2002',
+                '#2 pc demo',
+                '---',
+                'Code: Cyberfish',
+                'Modeling, gfx: Rawhead, Cyberfish',
+                'Music: Kezoomer',
+                'Vocals: Kezoomer\'s aunt'],
               youtube: 'https://www.youtube.com/watch?v=mHV_oIYZyEg',
               pouet: 'http://www.pouet.net/prod.php?which=5555',
               github: 'https://github.com/the-lost-souls/IV'
             },
             {
               image: 'assets/anytime.jpg',
-              title: 'Anytime',
+              title: '"Anytime"',
               text: ['Norvegia 2001', '#1 pc demo'],
               youtube: 'https://www.youtube.com/watch?v=_ubBTbGcLv8',
               pouet: 'http://www.pouet.net/prod.php?which=4244',
@@ -36,7 +43,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/III.jpg',
-              title: 'III - Live tomorrow',
+              title: '"III - Live tomorrow"',
               text: ['The Gathering 1999', '#2 pc demo'],
               youtube: 'https://youtu.be/rMkFe3xxZmA',
               pouet: 'http://www.pouet.net/prod.php?which=5919',
@@ -44,7 +51,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/cucumber01.png',
-              title: 'Cucumber Slumber',
+              title: '"Cucumber Slumber"',
               text: ['The Gathering 1999', '#1 fast demo'],
               youtube: 'https://youtu.be/ClB6vvaWzMg',
               pouet: 'https://www.pouet.net/prod.php?which=81547',
@@ -52,7 +59,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/FYH.jpg',
-              title: 'Follow your Heart',
+              title: '"Follow your Heart"',
               text: ['Aasheim Party 1999', '#1 combined demo'],
               youtube: 'https://youtu.be/AAPkby4EDQY',
               pouet: 'https://www.pouet.net/prod.php?which=81546',
@@ -60,7 +67,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/II.jpg',
-              title: 'II',
+              title: '"II"',
               text: ['The Gathering 1998', '#5 pc demo'],
               youtube: 'https://youtu.be/stSv0y_zg1o',
               pouet: 'http://www.pouet.net/prod.php?which=5923',
@@ -68,7 +75,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/pgp.gif',
-              title: 'pgp',
+              title: '"pgp"',
               text: ['The Gathering 1997', '#7 pc 4k'],
               youtube: 'https://youtu.be/Fg-FixaV6ws',
               pouet: 'http://www.pouet.net/prod.php?which=15848',
@@ -76,7 +83,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/mom02.png',
-              title: 'Mind over Matter',
+              title: '"Mind over Matter"',
               text: ['The Gathering 1996', '#8 pc demo'],
               youtube: 'https://youtu.be/UtopQ09WZ9c',
               pouet: 'http://www.pouet.net/prod.php?which=58683',
@@ -84,7 +91,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/pese01.png',
-              title: 'PESE',
+              title: '"PESE"',
               text: ['The Gathering 1996', '#3 fast intro'],
               youtube: 'https://youtu.be/OlRxaUWLNgU',
               pouet: null,
@@ -92,7 +99,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/time01.png',
-              title: 'Time',
+              title: '"Time"',
               text: ['Tonstad 1996'],
               youtube: 'https://youtu.be/AyIQb7SAhP0',
               pouet: 'http://www.pouet.net/prod.php?which=58684',
@@ -100,7 +107,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/synthetic.png',
-              title: 'Synthetic',
+              title: '"Synthetic"',
               text: ['Tonstad 1995'],
               youtube: 'https://youtu.be/tJvQbS8wOok',
               pouet: null,
@@ -108,7 +115,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/sorcerer.png',
-              title: 'Sorcerer',
+              title: '"Sorcerer"',
               text: ['1995', 'BBS Intro'],
               youtube: 'https://youtu.be/F_KWflqlF1g',
               pouet: null,
@@ -116,7 +123,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/tib.png',
-              title: 'Tiß',
+              title: '"Tiß"',
               text: ['Melhus Party 1994'],
               youtube: 'https://youtu.be/Qd8WPVmYhX8',
               pouet: null,
@@ -129,24 +136,24 @@ export class CarouselOptions {
             grow: 3,
             sectionHeight: 70,
             contentWidth: 60 * 2,
-            padding: 10,
+            padding: 5,
             blurRadius: 7,
             backgroundFadeRadius: 80,
-            titleFontSize: '8pt',
-            subtitleFontSize: '5pt',
+            titleFontSize: '16pt', // with grow=3, this gives a mobile size of 16pt
+            subtitleFontSize: '10pt',
             sections: content
         };
 
         const desktop: CarouselOptions = {
             center: 400,
             grow: 3,
-            sectionHeight: 130,
+            sectionHeight: 112,
             contentWidth: 100 * 2,
-            padding: 15,
+            padding: 6,
             blurRadius: 5,
             backgroundFadeRadius: 50,
-            titleFontSize: '12pt',
-            subtitleFontSize: '5pt',
+            titleFontSize: '25pt',
+            subtitleFontSize: '15pt',
             sections: content
         };
 
