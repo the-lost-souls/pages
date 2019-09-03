@@ -9,7 +9,7 @@
 
     <div class="title" [style.font-size]="titleFontSize | suffix: 'pt'" [style.opacity]="focus">"{{ content.title }}" ({{ content.year }})</div>
 
-    <div class="right-area" [style.opacity]="value" [style.font-size]="options.subtitleFontSize">
+    <div class="right-area" [style.opacity]="opacity" [style.font-size]="options.subtitleFontSize">
         <div class="subtitle">
             <div class="event" [style.font-size]="eventFontSize | suffix: 'pt'">
                 <div>{{ content.event }}</div>
