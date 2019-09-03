@@ -5,6 +5,7 @@ import { Utils } from '../utils';
 import { SafeStyle, DomSanitizer } from '@angular/platform-browser';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import * as IsMobile from 'is-mobile';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-carousel-section',
@@ -89,9 +90,9 @@ export class CarouselSectionComponent implements OnInit, AfterViewInit {
     this.contentTransform =
       this._sanitizer.bypassSecurityTrustStyle(`translateX(-50%) translateY(-50%) translateZ(2em) scale(${ 1 / this.options.grow }) `);
 
-    this.focusChanged.subscribe(value => {
-      requestAnimationFrame((frameT) => this.animate(frameT));
-    });
+    this.focusChanged
+      .pipe(distinctUntilChanged())
+      .subscribe(value => requestAnimationFrame((frameT) => this.animate(frameT)));
   }
 
   private animate(t: number) {
