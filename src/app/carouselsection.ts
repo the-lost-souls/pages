@@ -13,4 +13,5 @@ export interface CarouselSection {
     youtube: string;
     pouet: string;
     github: string;
+    download: string;
   }

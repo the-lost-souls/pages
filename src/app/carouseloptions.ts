@@ -33,7 +33,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://www.youtube.com/watch?v=mHV_oIYZyEg',
               pouet: 'http://www.pouet.net/prod.php?which=5555',
-              github: 'https://github.com/the-lost-souls/IV'
+              github: 'https://github.com/the-lost-souls/IV',
+              download: 'https://files.scene.org/view/parties/2002/thegathering02/demo/iv_-_racer_by_tls.zip'
             },
             {
               image: 'assets/anytime.jpg',
@@ -49,7 +50,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://www.youtube.com/watch?v=_ubBTbGcLv8',
               pouet: 'http://www.pouet.net/prod.php?which=4244',
-              github: 'https://github.com/the-lost-souls/anytime'
+              github: 'https://github.com/the-lost-souls/anytime',
+              download: 'https://files.scene.org/view/parties/2001/norvegia01/demo/tls-anytime.zip'
             },
             {
               image: 'assets/III.jpg',
@@ -65,7 +67,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/rMkFe3xxZmA',
               pouet: 'http://www.pouet.net/prod.php?which=5919',
-              github: 'https://github.com/the-lost-souls/III'
+              github: 'https://github.com/the-lost-souls/III',
+              download: 'https://files.scene.org/view/parties/1999/thegathering99/demo/iii__liv.zip'
             },
             {
               image: 'assets/cucumber01.png',
@@ -81,7 +84,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/ClB6vvaWzMg',
               pouet: 'https://www.pouet.net/prod.php?which=81547',
-              github: null
+              github: null,
+              download: 'https://files.scene.org/view/parties/1999/thegathering99/wild/fast-intro/cucumber.zip'
             },
             {
               image: 'assets/FYH.jpg',
@@ -97,7 +101,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/AAPkby4EDQY',
               pouet: 'https://www.pouet.net/prod.php?which=81546',
-              github: null
+              github: null,
+              download: 'https://github.com/the-lost-souls/follow-your-heart/releases/download/final/tls_fyh.zip'
             },
             {
               image: 'assets/II.jpg',
@@ -113,7 +118,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/stSv0y_zg1o',
               pouet: 'http://www.pouet.net/prod.php?which=5923',
-              github: 'https://github.com/the-lost-souls/II'
+              github: 'https://github.com/the-lost-souls/II',
+              download: 'https://files.scene.org/view/parties/1998/thegathering98/demo/tls_ii.zip'
             },
             {
               image: 'assets/pgp.gif',
@@ -127,7 +133,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/Fg-FixaV6ws',
               pouet: 'http://www.pouet.net/prod.php?which=15848',
-              github: 'https://github.com/the-lost-souls/pgp'
+              github: 'https://github.com/the-lost-souls/pgp',
+              download: 'https://files.scene.org/view/mirrors/hornet/demos/1997/t/tls_pgp.zip'
             },
             {
               image: 'assets/mom02.png',
@@ -143,7 +150,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/UtopQ09WZ9c',
               pouet: 'http://www.pouet.net/prod.php?which=58683',
-              github: 'https://github.com/the-lost-souls/mind-over-matter'
+              github: 'https://github.com/the-lost-souls/mind-over-matter',
+              download: 'https://files.scene.org/view/mirrors/hornet/demos/1996/t/tls_mom.zip'
             },
             {
               image: 'assets/pese01.png',
@@ -159,7 +167,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/OlRxaUWLNgU',
               pouet: null,
-              github: null
+              github: null,
+              download: null,
             },
             {
               image: 'assets/time01.png',
@@ -175,7 +184,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/AyIQb7SAhP0',
               pouet: 'http://www.pouet.net/prod.php?which=58684',
-              github: 'https://github.com/the-lost-souls/time'
+              github: 'https://github.com/the-lost-souls/time',
+              download: 'https://files.scene.org/view/parties/1996/tonstad96/demo/tls_time.zip'
             },
             {
               image: 'assets/synthetic.png',
@@ -191,7 +201,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/tJvQbS8wOok',
               pouet: null,
-              github: 'https://github.com/the-lost-souls/synthetic'
+              github: 'https://github.com/the-lost-souls/synthetic',
+              download: 'https://github.com/the-lost-souls/synthetic/releases/download/final/SYN_TLS.ZIP'
             },
             {
               image: 'assets/sorcerer.png',
@@ -206,7 +217,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/F_KWflqlF1g',
               pouet: null,
-              github: 'https://github.com/the-lost-souls/sorcerer'
+              github: 'https://github.com/the-lost-souls/sorcerer',
+              download: 'https://github.com/the-lost-souls/sorcerer/releases/download/final/SORCERER.zip'
             },
             {
               image: 'assets/tib.png',
@@ -224,7 +236,8 @@ export class CarouselOptions {
               ],
               youtube: 'https://youtu.be/Qd8WPVmYhX8',
               pouet: null,
-              github: 'https://github.com/the-lost-souls/TiB'
+              github: 'https://github.com/the-lost-souls/TiB',
+              download: 'https://github.com/the-lost-souls/TiB/releases/download/final/tls_Tiss.ZIP'
             }
           ];
 

@@ -10,6 +10,8 @@
 - github icon is blurry. Seems to only be a problem on Safari OSX.
 - would be cool to fade out the lens flares when the mouse 
 hovers over them
+- fix download link for Cucumber Slumber on pouet
+- fix TLS website url on Pouet
 
 ### Cleanup
 - remove unused styles
@@ -22,6 +24,7 @@ hovers over them
 - split 'options' from 'content'
 - rename 'config' to 'options' everywhere
 - rename 'item' to section everywhere
+
 
 ### Bugs
 - The first/last element does not cover the header correctly
