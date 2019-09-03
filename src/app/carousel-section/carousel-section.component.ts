@@ -130,10 +130,7 @@ export class CarouselSectionComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-
-    requestAnimationFrame((frameT) => this.animate(frameT));
-  }
+  ngAfterViewInit() { }
 
 
   public openUrl(url: string) {
