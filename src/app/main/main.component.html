@@ -14,9 +14,9 @@
         [style.padding-top]="scrollPaddingTop"
         [style.padding-bottom]="scrollPaddingBottom">
 
-        <div *ngFor="let section of config.sections, let i = index" 
+        <div *ngFor="let section of options.sections, let i = index" 
             class="section-wrapper"
-            [style.height]="config.sectionHeight | suffix: 'px'">
+            [style.height]="options.sectionHeight | suffix: 'px'">
 
             <!-- It seems like for the scroll-snap to work in safari, the snap-elements cannot be transformed -->
             <div class="section-transform" [style.transform]="layout[i].transform">
@@ -24,7 +24,7 @@
                     class="section" 
                     [style.height]="sectionContentHeight | suffix: 'px'" 
                     [content]="section"
-                    [options]="config" 
+                    [options]="options" 
                     [focus]="layout[i].focus"
                     [backgroundTransform]="layout[i].backgroundTransform">
                 </app-carousel-section>
@@ -40,6 +40,6 @@
     </app-lensflare>
 
     <div *ngIf="showCenter" style="position: absolute; width: 100%; height: 1px; background-color: red; left: 0"
-        [style.top]="config.center | suffix: 'px'">
+        [style.top]="options.center | suffix: 'px'">
     </div>
 </div>

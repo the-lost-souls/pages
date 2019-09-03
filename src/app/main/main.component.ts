@@ -13,10 +13,10 @@ import { ParamMap, ActivatedRoute } from '@angular/router';
 export class MainComponent implements OnInit, AfterViewInit {
 
   // inputs
-  public config: CarouselOptions = CarouselOptions.default();
+  public options: CarouselOptions = CarouselOptions.default();
 
   // -------------
-  public sectionContentHeight = this.config.sectionHeight - this.config.padding * 2;
+  public sectionContentHeight = this.options.sectionHeight - this.options.padding * 2;
 
   public angle1 = 0;
   public angle2 = -63;
@@ -34,14 +34,14 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   private _previousScrollTop: number;
 
-  public flares = CarouselOptions.flares(this.config);
+  public flares = CarouselOptions.flares(this.options);
 
   constructor(
     private _carouselService: CarouselService,
     private _changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute) {
 
-    this.layout = new Array(this.config.sections.length);
+    this.layout = new Array(this.options.sections.length);
     for (let i = 0; i < this.layout.length; i++) {
       this.layout[i] = new Layout();
     }
@@ -58,12 +58,12 @@ export class MainComponent implements OnInit, AfterViewInit {
     // On safari, using container.clientHeight gives the wrong value, for some reason
     const viewportHeight = window.innerHeight;
 
-    this.scrollPaddingTop = `${this.config.center - this.config.sectionHeight / 2}px`;
-    this.scrollPaddingBottom = `${viewportHeight - this.config.center - this.config.sectionHeight / 2}px`;
+    this.scrollPaddingTop = `${this.options.center - this.options.sectionHeight / 2}px`;
+    this.scrollPaddingBottom = `${viewportHeight - this.options.center - this.options.sectionHeight / 2}px`;
 
-    for (let i = 0; i < this.config.sections.length; i++) {
-      this.layout[i].virtualCenter = this.config.center + this.config.sectionHeight * i;
-      this.layout[i].virtualTop = this.layout[i].virtualCenter - this.config.sectionHeight / 2;
+    for (let i = 0; i < this.options.sections.length; i++) {
+      this.layout[i].virtualCenter = this.options.center + this.options.sectionHeight * i;
+      this.layout[i].virtualTop = this.layout[i].virtualCenter - this.options.sectionHeight / 2;
       this.layout[i].virtualTopStyle = this.layout[i].virtualTop + 'px';
     }
 
@@ -76,23 +76,23 @@ export class MainComponent implements OnInit, AfterViewInit {
     const scrollTop = this._carousel.nativeElement.scrollTop;
 
     const width = this._carousel.nativeElement.clientWidth;
-    const height = this.config.sectionHeight * this.config.grow;
+    const height = this.options.sectionHeight * this.options.grow;
 
     const k = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
     const backgroundScale = 1.3 * k / 256; // add 20% to compensate for parralax
 
 
     if (scrollTop !== this._previousScrollTop) {
-      this._carouselService.handleScroll(this.layout, this.config, this._carousel.nativeElement.scrollTop);
+      this._carouselService.handleScroll(this.layout, this.options, this._carousel.nativeElement.scrollTop);
 
-      this._carouselService.updateTransforms(this.layout, this.config, this.angle1);
-      this._carouselService.updateBackgroundTransforms(this.layout, this.config, this.angle1, backgroundScale);
-      this.polygons = this._carouselService.getPolygons(this.layout, this.config, scrollTop);
+      this._carouselService.updateTransforms(this.layout, this.options, this.angle1);
+      this._carouselService.updateBackgroundTransforms(this.layout, this.options, this.angle1, backgroundScale);
+      this.polygons = this._carouselService.getPolygons(this.layout, this.options, scrollTop);
     }
 
     if (this.animateBackground) {
       this.angle1 = t * 3.6 / 1000;
-      this._carouselService.updateBackgroundTransforms(this.layout, this.config, this.angle1, backgroundScale);
+      this._carouselService.updateBackgroundTransforms(this.layout, this.options, this.angle1, backgroundScale);
     }
 
     this._previousScrollTop = scrollTop;

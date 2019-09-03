@@ -18,7 +18,6 @@ hovers over them
 - cleanup use of flex vs flexbox ('flex' is apparently the latest standard)
 - use 'undefined' instead of 'null' in teh contents
 - split 'options' from 'content'
-- rename 'config' to 'options' everywhere
 
 
 ### Bugs
@@ -27,6 +26,7 @@ hovers over them
 
 
 ### Done
+- DONE: rename 'config' to 'options' everywhere
 - DONE: find a more stylish font
 - DONE: github icon is blurry. Seems to only be a problem on Safari OSX.
 - DONE: the text is blurry when scaled up. Must fix
