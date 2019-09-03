@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, EventEmitter } from '@angular/core';
 import { CarouselSection } from '../carouselsection';
 import { CarouselOptions } from '../carouseloptions';
 import { Utils } from '../utils';
@@ -27,7 +27,7 @@ import * as IsMobile from 'is-mobile';
     ]),
   ]
 })
-export class CarouselSectionComponent implements OnInit {
+export class CarouselSectionComponent implements OnInit, AfterViewInit {
 
   @Input()
   content: CarouselSection;
@@ -38,8 +38,18 @@ export class CarouselSectionComponent implements OnInit {
   @Input()
   options: CarouselOptions;
 
+  private _focus = 0;
   @Input()
-  focus = 0;
+  public set focus(value: number) {
+    this._focus = value;
+    this.focusChanged.next(value);
+  }
+
+  public get focus(): number {
+    return this._focus;
+  }
+
+  private focusChanged: EventEmitter<number> = new EventEmitter<number>();
 
   public foregroundImage: string;
   public backgroundImage: string;
@@ -53,6 +63,14 @@ export class CarouselSectionComponent implements OnInit {
   public eventFontSize = IsMobile.isMobile(navigator.userAgent) ? 14 : 22;
   public nameFontSize = IsMobile.isMobile(navigator.userAgent) ? 10 : 18;
   public roleFontSize = IsMobile.isMobile(navigator.userAgent) ? 8 : 12;
+
+  // animation
+  private _state = false;
+  private _start = 0;
+  private _durationIn = 0.8;
+  private _durationOut = 0.3;
+  public value = 0;
+  private _done = true;
 
   constructor(private _sanitizer: DomSanitizer) { }
 
@@ -70,7 +88,52 @@ export class CarouselSectionComponent implements OnInit {
     this.contentHeight = (this.options.sectionHeight - this.options.padding * 2) * this.options.grow;
     this.contentTransform =
       this._sanitizer.bypassSecurityTrustStyle(`translateX(-50%) translateY(-50%) translateZ(2em) scale(${ 1 / this.options.grow }) `);
+
+    this.focusChanged.subscribe(value => {
+      requestAnimationFrame((frameT) => this.animate(frameT));
+    });
   }
+
+  private animate(t: number) {
+
+    const currentState = (this.focus === 1);
+
+    if (currentState !== this._state) {
+
+      if (currentState) {
+        this._start = t - this.value * this._durationIn * 1000;
+      } else {
+        this._start = t - (1 - this.value) * this._durationOut * 1000;
+      }
+
+      this._state = currentState;
+      this._done = false;
+    }
+
+    if (currentState) {
+      const k = (t - this._start) / (this._durationIn * 1000);
+      this.value = Utils.clamp(k, 0, 1);
+      if (this.value === 1) {
+        this._done = true;
+      }
+    } else {
+      const k = (t - this._start) / (this._durationOut * 1000);
+      this.value = Utils.clamp(1 - k, 0, 1);
+      if (this.value === 0) {
+        this._done = true;
+      }
+    }
+
+    if (!this._done) {
+      requestAnimationFrame((frameT) => this.animate(frameT));
+    }
+  }
+
+  ngAfterViewInit() {
+
+    requestAnimationFrame((frameT) => this.animate(frameT));
+  }
+
 
   public openUrl(url: string) {
     window.location.href = url;

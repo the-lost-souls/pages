@@ -229,14 +229,14 @@ export class CarouselOptions {
           ];
 
         const mobile: CarouselOptions = {
-            center: 250,
+            center: 300,
             grow: 3,
             sectionHeight: 70,
             contentWidth: 60 * 2,
             padding: 5,
             blurRadius: 7,
             backgroundFadeRadius: 80,
-            titleFontSize: '16pt', // with grow=3, this gives a mobile size of 16pt
+            titleFontSize: '16pt',
             subtitleFontSize: '10pt',
             sections: content
         };
