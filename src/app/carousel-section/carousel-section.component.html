@@ -1,5 +1,5 @@
-<img [src]="backgroundImage" class="item-background" [style.transform]="backgroundTransform" />
-<img [src]="foregroundImage" class="item-image" />
+<img [src]="backgroundImage" class="background" [style.transform]="backgroundTransform" />
+<img [src]="foregroundImage" class="screenshot" />
 
 <div class="content" 
     [style.width]="contentWidth | suffix: 'px'" 
@@ -9,7 +9,7 @@
 
     <div class="title" [style.font-size]="titleFontSize | suffix: 'pt'" [style.opacity]="focus">"{{ content.title }}" ({{ content.year }})</div>
 
-    <div class="right-area" [style.opacity]="opacity" [style.font-size]="options.subtitleFontSize">
+    <div class="text-area" [style.opacity]="opacity" [style.font-size]="options.subtitleFontSize">
         <div>
             <div class="event" [style.font-size]="eventFontSize | suffix: 'pt'">
                 <div>{{ content.event }}</div>
