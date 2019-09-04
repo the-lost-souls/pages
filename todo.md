@@ -27,6 +27,7 @@ hovers over them
 
 
 ### Done
+- DONE: - fix favicon
 - DONE: rename 'config' to 'options' everywhere
 - DONE: find a more stylish font
 - DONE: github icon is blurry. Seems to only be a problem on Safari OSX.
