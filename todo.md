@@ -18,6 +18,7 @@ hovers over them
 - cleanup use of flex vs flexbox ('flex' is apparently the latest standard)
 - use 'undefined' instead of 'null' in teh contents
 - split 'options' from 'content'
+- turn off user-events and pointer-events globally, only enable on the actions
 
 
 ### Bugs

@@ -2,9 +2,9 @@
 
 
 ### Deployments
-[Prod](https://the-lost-souls.github.io/tls-home/) | 
-[Dev](https://the-lost-souls.github.io/tls-home/builds/latest) | 
-[All](builds.md)
+[Prod](https://the-lost-souls.github.io/) | 
+[Dev](https://the-lost-souls.github.io/versions/latest) | 
+[All](https://the-lost-souls.github.io/versions/versions.md)
 
 ### Gotchas
 - using Z-index for layering gives inconcistent behavior across Chrome (OSX) and Safari (OSX) when combined with transforms, so using translateZ for ordering instead.

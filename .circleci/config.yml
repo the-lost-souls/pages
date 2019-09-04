@@ -56,6 +56,7 @@ jobs:
                 key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
 
             - run:
+
                 name: Deploy
                 command: |
                     mkdir gh-pages-branch
@@ -63,9 +64,9 @@ jobs:
                     git config --global user.name "CircleCI"
                     git init
                     echo adding remote
-                    git remote add --fetch origin https://$GH_TOKEN@github.com/the-lost-souls/tls-home.git > /dev/null 2>&1
+                    git remote add --fetch origin https://$GH_TOKEN@github.com/the-lost-souls/the-lost-souls.github.io.git > /dev/null 2>&1
                     echo checking out
-                    git checkout gh-pages
+                    git checkout master
                     echo running deployment
                     ./versions/deploy.sh << parameters.version >> ../dist https://the-lost-souls.github.io/tls-home https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID https://github.com/the-lost-souls/tls-home/commit/$CIRCLE_SHA1
                     cd ..
