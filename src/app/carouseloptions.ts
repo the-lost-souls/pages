@@ -258,7 +258,7 @@ export class CarouselOptions {
           ];
 
         const mobile: CarouselOptions = {
-            center: 300,
+            center: 200,
             grow: 3,
             sectionHeight: 70,
             contentWidth: 60 * 2,
@@ -269,7 +269,7 @@ export class CarouselOptions {
         };
 
         const desktop: CarouselOptions = {
-            center: 400,
+            center: 300,
             grow: 3,
             sectionHeight: 112,
             contentWidth: 100 * 2,
