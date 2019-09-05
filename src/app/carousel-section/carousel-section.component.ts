@@ -62,10 +62,18 @@ export class CarouselSectionComponent implements OnInit {
   public contentHeight: number;
   public opacity = 0;
 
-  public titleFontSize = IsMobile.isMobile(navigator.userAgent) ? 14 : 22;
-  public eventFontSize = IsMobile.isMobile(navigator.userAgent) ? 14 : 22;
-  public nameFontSize = IsMobile.isMobile(navigator.userAgent) ? 10 : 18;
-  public roleFontSize = IsMobile.isMobile(navigator.userAgent) ? 8 : 12;
+  public style = IsMobile.isMobile(navigator.userAgent) ?
+  {
+    titleFontSize: 15,
+    eventFontSize: 8,
+    nameFontSize: 11,
+    roleFontSize: 8,
+  } : {
+    titleFontSize: 24,
+    eventFontSize: 11,
+    nameFontSize: 15,
+    roleFontSize: 11,
+  };
 
   public clickedLink: number[];
   // Would love to use Angular animations here, but using angular to animate opacity causes weird bouncing

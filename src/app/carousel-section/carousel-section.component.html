@@ -6,19 +6,14 @@
     [style.height]="contentHeight | suffix: 'px'"
     [style.transform]="contentTransform">
 
-
-    <div class="title" [style.font-size]="titleFontSize | suffix: 'pt'" [style.opacity]="focus">"{{ content.title }}" ({{ content.year }})</div>
-
-    <div class="text-area" [style.opacity]="opacity" [style.font-size]="options.subtitleFontSize">
+    <div class="text-area" [style.opacity]="opacity">
         <div>
-            <div class="event" [style.font-size]="eventFontSize | suffix: 'pt'">
-                <div>{{ content.event }}</div>
-                <div *ngIf="content.ranked">#{{ content.ranked }} {{ content.category }}</div>
-            </div>
-             
+            <div class="title" [style.font-size]="style.titleFontSize | suffix: 'pt'">"{{ content.title }}" ({{ content.year }})</div>
+            <div class="event" [style.font-size]="style.eventFontSize | suffix: 'pt'">{{ content.ranked ? '#' + content.ranked : '' }} {{ content.category }} {{ content.event }}</div>
+                 
             <div *ngFor="let credit of content.credits" class="credit">
-                <div class="role" [style.font-size]="roleFontSize | suffix: 'pt'"> {{ credit.role }} </div>
-                <div class="name"  [style.font-size]="nameFontSize | suffix: 'pt'"> {{ credit.name }} </div>
+                <div class="role" [style.font-size]="style.roleFontSize | suffix: 'pt'"> {{ credit.role }} </div>
+                <div class="name"  [style.font-size]="style.nameFontSize | suffix: 'pt'"> {{ credit.name }} </div>
             </div>
         </div>
         <div class="separator" [style.height]="contentHeight | suffix: 'px'"></div>
