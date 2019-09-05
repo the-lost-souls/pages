@@ -11,8 +11,6 @@ export class CarouselOptions {
         public padding: number,
         public blurRadius: number,
         public backgroundFadeRadius: number,
-        public titleFontSize: string,
-        public subtitleFontSize: string,
         public sections: CarouselSection[]) { }
 
     public static default(): CarouselOptions {
@@ -267,8 +265,6 @@ export class CarouselOptions {
             padding: 5,
             blurRadius: 7,
             backgroundFadeRadius: 80,
-            titleFontSize: '16pt',
-            subtitleFontSize: '10pt',
             sections: content
         };
 
@@ -280,8 +276,6 @@ export class CarouselOptions {
             padding: 6,
             blurRadius: 5,
             backgroundFadeRadius: 50,
-            titleFontSize: '20pt',
-            subtitleFontSize: '15pt',
             sections: content
         };
 

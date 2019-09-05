@@ -13,9 +13,4 @@ export interface CarouselSection {
       id: string,
       url: string
     }[];
-    // text: string[];
-    // youtube: string;
-    // pouet: string;
-    // github: string;
-    // download: string;
   }
