@@ -23,17 +23,9 @@
         </div>
         <div class="separator" [style.height]="contentHeight | suffix: 'px'"></div>
         <div class="actions">
-            <div *ngIf="content.github" class="action" (click)=openUrl(content.github)>
-                <img src="assets/GitHub-Mark-120px-plus.png" class="action-icon">
-            </div>
-            <div *ngIf="content.youtube" class="action" (click)=openUrl(content.youtube)>
-                <img src="assets/YouTube_Play_Button.png" class="action-icon">
-            </div>
-            <div *ngIf="content.pouet" class="action" (click)=openUrl(content.pouet)>
-                <img src="assets/trumpet.png" class="action-icon">
-            </div>
-            <div *ngIf="content.download" class="action" (click)=openUrl(content.download)>
-                <img src="assets/download.png" class="action-icon">
+
+            <div *ngFor="let link of content.links, let i = index" class="action" (click)="openLink(i)" [@boom]="clickedLink[i]">
+                <img src="assets/{{ link.id }}-icon.png" class="action-icon">
             </div>
         </div>
     </div>

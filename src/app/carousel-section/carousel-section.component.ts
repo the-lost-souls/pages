@@ -6,11 +6,29 @@ import { SafeStyle, DomSanitizer } from '@angular/platform-browser';
 import * as IsMobile from 'is-mobile';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { SimpleAnimator } from '../simpleanimator';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-carousel-section',
   templateUrl: './carousel-section.component.html',
-  styleUrls: ['./carousel-section.component.sass']
+  styleUrls: ['./carousel-section.component.sass'],
+  animations: [trigger('boom', [
+    transition(':increment', [
+      animate('1s ease-out', style({
+        transform: 'scale(8)',
+        opacity: 0
+      })),
+      animate('1ms', style({
+        transform: 'scale(0)',
+        opacity: 0
+      })),
+      animate('200ms', style({
+        transform: 'scale(1)',
+        opacity: 1
+      })),
+    ]),
+  ])
+  ]
 })
 export class CarouselSectionComponent implements OnInit {
 
@@ -49,6 +67,7 @@ export class CarouselSectionComponent implements OnInit {
   public nameFontSize = IsMobile.isMobile(navigator.userAgent) ? 10 : 18;
   public roleFontSize = IsMobile.isMobile(navigator.userAgent) ? 8 : 12;
 
+  public clickedLink: number[];
   // Would love to use Angular animations here, but using angular to animate opacity causes weird bouncing
   // effect when scrolling on ios webkit.
   private _animateOpacity: SimpleAnimator = new SimpleAnimator(false, 1, 0, 0.7, 0.4, (opacity) => this.opacity = opacity);
@@ -68,14 +87,18 @@ export class CarouselSectionComponent implements OnInit {
     this.contentWidth = this.options.contentWidth * this.options.grow;
     this.contentHeight = (this.options.sectionHeight - this.options.padding * 2) * this.options.grow;
     this.contentTransform =
-      this._sanitizer.bypassSecurityTrustStyle(`translateX(-50%) translateY(-50%) translateZ(2em) scale(${ 1 / this.options.grow }) `);
+      this._sanitizer.bypassSecurityTrustStyle(`translateX(-50%) translateY(-50%) translateZ(2em) scale(${1 / this.options.grow}) `);
 
     this.focusChanged
       .pipe(distinctUntilChanged())
       .subscribe(value => this._animateOpacity.state = (value === 1));
+
+    this.clickedLink = new Array(this.content.links.length);
+    this.clickedLink.fill(0);
   }
 
-  public openUrl(url: string) {
-    window.location.href = url;
+  public openLink(i: number) {
+    window.location.href = this.content.links[i].url;
+    this.clickedLink[i]++;
   }
 }

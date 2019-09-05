@@ -9,9 +9,13 @@ export interface CarouselSection {
       name: string,
       role: string
     }[];
+    links: {
+      id: string,
+      url: string
+    }[];
     // text: string[];
-    youtube: string;
-    pouet: string;
-    github: string;
-    download: string;
+    // youtube: string;
+    // pouet: string;
+    // github: string;
+    // download: string;
   }

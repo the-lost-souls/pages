@@ -31,10 +31,12 @@ export class CarouselOptions {
                 {name: 'Kezoomer\'s aunt', role: 'vocals'},
                 {name: 'Cyberfish', role: 'code, gfx, modeling, animation'},
               ],
-              youtube: 'https://www.youtube.com/watch?v=mHV_oIYZyEg',
-              pouet: 'http://www.pouet.net/prod.php?which=5555',
-              github: 'https://github.com/the-lost-souls/IV',
-              download: 'https://files.scene.org/view/parties/2002/thegathering02/demo/iv_-_racer_by_tls.zip'
+              links: [
+                {id: 'youtube', url: 'https://www.youtube.com/watch?v=mHV_oIYZyEg'},
+                {id: 'pouet', url: 'http://www.pouet.net/prod.php?which=5555'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/IV'},
+                {id: 'download', url: 'https://files.scene.org/view/parties/2002/thegathering02/demo/iv_-_racer_by_tls.zip'},
+              ]
             },
             {
               image: 'assets/anytime.jpg',
@@ -48,10 +50,12 @@ export class CarouselOptions {
                 {name: 'Kezoomer', role: 'music'},
                 {name: 'Cyberfish', role: 'code, gfx, modeling, animation'},
               ],
-              youtube: 'https://www.youtube.com/watch?v=_ubBTbGcLv8',
-              pouet: 'http://www.pouet.net/prod.php?which=4244',
-              github: 'https://github.com/the-lost-souls/anytime',
-              download: 'https://files.scene.org/view/parties/2001/norvegia01/demo/tls-anytime.zip'
+              links: [
+                {id: 'youtube', url: 'https://www.youtube.com/watch?v=_ubBTbGcLv8'},
+                {id: 'pouet', url: 'http://www.pouet.net/prod.php?which=4244'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/anytime'},
+                {id: 'download', url: 'https://files.scene.org/view/parties/2001/norvegia01/demo/tls-anytime.zip'}
+              ]
             },
             {
               image: 'assets/III.jpg',
@@ -65,10 +69,12 @@ export class CarouselOptions {
                 {name: 'Rawhead', role: 'gfx, modeling'},
                 {name: 'Kezoomer', role: 'music'},
               ],
-              youtube: 'https://youtu.be/rMkFe3xxZmA',
-              pouet: 'http://www.pouet.net/prod.php?which=5919',
-              github: 'https://github.com/the-lost-souls/III',
-              download: 'https://files.scene.org/view/parties/1999/thegathering99/demo/iii__liv.zip'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/rMkFe3xxZmA'},
+                {id: 'pouet', url: 'http://www.pouet.net/prod.php?which=5919'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/III'},
+                {id: 'download', url: 'https://files.scene.org/view/parties/1999/thegathering99/demo/iii__liv.zip'}
+              ]
             },
             {
               image: 'assets/cucumber01.png',
@@ -82,10 +88,11 @@ export class CarouselOptions {
                 {name: 'Kezoomer', role: 'music, gfx, modeling'},
                 {name: 'tChr', role: 'gfx'},
               ],
-              youtube: 'https://youtu.be/ClB6vvaWzMg',
-              pouet: 'https://www.pouet.net/prod.php?which=81547',
-              github: null,
-              download: 'https://files.scene.org/view/parties/1999/thegathering99/wild/fast-intro/cucumber.zip'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/ClB6vvaWzMg'},
+                {id: 'pouet', url: 'https://www.pouet.net/prod.php?which=81547'},
+                {id: 'download', url: 'https://files.scene.org/view/parties/1999/thegathering99/wild/fast-intro/cucumber.zip'}
+              ]
             },
             {
               image: 'assets/FYH.jpg',
@@ -99,10 +106,11 @@ export class CarouselOptions {
                 {name: 'Kezoomer', role: 'music'},
                 {name: 'Cyberfish', role: 'code'},
               ],
-              youtube: 'https://youtu.be/AAPkby4EDQY',
-              pouet: 'https://www.pouet.net/prod.php?which=81546',
-              github: null,
-              download: 'https://github.com/the-lost-souls/follow-your-heart/releases/download/final/tls_fyh.zip'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/AAPkby4EDQY'},
+                {id: 'pouet', url: 'https://www.pouet.net/prod.php?which=81546'},
+                {id: 'download', url: 'https://github.com/the-lost-souls/follow-your-heart/releases/download/final/tls_fyh.zip'}
+              ]
             },
             {
               image: 'assets/II.jpg',
@@ -116,10 +124,12 @@ export class CarouselOptions {
                 {name: 'Kezoomer', role: 'music, choreography'},
                 {name: 'Cyberfish', role: 'code, animation'},
               ],
-              youtube: 'https://youtu.be/stSv0y_zg1o',
-              pouet: 'http://www.pouet.net/prod.php?which=5923',
-              github: 'https://github.com/the-lost-souls/II',
-              download: 'https://files.scene.org/view/parties/1998/thegathering98/demo/tls_ii.zip'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/stSv0y_zg1o'},
+                {id: 'pouet', url: 'http://www.pouet.net/prod.php?which=5923'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/II'},
+                {id: 'download', url: 'https://files.scene.org/view/parties/1998/thegathering98/demo/tls_ii.zip'}
+              ]
             },
             {
               image: 'assets/pgp.gif',
@@ -131,10 +141,12 @@ export class CarouselOptions {
               credits: [
                 {name: 'Cyberfish', role: 'code, gfx'},
               ],
-              youtube: 'https://youtu.be/Fg-FixaV6ws',
-              pouet: 'http://www.pouet.net/prod.php?which=15848',
-              github: 'https://github.com/the-lost-souls/pgp',
-              download: 'https://files.scene.org/view/mirrors/hornet/demos/1997/t/tls_pgp.zip'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/Fg-FixaV6ws'},
+                {id: 'pouet', url: 'http://www.pouet.net/prod.php?which=15848'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/pgp'},
+                {id: 'download', url: 'https://files.scene.org/view/mirrors/hornet/demos/1997/t/tls_pgp.zip'}
+              ]
             },
             {
               image: 'assets/mom02.png',
@@ -148,10 +160,12 @@ export class CarouselOptions {
                 {name: 'Cyberfish', role: 'code'},
                 {name: 'Rawhead', role: 'gfx, modeling'},
               ],
-              youtube: 'https://youtu.be/UtopQ09WZ9c',
-              pouet: 'http://www.pouet.net/prod.php?which=58683',
-              github: 'https://github.com/the-lost-souls/mind-over-matter',
-              download: 'https://files.scene.org/view/mirrors/hornet/demos/1996/t/tls_mom.zip'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/UtopQ09WZ9c'},
+                {id: 'pouet', url: 'http://www.pouet.net/prod.php?which=58683'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/mind-over-matter'},
+                {id: 'download', url: 'https://files.scene.org/view/mirrors/hornet/demos/1996/t/tls_mom.zip'}
+              ]
             },
             {
               image: 'assets/pese01.png',
@@ -165,10 +179,9 @@ export class CarouselOptions {
                 {name: 'Cyberfish', role: 'code'},
                 {name: 'Rawhead', role: 'gfx, modeling'},
               ],
-              youtube: 'https://youtu.be/OlRxaUWLNgU',
-              pouet: null,
-              github: null,
-              download: null,
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/OlRxaUWLNgU'},
+              ]
             },
             {
               image: 'assets/time01.png',
@@ -182,10 +195,12 @@ export class CarouselOptions {
                 {name: 'Cyberfish', role: 'code, modeling'},
                 {name: 'Rawhead', role: 'gfx, modeling'},
               ],
-              youtube: 'https://youtu.be/AyIQb7SAhP0',
-              pouet: 'http://www.pouet.net/prod.php?which=58684',
-              github: 'https://github.com/the-lost-souls/time',
-              download: 'https://files.scene.org/view/parties/1996/tonstad96/demo/tls_time.zip'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/AyIQb7SAhP0'},
+                {id: 'pouet', url: 'http://www.pouet.net/prod.php?which=58684'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/time'},
+                {id: 'download', url: 'https://files.scene.org/view/parties/1996/tonstad96/demo/tls_time.zip'}
+              ]
             },
             {
               image: 'assets/synthetic.png',
@@ -199,10 +214,11 @@ export class CarouselOptions {
                 {name: 'Cyberfish', role: 'code, gfx'},
                 {name: 'Rawhead', role: 'gfx, modeling'},
               ],
-              youtube: 'https://youtu.be/tJvQbS8wOok',
-              pouet: null,
-              github: 'https://github.com/the-lost-souls/synthetic',
-              download: 'https://github.com/the-lost-souls/synthetic/releases/download/final/SYN_TLS.ZIP'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/tJvQbS8wOok'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/synthetic'},
+                {id: 'download', url: 'https://github.com/the-lost-souls/synthetic/releases/download/final/SYN_TLS.ZIP'}
+              ]
             },
             {
               image: 'assets/sorcerer.png',
@@ -215,10 +231,11 @@ export class CarouselOptions {
                 {name: 'Kezoomer', role: 'modeling'},
                 {name: 'Cyberfish', role: 'code, gfx'},
               ],
-              youtube: 'https://youtu.be/F_KWflqlF1g',
-              pouet: null,
-              github: 'https://github.com/the-lost-souls/sorcerer',
-              download: 'https://github.com/the-lost-souls/sorcerer/releases/download/final/SORCERER.zip'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/F_KWflqlF1g'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/sorcerer'},
+                {id: 'download', url: 'https://github.com/the-lost-souls/sorcerer/releases/download/final/SORCERER.zip'}
+              ]
             },
             {
               image: 'assets/tib.png',
@@ -234,10 +251,11 @@ export class CarouselOptions {
                 {name: 'MTB', role: 'code'},
                 {name: 'Euronymous', role: 'gfx'}
               ],
-              youtube: 'https://youtu.be/Qd8WPVmYhX8',
-              pouet: null,
-              github: 'https://github.com/the-lost-souls/TiB',
-              download: 'https://github.com/the-lost-souls/TiB/releases/download/final/tls_Tiss.ZIP'
+              links: [
+                {id: 'youtube', url: 'https://youtu.be/Qd8WPVmYhX8'},
+                {id: 'github', url: 'https://github.com/the-lost-souls/TiB'},
+                {id: 'download', url: 'https://github.com/the-lost-souls/TiB/releases/download/final/tls_Tiss.ZIP'}
+              ]
             }
           ];
 
