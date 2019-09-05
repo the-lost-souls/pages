@@ -4,7 +4,7 @@
 ### Deployments
 [Prod](https://the-lost-souls.github.io/) | 
 [Dev](https://the-lost-souls.github.io/versions/latest) | 
-[All](https://the-lost-souls.github.io/versions/versions.md)
+[All](https://github.com/the-lost-souls/the-lost-souls.github.io/blob/master/versions/versions.md)
 
 ### Gotchas
 - using Z-index for layering gives inconcistent behavior across Chrome (OSX) and Safari (OSX) when combined with transforms, so using translateZ for ordering instead.
