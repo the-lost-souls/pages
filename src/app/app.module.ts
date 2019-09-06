@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CarouselSectionComponent } from './carousel-section/carousel-section.component';
 import { SuffixPipe } from './suffix.pipe';
 import { LensflareComponent } from './lensflare/lensflare.component';
+import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { LensflareComponent } from './lensflare/lensflare.component';
     MainComponent,
     CarouselSectionComponent,
     SuffixPipe,
-    LensflareComponent
+    LensflareComponent,
+    SplashScreenComponent
   ],
   imports: [
     BrowserModule,

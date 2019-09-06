@@ -1,19 +1,16 @@
-@import './shared'
-@import url('https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise&display=swap')
+@import './shared' 
 
 
-html, body
-    height: 100%
-    width: 100%
-    margin: 0
-    font-family: 'Waiting for the Sunrise', cursive
+// body/html are styled in index.html so they're available for the splashscreen
 
-    background-color: $background-color
-
-    // Because of all the layers, just disable all interaction here and enable it the few places we need it.
-    user-select: none
-    pointer-events: none
-
-    // Disable overscroll/bounce on IOS
+// Positions a div top left and fills the parent. Can be used to overlay multiple divs
+// inside same container. Only works if parent position is either relative or absolute
+.overlay-and-fill
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
     overflow: hidden
-    position: fixed
+
+    

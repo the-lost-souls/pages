@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CarouselOptions } from '../carouseloptions';
 import { Layout } from '../layout';
-import { Flare } from '../flare';
 import { CarouselService } from '../carousel.service';
 import { ParamMap, ActivatedRoute } from '@angular/router';
 
@@ -28,6 +27,9 @@ export class MainComponent implements OnInit, AfterViewInit {
   public scrollPaddingBottom: string;
   public layout: Layout[] = [];
   public polygons: [number, number][][];
+
+  private sectionsLoaded = 0;
+  public loaded = false;
 
   public showCenter = false;
   public animateBackground = true;
@@ -105,5 +107,10 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     return map.get(key) === 'true';
+  }
+
+  public onSectionLoaded(): void {
+    this.sectionsLoaded++;
+    this.loaded = this.sectionsLoaded === this.options.sections.length;
   }
 }

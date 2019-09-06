@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CarouselSection } from '../carouselsection';
 import { CarouselOptions } from '../carouseloptions';
 import { Utils } from '../utils';
@@ -41,6 +41,9 @@ export class CarouselSectionComponent implements OnInit {
   @Input()
   options: CarouselOptions;
 
+  @Output()
+  public loaded: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+
   private _focus = 0;
   @Input()
   public set focus(value: number) {
@@ -56,7 +59,6 @@ export class CarouselSectionComponent implements OnInit {
 
   public foregroundImage: string;
   public backgroundImage: string;
-  public loaded = false;
   public contentTransform: SafeStyle;
   public contentWidth: number;
   public contentHeight: number;
@@ -88,7 +90,7 @@ export class CarouselSectionComponent implements OnInit {
     image.onload = () => {
       this.backgroundImage = Utils.prepareBackground(image, canvas, this.options.blurRadius, this.options.backgroundFadeRadius);
       this.foregroundImage = Utils.fadeEdges(image, canvas, 0, 640);
-      this.loaded = true;
+      this.loaded.next(true);
     };
     image.src = this.content.image;
 
