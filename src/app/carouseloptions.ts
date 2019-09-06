@@ -76,7 +76,7 @@ export class CarouselOptions {
             },
             {
               image: 'assets/cucumber01.png',
-              title: 'Cucumber Overdose',
+              title: 'Cucumber Slumber',
               event: 'The Gathering',
               year: 1999,
               category: 'fast intro',
