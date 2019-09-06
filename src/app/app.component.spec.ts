@@ -5,6 +5,7 @@ import { MainComponent } from './main/main.component';
 import { SuffixPipe } from './suffix.pipe';
 import { CarouselSectionComponent } from './carousel-section/carousel-section.component';
 import { LensflareComponent } from './lensflare/lensflare.component';
+import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -15,7 +16,7 @@ describe('AppComponent', () => {
         )
       ],
       declarations: [
-        AppComponent, MainComponent, SuffixPipe, CarouselSectionComponent, LensflareComponent
+        AppComponent, MainComponent, SuffixPipe, CarouselSectionComponent, LensflareComponent, SplashScreenComponent
 
       ],
     }).compileComponents();
