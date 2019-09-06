@@ -27,7 +27,8 @@
                     [options]="options" 
                     [focus]="layout[i].focus"
                     [backgroundTransform]="layout[i].backgroundTransform"
-                    (loaded)="onSectionLoaded()">
+                    (loaded)="onSectionLoaded()"
+                    (linkClicked)="goodbye.goodbye()">
                 </app-carousel-section>
             </div>
         </div>
@@ -44,9 +45,11 @@
         [style.top]="options.center | suffix: 'px'">
     </div>
 
-    <app-splash-screen 
+    <app-splash-screen
         [progressMin]="'0'"
         [progressMax]="options.sections.length"
         [progress]="sectionsLoaded"></app-splash-screen>
+
+    <app-goodbye-component></app-goodbye-component>
 </div>
 

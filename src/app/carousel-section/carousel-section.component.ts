@@ -14,7 +14,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
   styleUrls: ['./carousel-section.component.sass'],
   animations: [trigger('boom', [
     transition(':increment', [
-      animate('1s ease-out', style({
+      animate('0.2s ease-out', style({
         transform: 'scale(8)',
         opacity: 0
       })),
@@ -22,7 +22,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
         transform: 'scale(0)',
         opacity: 0
       })),
-      animate('200ms', style({
+      animate('100ms', style({
         transform: 'scale(1)',
         opacity: 1
       })),
@@ -42,7 +42,10 @@ export class CarouselSectionComponent implements OnInit {
   options: CarouselOptions;
 
   @Output()
-  public loaded: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  public loaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output()
+  public linkClicked: EventEmitter<void> = new EventEmitter<void>();
 
   private _focus = 0;
   @Input()
@@ -108,7 +111,10 @@ export class CarouselSectionComponent implements OnInit {
   }
 
   public openLink(i: number) {
-    window.location.href = this.content.links[i].url;
+    setTimeout(
+      () => window.location.href = this.content.links[i].url, 
+      200);
     this.clickedLink[i]++;
+    this.linkClicked.next();
   }
 }

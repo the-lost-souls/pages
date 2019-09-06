@@ -9,6 +9,7 @@ import { CarouselSectionComponent } from './carousel-section/carousel-section.co
 import { SuffixPipe } from './suffix.pipe';
 import { LensflareComponent } from './lensflare/lensflare.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
+import { GoodbyeComponentComponent } from './goodbye-component/goodbye-component.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SplashScreenComponent } from './splash-screen/splash-screen.component';
     CarouselSectionComponent,
     SuffixPipe,
     LensflareComponent,
-    SplashScreenComponent
+    SplashScreenComponent,
+    GoodbyeComponentComponent
   ],
   imports: [
     BrowserModule,

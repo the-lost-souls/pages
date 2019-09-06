@@ -3,6 +3,7 @@ import { CarouselOptions } from '../carouseloptions';
 import { Layout } from '../layout';
 import { CarouselService } from '../carousel.service';
 import { ParamMap, ActivatedRoute } from '@angular/router';
+import { GoodbyeComponentComponent } from '../goodbye-component/goodbye-component.component';
 
 @Component({
   selector: 'app-main',
@@ -23,12 +24,15 @@ export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild('carousel', { static: false })
   private _carousel: ElementRef<HTMLElement>;
 
+  @ViewChild(GoodbyeComponentComponent, { static: false })
+  public goodbye: GoodbyeComponentComponent;
+
   public scrollPaddingTop: string;
   public scrollPaddingBottom: string;
   public layout: Layout[] = [];
   public polygons: [number, number][][];
 
-  private sectionsLoaded = 0;
+  public sectionsLoaded = 0;
   public loaded = false;
 
   public showCenter = false;
