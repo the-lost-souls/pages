@@ -112,7 +112,7 @@ export class CarouselSectionComponent implements OnInit {
 
   public openLink(i: number) {
     setTimeout(
-      () => window.location.href = this.content.links[i].url, 
+      () => window.location.href = this.content.links[i].url,
       200);
     this.clickedLink[i]++;
     this.linkClicked.next();

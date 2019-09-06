@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef, Input, Inject, Vie
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DOCUMENT } from '@angular/common';
 import { Utils } from '../utils';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-splash-screen',
@@ -38,7 +39,7 @@ export class SplashScreenComponent implements AfterViewInit {
 
     const percentage = Math.round(100 * (this.progress - this.progressMin) / (this.progressMax - this.progressMin));
     if (this._progressBar) {
-      this._progressBar.innerText = `${percentage}%`;
+      this._progressBar.style['transform'] = `scaleX(${percentage / 100})`; //this._sanitizer.bypassSecurityTrustStyle(`scale(0.2)`) as any;
     }
     if (this.progress === this.progressMax) {
       this.fade = true;
@@ -52,7 +53,7 @@ export class SplashScreenComponent implements AfterViewInit {
 
   private _progressBar: HTMLElement;
 
-  constructor(@Inject(DOCUMENT) private _document: HTMLDocument) { }
+  constructor(@Inject(DOCUMENT) private _document: HTMLDocument, private _sanitizer: DomSanitizer) { }
 
   ngAfterViewInit() {
 

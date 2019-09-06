@@ -28,7 +28,7 @@
       background-color: white;
       pointer-events: none;
       user-select: none;
-      transform: transformZ(-10em);
+      transform: translateZ(-10em);
       color: black;
     }
 
@@ -64,9 +64,11 @@
 
 <body>
   <div id="splashscreen">
-    <div id="splashscreentext" style="width: 200px; height: 100px; display: flex; flex-direction: column">
-      <div id="progressbar" style="font-size: 40pt; text-align: center">0%</div>
-      <div style="font-size: 10pt; position: relative; top: -25px; text-align: center">Build: local</div>
+    <div id="splashscreentext" style="width: 300px; height: 100px; display: flex; flex-direction: column">
+        <div style="font-size: 10pt; position: relative; top: 15px; text-align: left">Build: local</div>
+        <div style="font-size: 40pt; position: relative; text-align: center">The Lost Souls</div>
+        <div id="progressbar" style="transform: scaleX(0); position: relative; top: -20px; transform-origin: 0% 0%; font-size: 1px; line-height: 100%; width: 100%; background-color: black; color: black">dummy</div>
+        <div style="font-size: 20pt; position: relative; top: -20px; text-align: center">Est. 1994 Population 5</div>
     </div>
   </div>
   <app-root></app-root>
