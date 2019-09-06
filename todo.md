@@ -19,7 +19,8 @@ hovers over them
 - use 'undefined' instead of 'null' in teh contents
 - split 'options' from 'content'
 - turn off user-events and pointer-events globally, only enable on the actions
-
+- change all screenshots to jpegs
+- Utils.subtractRange is no longer in use
 
 ### Bugs
 - The first/last element does not cover the header correctly
