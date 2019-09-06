@@ -39,7 +39,7 @@ export class SplashScreenComponent implements AfterViewInit {
 
     const percentage = Math.round(100 * (this.progress - this.progressMin) / (this.progressMax - this.progressMin));
     if (this._progressBar) {
-      this._progressBar.style['transform'] = `scaleX(${percentage / 100})`; //this._sanitizer.bypassSecurityTrustStyle(`scale(0.2)`) as any;
+      this._progressBar.style[`transform`] = `scaleX(${percentage / 100})`;
     }
     if (this.progress === this.progressMax) {
       this.fade = true;

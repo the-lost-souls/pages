@@ -30,7 +30,5 @@ export class GoodbyeComponentComponent implements OnInit {
 
   public goodbye(): void {
     this.fadeIn = true;
-    console.log('goodbye!')
   }
-
 }
