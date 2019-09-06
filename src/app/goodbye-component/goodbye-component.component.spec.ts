@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GoodbyeComponentComponent } from './goodbye-component.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GoodbyeComponentComponent', () => {
   let component: GoodbyeComponentComponent;
@@ -8,6 +9,9 @@ describe('GoodbyeComponentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        NoopAnimationsModule
+      ],
       declarations: [ GoodbyeComponentComponent ]
     })
     .compileComponents();

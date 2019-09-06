@@ -274,7 +274,7 @@ export class CarouselOptions {
             sectionHeight: 112,
             contentWidth: 100 * 2,
             padding: 6,
-            blurRadius: 5,
+            blurRadius: 3,
             backgroundFadeRadius: 50,
             sections: content
         };

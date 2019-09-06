@@ -18,8 +18,8 @@ export class MainComponent implements OnInit, AfterViewInit {
   // -------------
   public sectionContentHeight = this.options.sectionHeight - this.options.padding * 2;
 
-  public angle1 = 0;
-  public angle2 = -63;
+  public backgroundAngle = 0;
+  public backgroundScale = 1;
 
   @ViewChild('carousel', { static: false })
   private _carousel: ElementRef<HTMLElement>;
@@ -91,14 +91,16 @@ export class MainComponent implements OnInit, AfterViewInit {
     if (scrollTop !== this._previousScrollTop) {
       this._carouselService.handleScroll(this.layout, this.options, this._carousel.nativeElement.scrollTop);
 
-      this._carouselService.updateTransforms(this.layout, this.options, this.angle1);
-      this._carouselService.updateBackgroundTransforms(this.layout, this.options, this.angle1, backgroundScale);
+      this._carouselService.updateTransforms(this.layout, this.options, this.backgroundAngle);
+      this._carouselService.updateBackgroundTransforms(this.layout, this.options, this.backgroundAngle, backgroundScale + this.backgroundScale);
       this.polygons = this._carouselService.getPolygons(this.layout, this.options, scrollTop);
     }
 
     if (this.animateBackground) {
-      this.angle1 = t * 3.6 / 1000;
-      this._carouselService.updateBackgroundTransforms(this.layout, this.options, this.angle1, backgroundScale);
+      this.backgroundAngle = t * 3.6 / 1000;
+      this.backgroundScale = Math.cos(t / 3000) + 1;
+
+      this._carouselService.updateBackgroundTransforms(this.layout, this.options, this.backgroundAngle, backgroundScale + this.backgroundScale);
     }
 
     this._previousScrollTop = scrollTop;
