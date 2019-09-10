@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -10,6 +10,7 @@ import { SuffixPipe } from './suffix.pipe';
 import { LensflareComponent } from './lensflare/lensflare.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { GoodbyeComponentComponent } from './goodbye-component/goodbye-component.component';
+import { MasterComponent } from './master/master.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +20,33 @@ import { GoodbyeComponentComponent } from './goodbye-component/goodbye-component
     SuffixPipe,
     LensflareComponent,
     SplashScreenComponent,
-    GoodbyeComponentComponent
+    GoodbyeComponentComponent,
+    MasterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+export function initApp() {
+  return () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log('In initApp');
+        resolve();
+      }, 3000);
+    });
+  };
+}

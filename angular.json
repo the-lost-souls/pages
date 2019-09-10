@@ -30,7 +30,10 @@
             "styles": [
               "src/styles.sass"
             ],
-            "scripts": []
+            "scripts": [],
+            "lazyModules": [
+              "src/app/lazy/lazy.module"
+            ]
           },
           "configurations": {
             "production": {
