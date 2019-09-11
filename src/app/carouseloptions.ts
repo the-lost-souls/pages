@@ -84,7 +84,7 @@ export class CarouselOptions {
               credits: [
                 {name: 'Cyberfish', role: 'code, gfx, animation'},
                 {name: 'Kezoomer', role: 'music, gfx, modeling'},
-                {name: 'tChr', role: 'gfx'},
+                {name: 'tChr/ELQ', role: 'gfx'},
               ],
               links: [
                 {id: 'youtube', url: 'https://youtu.be/ClB6vvaWzMg'},
