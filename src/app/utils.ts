@@ -71,27 +71,4 @@ export class Utils {
     public static distance(x0, y0, x1, y1): number {
         return Math.sqrt(Math.pow(x0 - x1, 2) + Math.pow(y0 - y1, 2));
     }
-
-    public static subtractRange(a: [number, number], b: [number, number]): [number, number] {
-
-        const aSorted = a.sort((n1, n2) => n1 - n2);
-        const bSorted = b.sort((n1, n2) => n1 - n2);
-
-        if (aSorted[0] > bSorted[1] || aSorted[1] < bSorted[0]) {
-            // Non-overlapping, return the original line
-            return a;
-        }
-
-        if (aSorted[0] >= bSorted[0] && aSorted[1] <= bSorted[1]) {
-            // Completely contained, return a zero-length line
-            return [a[0], a[0]];
-        }
-
-        // Now we know the line is partially covered
-        if (aSorted[0] < bSorted[0]) {
-            return [aSorted[0], bSorted[0]];
-        } else {
-            return [bSorted[1], aSorted[1]];
-        }
-    }
 }
