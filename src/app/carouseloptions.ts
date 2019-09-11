@@ -75,7 +75,7 @@ export class CarouselOptions {
               ]
             },
             {
-              image: 'assets/cucumber01.png',
+              image: 'assets/cucumber01.jpg',
               title: 'Cucumber Slumber',
               event: 'The Gathering',
               year: 1999,
@@ -147,7 +147,7 @@ export class CarouselOptions {
               ]
             },
             {
-              image: 'assets/mom02.png',
+              image: 'assets/mom02.jpg',
               title: 'Mind over Matter',
               event: 'The Gathering',
               year: 1996,
@@ -166,7 +166,7 @@ export class CarouselOptions {
               ]
             },
             {
-              image: 'assets/pese01.png',
+              image: 'assets/pese01.jpg',
               title: 'PESE',
               event: 'The Gathering',
               year: 1996,

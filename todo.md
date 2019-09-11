@@ -1,14 +1,13 @@
 
 ### Enhancements
-- Splash screen
-- Only show items after they're done loading/preparing
-- make buttons bounce when they're clicked
 - show a symbol to indicate you can scroll down
 - add a member list and a quick description of what TLS is
 - would be cool to fade out the lens flares when the mouse 
 hovers over them
 - fix download link for Cucumber Slumber on pouet
-- fix TLS website url on Pouet
+- save position in URL so navigating back works properly
+- the loading bar should animate, not just bounce
+- add contact/email button and github/source button (at the bottom?)
 
 ### Cleanup
 - remove unused styles
@@ -19,16 +18,22 @@ hovers over them
 - use 'undefined' instead of 'null' in teh contents
 - split 'options' from 'content'
 - turn off user-events and pointer-events globally, only enable on the actions
-- change all screenshots to jpegs
 - Utils.subtractRange is no longer in use
+- fade out header as you scroll instead of just cover
 
 ### Bugs
 - The first/last element does not cover the header correctly
 - IOS: Scroll to end or beginning and keep flicking. Eventually the scrolling will stop working. You can get it going again by just tapping somewhere on the screen.
-
+- option-click on links don't work. Should fix that.
+- the 'goodbye' screen makes the site useless if you say yes to 'open in youtube' on iphone
 
 ### Done
-- DONE: - fix favicon
+- DONE: change all screenshots to jpegs
+- DONE: fix TLS website url on Pouet
+- DONE: Splash screen
+- DONE: Only show items after they're done loading/preparing
+- DONE: make buttons bounce when they're clicked
+- DONE: fix favicon
 - DONE: rename 'config' to 'options' everywhere
 - DONE: find a more stylish font
 - DONE: github icon is blurry. Seems to only be a problem on Safari OSX.
