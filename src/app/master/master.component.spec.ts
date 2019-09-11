@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MasterComponent } from './master.component';
+import { SystemJsNgModuleLoader } from '@angular/core';
 
 describe('MasterComponent', () => {
   let component: MasterComponent;
@@ -8,7 +9,9 @@ describe('MasterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MasterComponent ]
+      declarations: [ MasterComponent ],
+      // tslint:disable-next-line: deprecation
+      providers: [SystemJsNgModuleLoader]
     })
     .compileComponents();
   }));
