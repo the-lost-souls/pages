@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SafeStyle, DomSanitizer } from '@angular/platform-browser';
 
 import * as p from 'polygon-tools';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { SimpleAnimator } from '../simpleanimator';
 // For some reason, using p directly doesn't compile
 const polygonTools: any = p;
 
@@ -15,7 +17,22 @@ export class LensFlareOptions {
 @Component({
   selector: 'app-lensflare',
   templateUrl: './lensflare.component.html',
-  styleUrls: ['./lensflare.component.sass']
+  styleUrls: ['./lensflare.component.sass'],
+  animations: [
+    trigger('fadeIn', [
+      state('void, false', style({
+        // opacity : 0
+        transform: 'scale(0)'
+      })),
+      state('true', style({
+        // opacity: 1,
+        transform: 'scale(1)'
+      })),
+      transition('* => true', [
+        animate('1s 2s ease-in-out')
+      ]),
+    ]),
+  ]
 })
 export class LensflareComponent implements OnInit {
 
@@ -62,9 +79,24 @@ export class LensflareComponent implements OnInit {
 
   public transform: SafeStyle;
 
+
+  // Would love to use Angular animations here, but using angular to animate opacity causes weird bouncing
+  // effect when scrolling on ios webkit.
+  private _animateScale: SimpleAnimator = new SimpleAnimator(false, 1, 0, 0.7, 0.4, (scale) => {
+    this._startScale = scale;
+    this.updateTransform();
+  });
+  private _startScale = 0;
+
+
   constructor(private _sanitizer: DomSanitizer) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
+
+  public fadeIn() {
+    this._animateScale.state = true;
+  }
 
   private updateTransform(): void {
 
@@ -81,7 +113,7 @@ export class LensflareComponent implements OnInit {
       `translateY(-50%)` +
       `translateY(${this.position.y}px)` +
       `translateX(${this.position.x}px)` +
-      `scale(${visibility * this.imageScale})`;
+      `scale(${visibility * this.imageScale * this._startScale})`;
 
     this.transform = this._sanitizer.bypassSecurityTrustStyle(transform);
   }

@@ -1,7 +1,25 @@
 @import './shared' 
 
 
-// body/html are styled in index.html so they're available for the splashscreen
+
+
+html, body
+    height: 100%
+    width: 100%
+    margin: 0
+    font-family: 'Waiting for the Sunrise', cursive
+    /* font-family: "Comic Sans MS", cursive, sans-serif */
+
+    perspective: 0px
+    transform-style: preserve-3d
+
+    /* Because of all the layers, just disable all interaction here and enable it the few places we need it. */
+    user-select: none
+    pointer-events: none
+
+    /* Disable overscroll/bounce on IOS */
+    overflow: hidden
+    position: fixed
 
 // Positions a div top left and fills the parent. Can be used to overlay multiple divs
 // inside same container. Only works if parent position is either relative or absolute

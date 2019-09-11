@@ -1,18 +1,11 @@
 <div class="container">
-    <div class="header">
-        <div class="header-title">
-            THE LOST SOULS
-        </div>
-        <div class="header-tagline">
-            Visually in control. Still. Sort of.
-        </div>
-    </div>
 
     <div #carousel class="carousel" 
         [style.scroll-padding-top]="scrollPaddingTop"
         [style.scroll-padding-bottom]="scrollPaddingBottom" 
         [style.padding-top]="scrollPaddingTop"
-        [style.padding-bottom]="scrollPaddingBottom">
+        [style.padding-bottom]="scrollPaddingBottom"
+        [@fadeIn]="loaded">
 
         <div *ngFor="let section of options.sections, let i = index" 
             class="section-wrapper"
@@ -34,7 +27,8 @@
         </div>
     </div>
 
-    <app-lensflare *ngFor="let flare of flares"
+    <app-lensflare 
+        *ngFor="let flare of flares"
         [image]="flare.image"
         [imageScale]="flare.imageScale"
         [position]="flare.position"
@@ -45,10 +39,10 @@
         [style.top]="options.center | suffix: 'px'">
     </div>
 
-    <app-splash-screen
+    <!-- <app-splash-screen
         [progressMin]="'0'"
         [progressMax]="options.sections.length"
-        [progress]="sectionsLoaded"></app-splash-screen>
+        [progress]="sectionsLoaded"></app-splash-screen> -->
 
     <app-goodbye-component></app-goodbye-component>
 </div>

@@ -1,14 +1,29 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, QueryList, ViewChildren } from '@angular/core';
 import { CarouselOptions } from '../carouseloptions';
 import { Layout } from '../layout';
 import { CarouselService } from '../carousel.service';
 import { ParamMap, ActivatedRoute } from '@angular/router';
 import { GoodbyeComponentComponent } from '../goodbye-component/goodbye-component.component';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { LensflareComponent } from '../lensflare/lensflare.component';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.sass']
+  styleUrls: ['./main.component.sass'],
+  animations: [
+    trigger('fadeIn', [
+      state('void, false', style({
+        opacity : 0
+      })),
+      state('true', style({
+        opacity: 1,
+      })),
+      transition('* => true', [
+        animate('0.7s')
+      ]),
+    ]),
+  ]
 })
 export class MainComponent implements OnInit, AfterViewInit {
 
@@ -27,11 +42,15 @@ export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild(GoodbyeComponentComponent, { static: false })
   public goodbye: GoodbyeComponentComponent;
 
+  @ViewChildren(LensflareComponent)
+  private _lensFlares: QueryList<LensflareComponent>;
+
   public scrollPaddingTop: string;
   public scrollPaddingBottom: string;
   public layout: Layout[] = [];
   public polygons: [number, number][][];
 
+  public loadingProgress = 0;
   public sectionsLoaded = 0;
   public loaded = false;
 
@@ -125,6 +144,15 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   public onSectionLoaded(): void {
     this.sectionsLoaded++;
-    this.loaded = this.sectionsLoaded === this.options.sections.length;
+    this.loadingProgress = this.sectionsLoaded / this.options.sections.length;
+    if (this.sectionsLoaded === this.options.sections.length) {
+      this.loaded = true;
+      setTimeout(() => {
+          for (const lensFlare of this._lensFlares.toArray()) {
+            lensFlare.fadeIn();
+          }
+        },
+        0);
+    }
   }
 }

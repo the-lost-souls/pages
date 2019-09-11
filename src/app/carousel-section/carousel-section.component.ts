@@ -14,16 +14,16 @@ import { trigger, transition, style, animate } from '@angular/animations';
   styleUrls: ['./carousel-section.component.sass'],
   animations: [trigger('boom', [
     transition(':increment', [
-      animate('0.2s ease-out', style({
-        transform: 'scale(8)',
+      animate('0.5s ease-out', style({
+        transform: ' translateZ(-20em) scale(8)',
         opacity: 0
       })),
       animate('1ms', style({
-        transform: 'scale(0)',
+        transform: ' translateZ(-20em) scale(0)',
         opacity: 0
       })),
       animate('100ms', style({
-        transform: 'scale(1)',
+        transform: ' translateZ(-20em) scale(1)',
         opacity: 1
       })),
     ]),
