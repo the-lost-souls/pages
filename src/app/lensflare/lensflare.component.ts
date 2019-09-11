@@ -80,8 +80,8 @@ export class LensflareComponent implements OnInit {
   public transform: SafeStyle;
 
 
-  // Would love to use Angular animations here, but using angular to animate opacity causes weird bouncing
-  // effect when scrolling on ios webkit.
+  // Annoying to use this stupid animator here, but can't think of a better way to combine
+  // with the other scale factors
   private _animateScale: SimpleAnimator = new SimpleAnimator(false, 1, 0, 0.7, 0.4, (scale) => {
     this._startScale = scale;
     this.updateTransform();
