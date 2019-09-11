@@ -11,7 +11,7 @@
             <div class="title" [style.font-size]="style.titleFontSize | suffix: 'pt'">"{{ content.title }}" ({{ content.year }})</div>
             <div class="event" [style.font-size]="style.eventFontSize | suffix: 'pt'">{{ content.ranked ? '#' + content.ranked : '' }} {{ content.category }} {{ content.event }}</div>
                  
-            <div *ngFor="let credit of content.credits" class="credit">
+            <div *ngFor="let credit of content.credits">
                 <div class="role" [style.font-size]="style.roleFontSize | suffix: 'pt'"> {{ credit.role }} </div>
                 <div class="name"  [style.font-size]="style.nameFontSize | suffix: 'pt'"> {{ credit.name }} </div>
             </div>
