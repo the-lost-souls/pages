@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MasterComponent } from './master.component';
 import { SystemJsNgModuleLoader } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MasterComponent', () => {
   let component: MasterComponent;
@@ -11,7 +12,8 @@ describe('MasterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MasterComponent ],
       // tslint:disable-next-line: deprecation
-      providers: [SystemJsNgModuleLoader]
+      providers: [SystemJsNgModuleLoader],
+      imports: [NoopAnimationsModule]
     })
     .compileComponents();
   }));
