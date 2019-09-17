@@ -7,6 +7,7 @@ import { CarouselSectionComponent } from '../carousel-section/carousel-section.c
 import { LensflareComponent } from '../lensflare/lensflare.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GoodbyeComponentComponent } from '../goodbye-component/goodbye-component.component';
+import { ActionComponent } from '../action/action.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -25,7 +26,8 @@ describe('MainComponent', () => {
         SuffixPipe,
         CarouselSectionComponent,
         LensflareComponent,
-        GoodbyeComponentComponent],
+        GoodbyeComponentComponent,
+        ActionComponent],
     })
       .compileComponents();
   }));

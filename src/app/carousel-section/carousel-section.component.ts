@@ -6,29 +6,11 @@ import { SafeStyle, DomSanitizer } from '@angular/platform-browser';
 import * as IsMobile from 'is-mobile';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { SimpleAnimator } from '../simpleanimator';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-carousel-section',
   templateUrl: './carousel-section.component.html',
-  styleUrls: ['./carousel-section.component.sass'],
-  animations: [trigger('boom', [
-    transition(':increment', [
-      animate('0.5s ease-out', style({
-        transform: ' translateZ(-20em) scale(8)',
-        opacity: 0
-      })),
-      animate('1ms', style({
-        transform: ' translateZ(-20em) scale(0)',
-        opacity: 0
-      })),
-      animate('100ms', style({
-        transform: ' translateZ(-20em) scale(1)',
-        opacity: 1
-      })),
-    ]),
-  ])
-  ]
+  styleUrls: ['./carousel-section.component.sass']
 })
 export class CarouselSectionComponent implements OnInit {
 
@@ -80,7 +62,6 @@ export class CarouselSectionComponent implements OnInit {
     roleFontSize: 11,
   };
 
-  public clickedLink: number[];
   // Would love to use Angular animations here, but using angular to animate opacity causes weird bouncing
   // effect when scrolling on ios webkit.
   private _animateOpacity: SimpleAnimator = new SimpleAnimator(false, 1, 0, 0.7, 0.4, (opacity) => this.opacity = opacity);
@@ -105,16 +86,5 @@ export class CarouselSectionComponent implements OnInit {
     this.focusChanged
       .pipe(distinctUntilChanged())
       .subscribe(value => this._animateOpacity.state = (value === 1));
-
-    this.clickedLink = new Array(this.content.links.length);
-    this.clickedLink.fill(0);
-  }
-
-  public openLink(i: number) {
-    setTimeout(
-      () => window.location.href = this.content.links[i].url,
-      200);
-    this.clickedLink[i]++;
-    this.linkClicked.next();
   }
 }

@@ -18,10 +18,7 @@
         </div>
         <div class="separator" [style.height]="contentHeight | suffix: 'px'"></div>
         <div class="actions">
-
-            <div *ngFor="let link of content.links, let i = index" class="action" (click)="openLink(i)" [@boom]="clickedLink[i]">
-                <img src="assets/{{ link.id }}-icon.png" class="action-icon">
-            </div>
+            <app-action *ngFor="let link of content.links, let i = index" [url]="link.url" [image]="'assets/' + link.id + '-icon.png'"></app-action>
         </div>
     </div>
 </div>

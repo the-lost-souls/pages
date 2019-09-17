@@ -22,6 +22,9 @@ import { LensflareComponent } from '../lensflare/lensflare.component';
       transition('* => true', [
         animate('0.7s')
       ]),
+      transition('* => false', [
+        animate('0.2s')
+      ]),
     ]),
   ]
 })
@@ -53,6 +56,8 @@ export class MainComponent implements OnInit, AfterViewInit {
   public loadingProgress = 0;
   public sectionsLoaded = 0;
   public loaded = false;
+  public isAtTop = false;
+  public isAtBottom = false;
 
   public showCenter = false;
   public animateBackground = true;
@@ -107,6 +112,9 @@ export class MainComponent implements OnInit, AfterViewInit {
     const backgroundScale = 1.3 * k / 256; // add 20% to compensate for parralax
 
 
+    this.isAtTop = this.layout[0].distance <= 0;
+    this.isAtBottom = this.layout[this.layout.length - 1].distance >= 0;
+
     if (scrollTop !== this._previousScrollTop) {
       this._carouselService.handleScroll(this.layout, this.options, this._carousel.nativeElement.scrollTop);
 
@@ -154,5 +162,9 @@ export class MainComponent implements OnInit, AfterViewInit {
         },
         0);
     }
+  }
+
+  public mailTo(): string {
+    return 'torbjorv+thelostsouls';
   }
 }

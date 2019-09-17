@@ -5,6 +5,7 @@ import { CarouselSectionComponent } from '../carousel-section/carousel-section.c
 import { SuffixPipe } from '../suffix.pipe';
 import { LensflareComponent } from '../lensflare/lensflare.component';
 import { GoodbyeComponentComponent } from '../goodbye-component/goodbye-component.component';
+import { ActionComponent } from '../action/action.component';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { GoodbyeComponentComponent } from '../goodbye-component/goodbye-componen
     CarouselSectionComponent,
     SuffixPipe,
     LensflareComponent,
-    GoodbyeComponentComponent],
+    GoodbyeComponentComponent,
+    ActionComponent],
   imports: [
     CommonModule
   ],

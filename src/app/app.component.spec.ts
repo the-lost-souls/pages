@@ -6,6 +6,7 @@ import { SuffixPipe } from './suffix.pipe';
 import { CarouselSectionComponent } from './carousel-section/carousel-section.component';
 import { LensflareComponent } from './lensflare/lensflare.component';
 import { GoodbyeComponentComponent } from './goodbye-component/goodbye-component.component';
+import { ActionComponent } from './action/action.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -21,7 +22,8 @@ describe('AppComponent', () => {
         SuffixPipe,
         CarouselSectionComponent,
         LensflareComponent,
-        GoodbyeComponentComponent
+        GoodbyeComponentComponent,
+        ActionComponent
       ],
     }).compileComponents();
   }));
