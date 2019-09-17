@@ -43,6 +43,7 @@
         <app-action [url]="'https://github.com/the-lost-souls/tls-home'" [image]="'assets/github-icon.png'"></app-action>
         <app-action [url]="'mailto:' + mailTo() + '@gmail.com'" [image]="'assets/email-icon.png'"></app-action>
     </div>
+    <div *ngIf="isAtBottom" class="builddate">Build: local</div>
     
     <!-- Disable the goodbye screen until we've figured out how to handle the bugs -->
    <!-- <app-goodbye-component></app-goodbye-component> -->
